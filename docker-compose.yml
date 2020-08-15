@@ -1,0 +1,80 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/usr/src/app/corner/app
+    ports:
+      - '80:3000'
+    restart: always
+    # depends_on:
+    #   - api
+    networks:
+      - corner-networks
+    entrypoint: ["sh", "./dev-entrypoint.sh"]
+  # nuxt:
+  #   container_name: nuxt
+  #   build: ./nuxt
+  #   ports:
+  #     # - "8083:8083"
+  #     - "3000:3000"
+  #     - "80:8083"
+  #   links:
+  #     - api
+  #   volumes:
+  #     - ./nuxt:/usr/src/app/nuxt
+  #   networks:
+  #     - app
+  # api:
+  #   container_name: api
+  #   restart: always
+  #   build: ./api
+  #   ports:
+  #     # - '80:3000'
+  #     - '1003:3000'
+  #   links:
+  #     - mongo
+  #     - crawler
+  #   volumes:
+  #     - ./api:/usr/src/app/api
+  #   networks:
+  #     - corner-networks
+  # mongo:
+  #   container_name: corner_mongo
+  #   image: mongo
+  #   ports:
+  #     - '2004:27017'
+  #   volumes:
+  #     - ./mongo:/usr/src/app/corner/mongo
+  #   networks:
+  #     - corner-networks
+  # crawler:
+  #   restart: always
+  #   build: ./crawler
+  #   command: sh -c "npm install && npm run start"
+  #   working_dir: /usr/src/app/corner/crawler
+  #   ports: 
+  #     - '2002:8082'
+  #   volumes:
+  #     - ./crawler:/usr/src/app/corner/crawler
+  #   networks:
+  #     - corner-networks
+  # api:
+  #   restart: always
+  #   build: ./api
+  #   command: sh -c "npm install && npm run start"
+  #   working_dir: /usr/src/app/corner/api
+  #   ports: 
+  #     - '2003:8083'
+  #   volumes:
+  #     - ./api:/usr/src/app/corner/api
+  #   networks:
+  #     - corner-networks
+    
+
+networks:
+  corner-networks:
+    driver: bridge
