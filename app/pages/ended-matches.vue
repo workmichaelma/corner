@@ -1,9 +1,6 @@
 <template>
-  <v-layout
-    justify-center
-    align-center
-  >
-    <v-flex xs12 sm8 md10>
+  <v-layout align-center justify-center>
+    <v-flex class="text-center" xs12 sm8 md10>
       <match-list v-bind="{matches}" />
     </v-flex>
   </v-layout>
@@ -18,7 +15,7 @@ export default {
   },
   computed: {
     matches () {
-      return this.$store.state.matchList.upcoming || []
+      return this.$store.state.matchList.ended || []
     }
   },
 }

@@ -6,6 +6,10 @@ export default {
   ** See https://nuxtjs.org/api/configuration-mode
   */
   mode: 'universal',
+  server: {
+    port: 3000,
+    host: '0.0.0.0'
+  },
   /*
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
@@ -31,6 +35,8 @@ export default {
   ** Global CSS
   */
   css: [
+    // '~/assets/style/grid.styl',
+    // '~/assets/style/main.styl'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -53,6 +59,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
+    'nuxt-svg-loader',
   ],
   /*
   ** vuetify module configuration
@@ -80,5 +88,26 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    extend(config, ctx) {
+      if (ctx.isDev) {
+        config.devtool = 'eval-source-map'
+      }
+
+      // Run ESLint on save
+      // if (ctx.isDev && ctx.isClient) {
+      //   config.module.rules.push({
+      //     enforce: 'pre',
+      //     test: /\.(js|vue)$/,
+      //     loader: 'eslint-loader',
+      //     exclude: /(node_modules)/
+      //   })
+      // }
+
+      config.module.rules.push({
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader',
+      })
+    }
   }
 }

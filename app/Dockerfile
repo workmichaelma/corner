@@ -1,14 +1,14 @@
 FROM node:10-slim
 
-RUN apt-get update -y && apt-get install -y bash git
-
 WORKDIR /usr/src/app/corner/app
 
 COPY package.json .
 RUN npm install
+# RUN npm run build
 
 COPY . .
 
 EXPOSE 3000
 
-CMD npm run start
+# RUN npm run start
+CMD npm run dev

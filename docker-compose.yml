@@ -14,7 +14,7 @@ services:
     #   - api
     networks:
       - corner-networks
-    entrypoint: ["sh", "./dev-entrypoint.sh"]
+    # entrypoint: ["sh", "./dev-entrypoint.sh"]
   # nuxt:
   #   container_name: nuxt
   #   build: ./nuxt
