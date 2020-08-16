@@ -17,12 +17,14 @@ export const state = () => ({
     homeTeam: {
       teamID: '1037',
       teamName: '山形山神',
-      image: '/images/team/1037'
+      rank: '16',
+      image: 'http://zq.win007.com/image/team/images/2013319174431.jpg'
     },
     awayTeam: {
       teamID: '1742',
       teamName: '長崎成功丸',
-      image: '/images/team/1742'
+      rank: '8',
+      image: 'http://zq.win007.com/image/team/images/2013325134639.jpg'
     },
     odds: {
       HAD: [
@@ -196,11 +198,13 @@ export const state = () => ({
     homeTeam: {
       teamID: '1180',
       teamName: '櫪木SC',
+      rank: '2',
       image: '/images/team/1180'
     },
     awayTeam: {
       teamID: '1035',
       teamName: 'FC愛媛',
+      rank: '12',
       image: '/images/team/1035'
     },
     odds: {
@@ -377,7 +381,8 @@ export const state = () => ({
         away: '1'
       },
       corner: '8',
-      CHL: 'L'
+      CHL: 'L',
+      HAD: 'H'
     },
     league: {
       id: '87',
@@ -387,12 +392,14 @@ export const state = () => ({
     homeTeam: {
       teamID: '1180',
       teamName: '櫪木SC',
-      image: '/images/team/1180'
+      rank: '7',
+      image: 'http://zq.win007.com/image/team/images/2013318130625.jpg'
     },
     awayTeam: {
       teamID: '1225',
       teamName: '岡山綠雉',
-      image: '/images/team/1225'
+      rank: '14',
+      image: 'http://zq.win007.com/Image/team/images/2013319175026.jpg'
     },
     odds: {
       HAD: [
@@ -564,7 +571,8 @@ export const state = () => ({
         home: '0',
         away: '1'
       },
-      corner: null
+      corner: null,
+      HAD: 'A'
     },
     league: {
       id: '87',
@@ -574,11 +582,13 @@ export const state = () => ({
     homeTeam: {
       teamID: '1035',
       teamName: 'FC愛媛',
+      rank: '10',
       image: '/images/team/1035'
     },
     awayTeam: {
       teamID: '1037',
       teamName: '山形山神',
+      rank: '19',
       image: '/images/team/1037'
     },
     odds: {
@@ -750,7 +760,8 @@ export const state = () => ({
         home: '2',
         away: '0'
       },
-      corner: null
+      corner: null,
+      HAD: 'H'
     },
     league: {
       id: '87',
@@ -760,11 +771,13 @@ export const state = () => ({
     homeTeam: {
       teamID: '1742',
       teamName: '長崎成功丸',
+      rank: '12',
       image: '/images/team/1742'
     },
     awayTeam: {
       teamID: '1037',
       teamName: '群馬草津溫泉',
+      rank: '18',
       image: '/images/team/1032'
     },
     odds: {

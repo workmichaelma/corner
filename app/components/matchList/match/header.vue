@@ -3,20 +3,20 @@
     <v-flex class="flex-column pr-1">
       <v-flex class="d-flex flex-row caption">
         <div>
-          {{ format(new Date('2020-08-12T18:00:00+08:00'), 'DD/MM HH:mm') }}
+          {{ format(new Date(match.matchTime), 'DD/MM HH:mm') }}
         </div>
         <v-spacer />
-        <v-flex class="d-flex align-self-sm-end text-right align-center justify-end" v-if="CHL">
+        <v-flex class="d-flex align-self-sm-end text-right align-center justify-end" v-if="CHL_1">
           <div class="font-italic" :class="{'green--text lighten-2 font-weight-black': get(match, 'result.CHL') === 'H'}">
-            {{ CHL.H }}
+            {{ CHL_1.H }}
           </div>
           <v-divider class="mx-1" vertical />
           <div class="lime--text accent-1" :class="{'font-weight-black': !match.ended}">
-            {{ CHL.LINE.split('/')[0] }}
+            {{ CHL_1.LINE.split('/')[0] }}
           </div>
           <v-divider class="mx-1" vertical />
           <div class="font-italic" :class="{'green--text lighten-2 font-weight-black': get(match, 'result.CHL') === 'L'}">
-            {{ CHL.L }}
+            {{ CHL_1.L }}
           </div>
         </v-flex>
       </v-flex>
@@ -45,10 +45,14 @@
   </v-expansion-panel-header>  
 </template>
 <script>
+import Match from '~/mixins/match'
 import format from 'date-fns/format'
 import last from 'lodash/last'
 import get from 'lodash/get'
 export default {
+  mixins: [
+    Match
+  ],
   props: {
     match: {
       required: true,
@@ -58,11 +62,6 @@ export default {
   methods: {
     format,
     get
-  },
-  computed: {
-    CHL () {
-      return last(get(this.match, 'odds.CHL', []))
-    }
   },
 }
 </script>
