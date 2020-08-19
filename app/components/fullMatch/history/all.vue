@@ -11,10 +11,10 @@
             <v-list-item :key="i" class="px-0">
               <v-list-item-content class="pa-0">
                 <v-flex class="d-flex col-6 pa-0 ma-0">
-                  <match-row v-if="match.history.home[i]" v-bind="{id: match.history.home[i], teamId: match.homeTeam.teamID, half: true}" :key="`matchRow_home_${i}`" />
+                  <match-row v-if="match.history.home[i-1]" v-bind="{id: match.history.home[i-1], teamId: match.homeTeam.teamID, half: true}" :key="`matchRow_home_${i-1}`" />
                 </v-flex>
                 <v-flex class="d-flex col-6 pa-0 ma-0">
-                  <match-row v-if="match.history.away[i]" v-bind="{id: match.history.away[i], teamId: match.awayTeam.teamID, half: true, right: true}" :key="`matchRow_away_${i}`" />
+                  <match-row v-if="match.history.away[i-1]" v-bind="{id: match.history.away[i-1], teamId: match.awayTeam.teamID, half: true, right: true}" :key="`matchRow_away_${i-1}`" />
                 </v-flex>
               </v-list-item-content>
             </v-list-item>
