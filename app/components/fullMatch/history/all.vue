@@ -1,7 +1,29 @@
 <template>
-<div>
-  all
-</div>
+  <div>
+    <v-card
+      class="mx-auto"
+      max-width="100%"
+      tile
+    >
+      <v-list dense>
+        <v-list-item-group color="primary">
+          <template v-for="i in historyLength">
+            <v-list-item :key="i" class="px-0">
+              <v-list-item-content class="pa-0">
+                <v-flex class="d-flex col-6 pa-0 ma-0">
+                  <match-row v-if="match.history.home[i]" v-bind="{id: match.history.home[i], teamId: match.homeTeam.teamID, half: true}" :key="`matchRow_home_${i}`" />
+                </v-flex>
+                <v-flex class="d-flex col-6 pa-0 ma-0">
+                  <match-row v-if="match.history.away[i]" v-bind="{id: match.history.away[i], teamId: match.awayTeam.teamID, half: true, right: true}" :key="`matchRow_away_${i}`" />
+                </v-flex>
+              </v-list-item-content>
+            </v-list-item>
+            <v-divider v-if="i + 1 < historyLength" :key="i" />
+          </template>
+        </v-list-item-group>
+      </v-list>
+    </v-card>
+  </div>
 </template>
 <script>
 import Match from '~/mixins/match'
@@ -15,6 +37,14 @@ export default {
     match: {
       required: true,
       default: {}
+    }
+  },
+  computed: {
+    historyLength () {
+      return Math.max(
+        get(this.match, 'history.home', []).length,
+        get(this.match, 'history.away', []).length
+      )
     }
   }
 }

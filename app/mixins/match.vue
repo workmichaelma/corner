@@ -22,7 +22,16 @@ export default {
     },
     CHL_1 () {
       return last(this.CHLs)
-    }
+    },
+    HHAs () {
+      return get(this.match, 'odds.HHA', [])
+    },
+    HHA1 () {
+      return head(this.HHAs)
+    },
+    HHA_1 () {
+      return last(this.HHAs)
+    },
   },
   methods: {
     noTime (arr) {

@@ -3,7 +3,7 @@
     <full-match-header v-bind="{ match }" />
     <v-divider />
     <full-match-profile v-bind="{ match }" />
-    <full-match-result v-bind="{match}" />
+    <full-match-result v-bind="{match}" v-if="match.result" />
     <v-divider />
     <full-match-history v-bind="{match}" />
   </div>

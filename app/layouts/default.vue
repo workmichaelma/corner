@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-main>
-      <v-container class="pb-14">
+      <v-container class="pb-14 px-1">
         <nuxt />
       </v-container>
       <app-footer />

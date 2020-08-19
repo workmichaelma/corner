@@ -1,5 +1,5 @@
 <template>
-  <v-flex id="match__history" class="d-flex col-12 flex-column px-0">
+  <v-flex id="match__history" class="d-flex col-12 flex-column">
     <v-flex class="d-flex">
       <div class="col-6 caption pa-0">
         <v-btn tile v-on:click="to(0)">
@@ -18,18 +18,15 @@
         v-for="page in ['home', 'all', 'away']"
         :key="page"
       >
-      <all v-if="page === 'all'" v-bind="{match}"/>
-      <side v-else v-bind="{match, side: page}" />
+      <component :is="page" v-bind="{match}" />
       </v-carousel-item>
     </v-carousel>
     </v-flex>
   </v-flex>
 </template>
 <script>
-import All from './all'
 export default {
   components: {
-    All,
   },
   data () {
     return {
