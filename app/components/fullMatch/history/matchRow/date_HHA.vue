@@ -1,10 +1,10 @@
 <template>
   <v-flex class="d-flex flex-column caption justify-center">
     <v-flex class="d-flex align-end justify-center">
-      <div :style="{transform: 'scale(0.85) translateY(7px)'}">{{ dateDiff }}</div>
+      <div class="date">{{ dateDiff }}</div>
       <v-icon size="10">mdi-calendar-check</v-icon>
     </v-flex>
-    <v-flex class="d-flex align-center justify-center" :style="{transform: 'scale(0.75'}">
+    <v-flex class="d-flex align-center justify-center hha">
       {{ HHA }}
     </v-flex>
   </v-flex>  
@@ -26,5 +26,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
+.date
+  transform scale(0.85) translateY(5px)
+.hha
+  transform scale(0.75)
 </style>

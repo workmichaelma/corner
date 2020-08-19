@@ -11,6 +11,7 @@
 import format from 'date-fns/format'
 import Team from './team'
 export default {
+  name: 'full-match-header',
   components: {
     Team,
   },

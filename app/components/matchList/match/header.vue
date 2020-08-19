@@ -50,6 +50,7 @@ import format from 'date-fns/format'
 import last from 'lodash/last'
 import get from 'lodash/get'
 export default {
+  name: 'match-list-match-header',
   mixins: [
     Match
   ],

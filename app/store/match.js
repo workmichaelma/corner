@@ -1,6 +1,8 @@
 import get from 'lodash/get'
 import { differenceInDays } from 'date-fns'
 import Vue from 'vue'
+import toString from 'lodash/toString'
+import toSafeInteger from 'lodash/toSafeInteger'
 
 const CHLLines = [8.5, 9.5, 10.5, 11.5, 12.5]
 const teams = {
@@ -114,14 +116,16 @@ const init = ({
   home,
   away,
 }) => {
-  const int = id.charCodeAt(0)
+  const int = toString(id.charCodeAt(0))
+  const H = toSafeInteger(int[0]) || 0
+  const A = toSafeInteger(int[1]) || 0
   const full = {
-    home: int[0] || 0,
-    away: int[1] || 0
+    home: H > 5 ? Math.floor(H / 2) : H,
+    away: A > 5 ? Math.floor(A / 2) : A
   }
   const half = {
-    home: Math.floor(full.home),
-    away: Math.floor(full.away),
+    home: Math.floor(full.home / 2),
+    away: Math.floor(full.away / 2),
   }
 
   const nums = id.match(/\d/g)

@@ -1,12 +1,12 @@
 <template>
   <v-flex class="d-flex align-center justify-center">
-    <v-flex class="d-flex align-center justify-center col-4 caption pa-0" :class="[`${result === 'H' && 'green--text accent-1'}`]" :style="{transform: 'scale(0.85)'}">
+    <v-flex class="odd d-flex align-center justify-center col-4 caption pa-0" :class="[`${result === 'H' ? 'green--text accent-1' : 'grey--text darken-1'}`]">
       {{ H }}
     </v-flex>
     <v-flex class="d-flex align-center justify-center col-4 body-2 pa-0" :style="{transform: 'scale(1.1)'}">
       {{ LINE }}
     </v-flex>
-    <v-flex class="d-flex align-center justify-center col-4 caption pa-0" :class="[`${result === 'L' && 'green--text accent-1'}`]" :style="{transform: 'scale(0.85)'}">
+    <v-flex class="odd d-flex align-center justify-center col-4 caption pa-0" :class="[`${result === 'L' ? 'green--text accent-1' : 'grey--text darken-1'}`]">
       {{ L }}
     </v-flex>
   </v-flex>
@@ -36,5 +36,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
+.odd
+  transform scale(0.85)
 </style>

@@ -11,6 +11,12 @@
     <!--日期及讓盤-->
     <date-hha v-bind="{dateDiff: match.dateDiff, HHA: side === 'home' ? `主${HHA_1.HG}` : `客${HHA_1.AG}`}" />
     <!--日期及讓盤-->
+
+    <keep-alive>
+      <template v-if="!half">
+        <match-profile v-bind="{match, teamId}" v-show="!half" />
+      </template>
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -31,7 +37,7 @@ export default {
       default: ''
     },
     half: {
-      required: true,
+      required: false,
       default: false
     },
     right: {
@@ -59,10 +65,10 @@ export default {
   display grid
   width 100%
   max-width 100%
-  grid-template-columns 40px 1px minmax(0, 1fr) 1px 40px
+  grid-template-columns 40px 1px minmax(0, 1fr) 1px 40px 50%
   &.right
-    for num in 1...5
+    for num in 1...6
       > *:nth-child({num})
-        order 6 - num
+        order 7 - num
 
 </style>
