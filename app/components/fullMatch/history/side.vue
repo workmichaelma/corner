@@ -9,11 +9,7 @@
       <v-list-item-group color="primary">
         <template v-for="(id, i) in match.history[side]">
           <v-list-item :key="i" class="px-1">
-            <!-- <v-list-item-icon>
-              <v-icon v-text="item.icon"></v-icon>
-            </v-list-item-icon> -->
             <v-list-item-content class="pa-0">
-              <!-- <v-list-item-title v-text="item.text"></v-list-item-title> -->
               <match-row v-bind="{id, teamId, right: side === 'away'}" :key="`${id}_${i}`" />
             </v-list-item-content>
           </v-list-item>

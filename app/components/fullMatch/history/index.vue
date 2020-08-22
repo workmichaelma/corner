@@ -12,16 +12,17 @@
         </v-btn>
       </div>
     </v-flex>
-    <v-flex class="d-fex">
-    <v-carousel v-model="pages" hide-delimiters :show-arrows="false" :continuous="false" height="auto">
-      <v-carousel-item
-        v-for="page in ['home', 'all', 'away']"
-        :key="page"
-      >
-      <all v-if="page === 'all'" v-bind="{match}"/>
-      <side v-else v-bind="{match, side: page}" />
-      </v-carousel-item>
-    </v-carousel>
+    <control-bar v-bind="{match}" :updateControlConfig="updateControlConfig"/>
+    <v-flex class="d-flex">
+      <v-carousel v-model="pages" hide-delimiters :show-arrows="false" :continuous="false" height="auto">
+        <v-carousel-item
+          v-for="page in ['home', 'all', 'away']"
+          :key="page"
+        >
+        <all v-if="page === 'all'" v-bind="{match}" />
+        <side v-else v-bind="{match, side: page}" />
+        </v-carousel-item>
+      </v-carousel>
     </v-flex>
   </v-flex>
 </template>
@@ -33,7 +34,13 @@ export default {
   },
   data () {
     return {
-      pages: 1
+      pages: 1,
+      config: {
+        showSameSide: false,
+        showSameLeague: false,
+        showSimilarOdd: false,
+        oddsRange: null
+      }
     }
   },
   props: {
@@ -45,6 +52,14 @@ export default {
   methods: {
     to (page) {
       this.pages = this.pages === page ? 1 : page
+    },
+    updateControlConfig (v) {
+      this.config = v
+    }
+  },
+  watch: {
+    config (v) {
+      console.log('diu', v)
     }
   }
 }
