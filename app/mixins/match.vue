@@ -32,6 +32,15 @@ export default {
     HHA_1 () {
       return last(this.HHAs)
     },
+    HILs () {
+      return get(this.match, 'odds.HIL', [])
+    },
+    HIL1 () {
+      return head(this.HILs)
+    },
+    HIL_1 () {
+      return last(this.HILs)
+    },
   },
   methods: {
     noTime (arr) {

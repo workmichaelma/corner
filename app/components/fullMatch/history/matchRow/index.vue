@@ -66,7 +66,12 @@ export default {
   width 100%
   max-width 100%
   grid-template-columns 40px 1px minmax(0, 1fr) 1px 40px 50%
+  &.half
+    grid-template-columns 40px 1px minmax(0, 1fr) 1px 40px
   &.right
+    grid-template-columns 50% 40px 1px minmax(0, 1fr) 1px 40px
+    &.half
+      grid-template-columns 40px 1px minmax(0, 1fr) 1px 40px
     for num in 1...6
       > *:nth-child({num})
         order 7 - num
