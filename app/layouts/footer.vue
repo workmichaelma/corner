@@ -6,7 +6,7 @@
     shift
   >
     <template v-for="item in items">
-      <v-btn :href="item.to" :key="item.title">
+      <v-btn :key="item.title" @click="redirect(item.to)">
         <span>賽程</span>
         <v-icon :large="item.large">{{ item.icon }}</v-icon>
       </v-btn>
@@ -38,5 +38,10 @@
         ],
       }
     },
+    methods: {
+      redirect (url) {
+        this.$router.push(url)
+      }
+    }
   }
 </script>

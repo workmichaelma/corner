@@ -5,7 +5,7 @@
         買咩好？
       </v-flex>
       <v-flex class="col-2">
-        <v-btn text class="pa-0" min-width="24" :href="`/match/${match.id}`">
+        <v-btn text class="pa-0" min-width="24" @click="redirect()">
           <v-icon>
             mdi-page-next-outline
           </v-icon>
@@ -20,6 +20,11 @@ export default {
     match: {
       required: true,
       default: {}
+    }
+  },
+  methods: {
+    redirect () {
+      this.$router.push(`/match/${this.match.id}`)
     }
   }
 }
