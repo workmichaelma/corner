@@ -7,7 +7,7 @@
     <v-list dense>
       <v-list-item-group color="primary">
         <template v-for="(id, i) in match.history[side]">
-          <v-list-item :key="`history-side-v-list-item__${i}`" class="px-1">
+          <v-list-item :inactive="false" :key="`history-side-v-list-item__${i}`" class="px-1">
             <v-list-item-content class="pa-0">
               <match-row
                 v-bind="{

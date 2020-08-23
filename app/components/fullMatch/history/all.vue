@@ -8,7 +8,7 @@
       <v-list dense>
         <v-list-item-group color="primary">
           <template v-for="i in historyLength">
-            <v-list-item :key="`history-all-v-list-item__${i}`" class="px-0">
+            <v-list-item :inactive="false" :key="`history-all-v-list-item__${i}`" class="px-0">
               <v-list-item-content class="pa-0">
                 <v-flex class="d-flex col-6 pa-0 ma-0">
                   <match-row

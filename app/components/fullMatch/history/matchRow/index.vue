@@ -1,5 +1,5 @@
 <template>
-  <div class="match-row ma-0" :class="{half, right}" v-if="exposed">
+  <div class="match-row ma-0" :class="{half, right}" v-if="exposed" v-on:dblclick="toggleOverlay()">
     <!-- 角球數 -->
     <corner-count v-bind="{ count: get(match, 'result.corner') }" />
     <!-- 角球數 -->
@@ -17,6 +17,7 @@
         <match-profile v-bind="{match, teamId}" v-show="!half" />
       </template>
     </keep-alive>
+    <overlay v-bind="{show: overlay && !half, url: `/match/${match.id}`, toggleOverlay}" />
   </div>
 </template>
 <script>
@@ -28,6 +29,11 @@ export default {
   mixins: [
     Match
   ],
+  data () {
+    return {
+      overlay: false
+    }
+  },
   props: {
     id: {
       required: true,
@@ -66,10 +72,10 @@ export default {
         const side = this.right ? 'away' : 'home'
         exposed = this.teamId === get(this.match, `${side}Team.teamID`)
       }
-      if (this.config.showSameLeague) {
+      if (this.config.showSameLeague && exposed) {
         exposed = this.leagueId === get(this.match, 'league.id')
       }
-      if (isObject(this.config.oddsRange)) {
+      if (isObject(this.config.oddsRange) && exposed) {
         const { min, max } = this.config.oddsRange || {}
         exposed = this.HAD_1.H >= min && this.HAD_1.H <= max
       }
@@ -84,7 +90,11 @@ export default {
     }
   },
   methods: {
-    get
+    get,
+    toggleOverlay () {
+      console.log(this.overlay)
+      this.overlay = !this.overlay
+    }
   }
 }
 </script>

@@ -1,13 +1,13 @@
 <template>
   <v-flex class="d-flex flex-column">
     <v-flex class="d-flex justify-center align-center">
-      <p class="ft" :class="[t, color('home', homeId)]">
+      <p class="ft" :class="['home', color('home', homeId)]">
         {{ result.FT.home }}
       </p>
       <p>
         :
       </p>
-      <p class="ft" :class="[t, color('away', awayId)]">
+      <p class="ft" :class="['away', color('away', awayId)]">
         {{ result.FT.away }}
       </p>
     </v-flex>
