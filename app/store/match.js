@@ -3,6 +3,7 @@ import { differenceInDays } from 'date-fns'
 import Vue from 'vue'
 import toString from 'lodash/toString'
 import toSafeInteger from 'lodash/toSafeInteger'
+import last from 'lodash/last'
 
 const CHLLines = [8.5, 9.5, 10.5, 11.5, 12.5]
 const teams = {
@@ -149,7 +150,8 @@ const init = ({
         },
         corner,
         HAD: full.home > full.away ? 'H' : full.home < full.away ? 'A' : 'D',
-        CHL: corner > CHLLine ? 'H' : 'L'
+        CHL: corner > CHLLine ? 'H' : 'L',
+        HIL: full.home + full.away > get(last(odds.HIL), 'LINE') ? 'H' : 'L'
       },
       league: {
         id: '87',

@@ -1,5 +1,4 @@
 <template>
-  <div>
   <v-card
     class="mx-auto"
     max-width="100%"
@@ -8,9 +7,18 @@
     <v-list dense>
       <v-list-item-group color="primary">
         <template v-for="(id, i) in match.history[side]">
-          <v-list-item :key="i" class="px-1">
+          <v-list-item :key="`history-side-v-list-item__${i}`" class="px-1">
             <v-list-item-content class="pa-0">
-              <match-row v-bind="{id, teamId, right: side === 'away'}" :key="`${id}_${i}`" />
+              <match-row
+                v-bind="{
+                  id,
+                  teamId,
+                  leagueId: match.league.id,
+                  config,
+                  right: side === 'away'
+                }"
+                :key="`${id}_${i}`"
+              />
             </v-list-item-content>
           </v-list-item>
           <v-divider v-if="i + 1 < match.history[side].length" :key="i" />
@@ -18,7 +26,6 @@
       </v-list-item-group>
     </v-list>
   </v-card>
-  </div>
 </template>
 <script>
 import Match from '~/mixins/match'
@@ -48,6 +55,10 @@ export default {
       required: true,
       default: {}
     },
+    config: {
+      required: true,
+      default: {}
+    },
     side: {
       required: true,
       default: 'home'
@@ -63,3 +74,9 @@ export default {
   },
 }
 </script>
+
+<style lang="stylus" scoped>
+*
+  >>> .v-list-item
+    min-height 0 !important
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div :class="{overflowed}">
+  <div class="team" :class="{overflowed}">
     <div>
       {{ name }}
     </div>
@@ -24,6 +24,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.team
+  transform scale(0.85) translateY(1px)
+  letter-spacing 2px
 @keyframes slide-me
   0%
     transform translateX(0)

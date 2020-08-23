@@ -4,12 +4,12 @@
       <v-flex class="d-flex" :style="{minHeight: 'fit-content'}">
         <v-flex class="d-flex align-center switch">
           <div>
-            <v-switch v-model="showSameSide" label="只顯示同主客" dense inset hide-details />
+            <v-switch v-model="showSameSide" label="只顯示同主客" dense inset hide-details :disabled="disabled" />
           </div>
         </v-flex>
         <v-flex class="d-flex align-center switch">
           <div>
-            <v-switch v-model="showSameLeague" label="只顯示同賽事" dense inset hide-details />
+            <v-switch v-model="showSameLeague" label="只顯示同賽事" dense inset hide-details :disabled="disabled" />
           </div>
         </v-flex>
       </v-flex>
@@ -17,7 +17,7 @@
       <v-flex class="d-flex col-12 pa-0" :style="{minHeight: 'fit-content'}">
         <v-flex class="d-flex align-center switch flex-grow-0">
           <div>
-            <v-switch v-model="showSimilarOdd" label="只顯示相近主勝" dense inset hide-details />
+            <v-switch v-model="showSimilarOdd" label="只顯示相近主勝" dense inset hide-details :disabled="disabled" />
           </div>
         </v-flex>
         <v-flex class="d-flex slider caption">
@@ -28,7 +28,7 @@
             :max="slider.max"
             :tick-size="slider.tick.length"
             :tick-labels="slider.tick"
-            :disabled="!showSimilarOdd"
+            :disabled="!showSimilarOdd || disabled"
             ticks="always"
             step="1"
             hide-details
@@ -54,6 +54,10 @@ export default {
     updateControlConfig: {
       required: true,
       type: Function
+    },
+    disabled: {
+      required: true,
+      default: false
     }
   },
   data () {
@@ -68,7 +72,6 @@ export default {
     slider () {
       const H = this.HAD_1.H
       return {
-        default: [2, 2],
         max: 4,
         tick: [
           (H * 0.9).toFixed(2),
@@ -92,7 +95,7 @@ export default {
         showSameSide: this.showSameSide,
         showSameLeague: this.showSameLeague,
         showSimilarOdd: this.showSimilarOdd,
-        oddsRange: this.oddsRange
+        oddsRange: this.showSimilarOdd ? this.oddsRange : null
       }
     }
   },
@@ -104,6 +107,9 @@ export default {
   watch: {
     config: {
       handler (v) {
+        if (!v.showSimilarOdd) {
+          this.sliderPositions = [0, 4]
+        }
         this.updateControlConfig(v)
       },
       deep: true

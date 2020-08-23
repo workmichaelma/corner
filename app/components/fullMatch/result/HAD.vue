@@ -16,6 +16,7 @@ import Match from '~/mixins/match'
 import get from 'lodash/get'
 import format from 'date-fns/format'
 export default {
+  name: 'result-had',
   mixins: [
     Match
   ],

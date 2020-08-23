@@ -1,5 +1,5 @@
 <template>
-  <div class="match-row ma-0" :class="{half, right}">
+  <div class="match-row ma-0" :class="{half, right}" v-if="exposed">
     <!-- 角球數 -->
     <corner-count v-bind="{ count: get(match, 'result.corner') }" />
     <!-- 角球數 -->
@@ -22,6 +22,7 @@
 <script>
 import Match from '~/mixins/match'
 import get from 'lodash/get'
+import isObject from 'lodash/isObject'
 import format from 'date-fns/format'
 export default {
   mixins: [
@@ -29,6 +30,10 @@ export default {
   ],
   props: {
     id: {
+      required: true,
+      default: ''
+    },
+    leagueId: {
       required: true,
       default: ''
     },
@@ -43,9 +48,33 @@ export default {
     right: {
       required: false,
       default: false
+    },
+    config: {
+      required: true,
+      default: {
+        showSameSide: false,
+        showSameLeague: false,
+        showSimilarOdd: false,
+        oddsRange: null
+      }
     }
   },
   computed: {
+    exposed () {
+      let exposed = true
+      if (this.config.showSameSide) {
+        const side = this.right ? 'away' : 'home'
+        exposed = this.teamId === get(this.match, `${side}Team.teamID`)
+      }
+      if (this.config.showSameLeague) {
+        exposed = this.leagueId === get(this.match, 'league.id')
+      }
+      if (isObject(this.config.oddsRange)) {
+        const { min, max } = this.config.oddsRange || {}
+        exposed = this.HAD_1.H >= min && this.HAD_1.H <= max
+      }
+      return exposed
+    },
     match () {
       return this.$store.state.match[this.id] || {}
     },

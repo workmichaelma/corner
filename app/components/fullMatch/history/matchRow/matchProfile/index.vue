@@ -2,46 +2,43 @@
   <v-flex class="d-flex flex-column">
     <v-flex class="d-flex caption">
       <v-flex class="d-flex flex-column col-5 pa-0">
+        <!-- 主隊 -->
         <team class="team text-center" :class="[color('home', match.homeTeam.teamID)]" v-bind="{name: match.homeTeam.teamName}" />
-        <div class="had">
-          <div class="odd" v-for="o in noTime(HAD_1)" :key="o">
-            {{ o }}
-          </div>
-        </div>
+        <!-- 主隊 -->
+
+        <!-- 大細波 -->
+        <had v-bind="{HAD: HAD_1, result: match.result.HAD}" />
+        <!-- 大細波 -->
       </v-flex>
-      <v-flex class="d-flex flex-column col-1 pa-0" v-for="t in ['home', 'away']" :key="t">
-        <v-flex class="d-flex algin-center justify-center ft" :class="[t, color(t, match[`${t}Team`].teamID)]">
-          {{ match.result.FT[t] }}
-        </v-flex>
-        <v-flex class="d-flex algin-center justify-center ht" :class="[t]">
-          {{ match.result.HT[t] }}
-        </v-flex>
-      </v-flex>
+      <!-- 比數 -->
+      <result class="col-2 pa-0" v-bind="{result: match.result, color, homeId: match.homeTeam.teamID, awayId: match.awayTeam.teamID}"/>
+      <!-- 比數 -->
       <v-flex class="d-flex flex-column col-5 pa-0">
+        <!-- 客隊 -->
         <team class="team text-center" :class="[color('away', match.awayTeam.teamID)]" v-bind="{name: match.awayTeam.teamName}" />
-        <div class="hil">
-          <div class="odd">
-            {{ HIL_1.H }}
-          </div>
-          <div class="odd">
-            {{ HIL_1.LINE }}
-          </div>
-          <div class="odd">
-            {{ HIL_1.L }}
-          </div>
-        </div>
+        <!-- 客隊 -->
+
+        <!-- 大細波 -->
+        <hil v-bind="{HIL: HIL_1, result: match.result.HIL}" />
+        <!-- 大細波 -->
       </v-flex>
     </v-flex>
   </v-flex>
 </template>
 <script>
 import Team from './team'
+import _HIL from './hil'
+import _HAD from './had'
+import _Result from './result'
 import Match from '~/mixins/match'
 import get from 'lodash/get'
 import format from 'date-fns/format'
 export default {
   components: {
-    Team
+    Team,
+    hil: _HIL,
+    had: _HAD,
+    result: _Result
   },
   mixins: [
     Match
@@ -76,47 +73,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-.had
-.hil
-  display grid
-  grid-template-columns 1fr 1fr 1fr
-  overflow hidden
-  > .odd
-    transform scale(0.7)
-.had
-  >.odd
-    transform-origin 2px
-.hil
-  >.odd
-    transform-origin 100%
-    justify-self end
-    &:nth-child(2)
-      transform scale(0.85)
-.team
-  transform scale(0.85) translateY(1px)
-  letter-spacing 2px
-.ft
-  &.home
-    transform translateX(2px)
-    &:after
-      margin-left 2px
-      content ':'
-  &.away
-    transform translateX(-2px)
-.ht
-  &.home
-    transform scale(0.8) translateY(-3px) translateX(3px)
-    &:before
-      content '('
-      margin-right 1px
-    &:after
-      content '-'
-      margin-left 3px
-  &.away
-    transform scale(0.8) translateY(-3px) translateX(1px)
-    &:after
-      content ')'
-      margin-left 1px
-</style>

@@ -8,13 +8,34 @@
       <v-list dense>
         <v-list-item-group color="primary">
           <template v-for="i in historyLength">
-            <v-list-item :key="i" class="px-0">
+            <v-list-item :key="`history-all-v-list-item__${i}`" class="px-0">
               <v-list-item-content class="pa-0">
                 <v-flex class="d-flex col-6 pa-0 ma-0">
-                  <match-row v-if="match.history.home[i-1]" v-bind="{id: match.history.home[i-1], teamId: match.homeTeam.teamID, half: true}" :key="`matchRow_home_${i-1}`" />
+                  <match-row
+                    v-if="match.history.home[i-1]"
+                    v-bind="{
+                      id: match.history.home[i-1],
+                      teamId: match.homeTeam.teamID,
+                      leagueId: match.league.id,
+                      config,
+                      half: true,
+                    }"
+                    :key="`matchRow_home_${i-1}`" 
+                  />
                 </v-flex>
                 <v-flex class="d-flex col-6 pa-0 ma-0">
-                  <match-row v-if="match.history.away[i-1]" v-bind="{id: match.history.away[i-1], teamId: match.awayTeam.teamID, half: true, right: true}" :key="`matchRow_away_${i-1}`" />
+                  <match-row
+                    v-if="match.history.away[i-1]"
+                    v-bind="{
+                      id: match.history.away[i-1],
+                      teamId: match.awayTeam.teamID,
+                      leagueId: match.league.id,
+                      config,
+                      half: true,
+                      right: true
+                    }"
+                    :key="`matchRow_away_${i-1}`"
+                  />
                 </v-flex>
               </v-list-item-content>
             </v-list-item>
@@ -31,6 +52,10 @@ import format from 'date-fns/format'
 export default {
   props: {
     match: {
+      required: true,
+      default: {}
+    },
+    config: {
       required: true,
       default: {}
     }

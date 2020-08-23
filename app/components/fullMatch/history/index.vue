@@ -12,15 +12,15 @@
         </v-btn>
       </div>
     </v-flex>
-    <control-bar v-bind="{match}" :updateControlConfig="updateControlConfig"/>
+    <control-bar v-bind="{match, updateControlConfig, disabled: pages[currentPage] === 'all'}" />
     <v-flex class="d-flex">
-      <v-carousel v-model="pages" hide-delimiters :show-arrows="false" :continuous="false" height="auto">
+      <v-carousel v-model="currentPage" hide-delimiters :show-arrows="false" :continuous="false" height="auto">
         <v-carousel-item
           v-for="page in ['home', 'all', 'away']"
-          :key="page"
+          :key="`history-${page}`"
         >
-        <all v-if="page === 'all'" v-bind="{match}" />
-        <side v-else v-bind="{match, side: page}" />
+          <all v-if="page === 'all'" v-bind="{match, config}" />
+          <side v-else v-bind="{match, side: page, config}" />
         </v-carousel-item>
       </v-carousel>
     </v-flex>
@@ -34,7 +34,8 @@ export default {
   },
   data () {
     return {
-      pages: 1,
+      currentPage: 1,
+      pages: ['home', 'all', 'away'],
       config: {
         showSameSide: false,
         showSameLeague: false,
@@ -51,7 +52,7 @@ export default {
   },
   methods: {
     to (page) {
-      this.pages = this.pages === page ? 1 : page
+      this.currentPage = this.currentPage === page ? 1 : page
     },
     updateControlConfig (v) {
       this.config = v
