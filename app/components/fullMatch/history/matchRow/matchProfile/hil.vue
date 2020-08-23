@@ -1,5 +1,5 @@
 <template>
-  <div class="hil caption">
+  <div class="hil caption" v-if="HIL.H && HIL.LINE && HIL.L">
     <div class="odd" :class="{'grey--text darken-1': result !== 'H'}">
       {{ HIL.H }}
     </div>

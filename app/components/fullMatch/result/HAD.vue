@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-center align-center text-center caption">
+  <div class="d-flex justify-center align-center text-center caption" v-if="HAD_1.H && HAD_1.D && HAD_1.A">
     <div class="col-4 px-0 py-0" :class="{'lime--text accent-1': match.result.HAD === 'H'}">
       {{ HAD_1.H }}
     </div>

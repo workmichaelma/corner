@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="d-flex flex-column">
+  <v-flex class="d-flex flex-column" v-if="result.HAD">
     <v-flex class="d-flex justify-center align-center">
       <p class="ft" :class="['home', color('home', homeId)]">
         {{ result.FT.home }}

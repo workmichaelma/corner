@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="d-flex align-center justify-center">
+  <v-flex class="d-flex align-center justify-center" v-if="H && L && LINE">
     <v-flex class="odd d-flex align-center justify-center col-4 caption pa-0" :class="[`${result === 'H' ? 'lime--text darken-1' : 'grey--text darken-1'}`]">
       {{ H }}
     </v-flex>

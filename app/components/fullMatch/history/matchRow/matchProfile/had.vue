@@ -1,5 +1,5 @@
 <template>
-  <div class="had caption">
+  <div class="had caption" v-if="HAD.H && HAD.D && HAD.A">
     <div class="odd" :class="{'grey--text darken-1': result !== 'H'}">
       {{ HAD.H }}
     </div>

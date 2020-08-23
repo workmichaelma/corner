@@ -12,7 +12,7 @@
           </div>
           <v-divider class="mx-1" vertical />
           <div class="lime--text accent-1" :class="{'font-weight-black': !match.ended}">
-            {{ CHL_1.LINE.split('/')[0] }}
+            {{ CHL_1.LINE }}
           </div>
           <v-divider class="mx-1" vertical />
           <div class="font-italic" :class="{'green--text lighten-2 font-weight-black': get(match, 'result.CHL') === 'L'}">
