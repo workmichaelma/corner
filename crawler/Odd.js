@@ -1,9 +1,24 @@
 const axios = require('axios')
 const find = require('lodash/find')
+const map = require('lodash/map')
 const reduce = require('lodash/reduce')
+const get = require('lodash/get')
+const forEach = require('lodash/forEach')
+const concat = require('lodash/concat')
+
+const url = type => `https://bet.hkjc.com/football/getJSON.aspx?jsontype=odds_${type}.aspx`
+
+const requiredOddType = [
+  'had',
+  'hha',
+  'hil',
+  'fhl',
+  'chl',
+  'hdc',
+]
 
 const trim = w => {
-  return w.replace(/100@/g, '')
+  return (w || '').replace(/100@/g, '')
 }
 
 class Dt {
@@ -20,10 +35,54 @@ class Odd extends Dt {
   }
 }
 
-class CHL extends Dt {
-  constructor(chl) {
+class HAD extends Dt {
+  constructor(v = {}) {
     super()
-    const obj = find(chl.LINELIST || [], { LINEORDER: '1' })
+    this.H = trim(v.H)
+    this.D = trim(v.D)
+    this.A = trim(v.A)
+  }
+}
+
+class HHA extends Dt {
+  constructor(v = {}) {
+    super()
+    this.H = trim(v.H)
+    this.D = trim(v.D)
+    this.A = trim(v.A)
+    this.HG = v.HG
+    this.AG = v.AG
+  }
+}
+
+class HIL extends Dt {
+  constructor(v = {}) {
+    super()
+    const obj = find(v.LINELIST || [], { LINEORDER: '1' })
+    if (obj) {
+      this.H = trim(obj.H)
+      this.L = trim(obj.L)
+      this.LINE = obj.LINE
+    }
+  }
+}
+
+class FHL extends Dt {
+  constructor(v = {}) {
+    super()
+    const obj = find(v.LINELIST || [], { LINEORDER: '1' })
+    if (obj) {
+      this.H = trim(obj.H)
+      this.L = trim(obj.L)
+      this.LINE = obj.LINE
+    }
+  }
+}
+
+class CHL extends Dt {
+  constructor(v = {}) {
+    super()
+    const obj = find(v.LINELIST || [], { LINEORDER: '1' })
     if (obj) {
       this.H = trim(obj.H)
       this.L = trim(obj.L)
@@ -32,22 +91,69 @@ class CHL extends Dt {
   }
 }
 
+class HDC extends Dt {
+  constructor(v = {}) {
+    super()
+    this.H = trim(v.H)
+    this.A = trim(v.A)
+    this.HG = v.HG
+    this.AG = v.AG
+  }
+}
+
+const oddSwitcher = (obj, type) => {
+  switch (type) {
+    case 'had':
+      return new HAD(obj)
+    case 'hha':
+      return new HHA(obj)
+    case 'hil':
+      return new HIL(obj)
+    case 'fhl':
+      return new FHL(obj)
+    case 'chl':
+      return new CHL(obj)
+    case 'hdc':
+      return new HDC(obj)
+    default:
+      return {}
+  }
+}
+
 module.exports = {
   init: async () => {
     try {
-      const url = `https://bet.hkjc.com/football/getJSON.aspx?jsontype=odds_chl.aspx`
-      return await axios.get(url).then(res => {
-        const data = res.data
-        const active = data ? find(data, { name: 'ActiveMatches' }) : false
-        if (data && active && active.matches) {
-          return reduce(active.matches, (arr, v, k) => {
-            if (new Date(v.matchTime) >= new Date()) arr.push(new Odd(v))
-            return arr
-          }, [])
-        } else {
-          return []
+      const data = await Promise.all(map(requiredOddType, async type => {
+        const { data } = await axios.get(url(type))
+        const active = find(data, { name: 'ActiveMatches' })
+    
+        if (active) {
+          return {
+            type,
+            data: reduce(active.matches, (obj, v, k) => {
+              if (new Date(v.matchTime) >= new Date()) {
+                obj[v.matchID] = get(v, `${type}odds`)
+              }
+              return obj
+            }, {}),
+          }
         }
-      })
+        return {
+          type,
+          data: {},
+        }
+      }))
+    
+      return reduce(data, (obj, v) => {
+        const { type, data } = v
+        forEach(data, (odd, id) => {
+          obj[id] = {
+            ...obj[id] || {},
+            [type]: oddSwitcher(odd, type)
+          }
+        })
+        return obj
+      }, {})
     } catch (err) {
       console.log(err)
       return {}
