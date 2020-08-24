@@ -4,19 +4,23 @@ const get = require('lodash/get')
 
 class Result {
   constructor(obj) {
-    this.id = obj.matchID
-    const score = obj.accumulatedscore || []
-    const fh = find(score, { periodvalue: 'FirstHalf' }) || {}
-    const sh = find(score, { periodvalue: 'SecondHalf' }) || {}
-    this.fh = {
-      home: fh.home ? ~~fh.home : -1,
-      away: fh.away ? ~~fh.away : -1
+    const { HAD } = obj.results || {}
+    if (HAD) {
+      this.id = obj.matchID
+      this.HAD = HAD
+      const score = obj.accumulatedscore || []
+      const ht = find(score, { periodvalue: 'FirstHalf' }) || {}
+      const ft = find(score, { periodvalue: 'SecondHalf' }) || {}
+      this.HT = {
+        home: ht.home ? ~~ht.home : -1,
+        away: ht.away ? ~~ht.away : -1
+      }
+      this.FT = {
+        home: ft.home ? ~~ft.home : -1,
+        away: ft.away ? ~~ft.away : -1
+      }
+      this.corner = obj.cornerresult ? ~~obj.cornerresult : -1
     }
-    this.sh = {
-      home: sh.home ? ~~sh.home : -1,
-      away: sh.away ? ~~sh.away : -1
-    }
-    this.corner = obj.cornerresult ? ~~obj.cornerresult : -1
   }
 }
 
