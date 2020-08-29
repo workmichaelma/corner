@@ -17,7 +17,7 @@ const init = async () => {
       return {
         winId: el[0],
         winLeagueId: el[1],
-        matchTime: el[2],
+        winDatetime: el[2],
         winHomeTeam: {
           id: el[4],
           name: el[6],

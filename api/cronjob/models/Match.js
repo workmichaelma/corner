@@ -6,8 +6,6 @@ const MatchSchema = new Schema({
   id: String,
   num: String,
   day: String,
-  date: String,
-  time: String,
   datetime: String,
   league: {
     type: Schema.Types.ObjectId,
@@ -20,8 +18,20 @@ const MatchSchema = new Schema({
   away: {
     type: Schema.Types.ObjectId,
     ref: 'Team'
-  }
+  },
+  homeRank: String,
+  awayRank: String
 });
+
+MatchSchema.statics.find_Update_Insert = async match => {
+  try {
+    return await Match.findOneAndUpdate({
+      id: match.id
+    }, match, { upsert: true, new: true })
+  } catch (err) {
+    return {}
+  }
+}
 
 MatchSchema.plugin(Update)
 
