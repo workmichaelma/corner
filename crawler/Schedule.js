@@ -38,6 +38,9 @@ module.exports = {
         if (data && active && active.matches) {
           return active.matches.map(m => {
             return new Match(m)
+          }).filter(m => {
+            // Do not return LIVE matches
+            return moment(m.datetime) > moment()
           })
         } else {
           return []

@@ -7,12 +7,13 @@ const map = require('lodash/map')
 const uniq = require('lodash/uniq')
 const find = require('lodash/find')
 const reduce = require('lodash/reduce')
+const compact = require('lodash/compact')
 const forEach = require('lodash/forEach')
 const toInteger = require('lodash/toInteger')
 const { API_DOMAIN } = require('../../config')
-const { get, isEmpty } = require('lodash')
+const { get, isEmpty, difference } = require('lodash')
 
-const saveMatch = async (jc, win) => {
+const saveMatch = async ({ jc, win }) => {
   try {
     const winValid = !isEmpty(win) && get(win, 'winId')
     const { winLeagueId, winId, winHomeTeam, winAwayTeam } = win || {}
@@ -49,7 +50,11 @@ const saveMatch = async (jc, win) => {
       awayRank,
       league: league_id,
       home: home_id,
-      away: away_id
+      away: away_id,
+      datetime: new Date(jc.datetime),
+      ...winValid ? {
+        winId
+      } : {}
     })
   } catch (err) {
     console.log(err)
@@ -57,27 +62,18 @@ const saveMatch = async (jc, win) => {
   }
 }
 
+// 對一對 馬會 同 球探 既比賽時間，如果一樣，即為相同比賽
 const compareJcAndWinMatch = (jc, wins) => {
   if (wins === null) {
     return null
   }
   const {
-    home: jcHome,
-    away: jcAway,
     datetime: jcDatetime
   } = jc
 
-  const {
-    name: jcHomeName
-  } = jcHome
-
-  const {
-    name: jcAwayName
-  } = jcAway
-
   return reduce(wins, (obj, v) => {
     if (obj === null) {
-      const { winHomeTeam, winAwayTeam, winDatetime } = v
+      const { winDatetime } = v
       return (new Date(toInteger(winDatetime)).getTime() === new Date(jcDatetime).getTime()) ? v : null
     }
     return obj
@@ -94,11 +90,13 @@ class MatchClass {
   }
 
   async init() {
-    // await this.getCurrent()
+    // 拿取在 db 裡儲存的未來比賽資料
+    await this.getCurrent()
+    // 拿取 即時 的未來比賽資料
     await this.getFuture()
     
-    return this.combineWinMatchs(this.matches.future)
-    // return await this.update()
+    // 先對比 db 與 即時 的未來賽程，將會更新一些未有winId的比賽，並且儲存一些新比賽
+    return await this.update()
   }
 
   async getFuture() {
@@ -108,52 +106,28 @@ class MatchClass {
   }
 
   async getCurrent() {
-    const params = {
-      datetime: {
-        $gte: new Date()
-      }
-    }
-    this.matches.current = await Match.find(params).then(matches => {
-      return matches
-    })
-  }
-
-  async transform(match) {
-    const league = new LeagueClass(match.league)
-    const home = new TeamClass(match.home)
-    const away = new TeamClass(match.away)
-    
-    const newMatch = await (async ({ league, home, away, match }) => {
-      console.log(league, home, away, match)
-      return new Match({
-        ...match,
-        ...{ home },
-        ...{ away },
-        ...{ league }
-      })
-    })({ league, home, away, match })
-    return newMatch
-    // return newMatch.save()
+    this.matches.current = await Match.getFutureMatches()
   }
 
   async update() {
     const current = this.matches.current.map(m => m.id)
     const future = this.matches.future.map(m => m.id)
 
-    const newId = uniq([...current, ...future])
-    return await Promise.all(await newId.map(async id => {
-      const match = find(this.matches.future, { id })
-      if (match) {
-        // const newMatch = new Match(match)
-        // const newMatch = await this.transform(match)
-        // return newMatch
-        return match
-      }
+    const newIds = compact(map(future, id => {
+      const { winId } = find(this.matches.current, { id }) || {}
+      return !winId && id
     }))
 
-    // return [...current, ...future]
+    if (!isEmpty(newIds)) {
+      return this.saveMatchsWithWin(newIds)
+    } else {
+      console.log('搵唔到新比賽')
+      return []
+    }
   }
 
+  // 若球隊有 winId, 則先會搜尋 winTeamMatchMap 有否此隊伍的 winId 有否存在於 win schedule 中
+  // 若球隊冇 winId, 則會搜尋 winTeamMatchMap 有否此隊伍的 隊伍中文名稱 有否存在於 win schedule 中
   async mapJcToWinMatch(jcMatch, winTeamMatchMap) {
     let winMatch = null
     const {
@@ -185,7 +159,10 @@ class MatchClass {
     return winMatch
   }
 
-  async combineWinMatchs(matches) {
+  async saveMatchsWithWin(ids) {
+    const matches = map(ids, id => {
+      return find(this.matches.future, { id })
+    })
     const winMatches = await axios.get(`${API_DOMAIN}/win/schedule`).then(res => {
       const { data } = res
       return data
@@ -196,6 +173,10 @@ class MatchClass {
       name: {}
     }
 
+    // 將 Array of Object 的比賽變為 winId: obj
+    // winTeamMatchMap.id = winId: winData
+    // winTeamMatchMap.name = winTeamName: winData
+    
     forEach(winMatches, m => {
       const { id: homeId, name: homeName } = get(m, 'winHomeTeam', {})
       const { id: awayId, name: awayName } = get(m, 'winAwayTeam', {})
@@ -235,9 +216,10 @@ class MatchClass {
       m.winHomeId = homeTeam.winId
       m.winAwayId = awayTeam.winId
 
+      // 利用球隊 winId / 名稱 搜尋 winTeamMatchMap 中有否win的比賽
       const winMatch = await this.mapJcToWinMatch(m, winTeamMatchMap)
 
-      return await saveMatch(m, winMatch)
+      return saveMatch({ jc: m, win: winMatch })
     }))
   }
 }

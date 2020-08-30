@@ -6,7 +6,7 @@ const MatchSchema = new Schema({
   id: String,
   num: String,
   day: String,
-  datetime: String,
+  datetime: Date,
   league: {
     type: Schema.Types.ObjectId,
     ref: 'League'
@@ -20,7 +20,8 @@ const MatchSchema = new Schema({
     ref: 'Team'
   },
   homeRank: String,
-  awayRank: String
+  awayRank: String,
+  winId: String
 });
 
 MatchSchema.statics.find_Update_Insert = async match => {
@@ -30,6 +31,19 @@ MatchSchema.statics.find_Update_Insert = async match => {
     }, match, { upsert: true, new: true })
   } catch (err) {
     return {}
+  }
+}
+
+MatchSchema.statics.getFutureMatches = async () => {
+  try {
+    return Match.find({
+      datetime: {
+        $gte: new Date()
+      }
+    })
+  } catch (err) {
+    console.log(err)
+    return []
   }
 }
 
