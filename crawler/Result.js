@@ -1,16 +1,20 @@
 const axios = require('axios')
-const find = require('lodash/find')
 const get = require('lodash/get')
+const find = require('lodash/find')
+const forEach = require('lodash/forEach')
 
 class Result {
   constructor(obj) {
-    const { HAD } = obj.results || {}
-    if (HAD) {
+    const { HAD, FHA, OOE } = obj.results || {}
+    const score = obj.accumulatedscore || []
+    const ht = find(score, { periodvalue: 'FirstHalf' }) || {}
+    const ft = find(score, { periodvalue: 'SecondHalf' }) || {}
+
+    if (HAD && FHA && OOE && ft.periodstatus === 'ResultFinal') {
       this.id = obj.matchID
       this.HAD = HAD
-      const score = obj.accumulatedscore || []
-      const ht = find(score, { periodvalue: 'FirstHalf' }) || {}
-      const ft = find(score, { periodvalue: 'SecondHalf' }) || {}
+      this.FHA = FHA
+      this.OOE = OOE
       this.HT = {
         home: ht.home ? ~~ht.home : -1,
         away: ht.away ? ~~ht.away : -1
@@ -32,11 +36,16 @@ module.exports = {
         const data = res.data
         const active = data ? find(data, { name: 'ActiveMatches' }) : false
         if (data && active && active.matches) {
-          return active.matches.map(m => {
-            return new Result(m)
+          const matches = {}
+          forEach(active.matches, m => {
+            const match = new Result(m)
+            if (match.id) {
+              matches[match.id] = match
+            }
           })
+          return matches
         } else {
-          return []
+          return {}
         }
       })
       return schedule

@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 
 const Odd = require('./worker/Odd')
-const Match = require('./worker/Match')
-// const Result = require('./worker/Result')
+const Schedule = require('./worker/Schedule')
+const Result = require('./worker/Result')
 
 app.get('/odd', async (req, res) => {
   try {
@@ -15,9 +15,9 @@ app.get('/odd', async (req, res) => {
   }
 })
 
-app.get('/match', async (req, res) => {
+app.get('/schedule', async (req, res) => {
   try {
-    const worker = new Match()
+    const worker = new Schedule()
     res.json(await worker.init())
   } catch (err) {
     console.log(err)
@@ -25,13 +25,14 @@ app.get('/match', async (req, res) => {
   }
 })
 
-// app.get('/result', async (req, res) => {
-//   try {
-//     res.json(await Result.init())
-//   } catch (err) {
-//     console.log(err)
-//     res.json({})
-//   }
-// })
+app.get('/result', async (req, res) => {
+  try {
+    const worker = new Result()
+    res.json(await worker.init())
+  } catch (err) {
+    console.log(err)
+    res.json({})
+  }
+})
 
 module.exports = app

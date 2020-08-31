@@ -51,7 +51,7 @@ const saveMatch = async ({ jc, win }) => {
       league: league_id,
       home: home_id,
       away: away_id,
-      datetime: new Date(jc.datetime),
+      datetime: moment(jc.datetime).toDate(),
       ...winValid ? {
         winId
       } : {}
@@ -110,7 +110,6 @@ class MatchClass {
   }
 
   async update() {
-    const current = this.matches.current.map(m => m.id)
     const future = this.matches.future.map(m => m.id)
 
     const newIds = compact(map(future, id => {
