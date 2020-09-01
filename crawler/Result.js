@@ -29,6 +29,7 @@ class Result {
 }
 
 module.exports = {
+  Result,
   init: async () => {
     try {
       const url = `https://bet.hkjc.com/football/getJSON.aspx?jsontype=results.aspx`

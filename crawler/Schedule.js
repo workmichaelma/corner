@@ -27,6 +27,7 @@ class Match {
 }
 
 module.exports = {
+  Match,
   init: async () => {
     try {
       // return JSON.parse(`
