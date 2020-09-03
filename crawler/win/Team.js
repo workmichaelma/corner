@@ -1,5 +1,4 @@
 const axios = require('axios')
-const axiosRetry = require('axios-retry')
 const moment = require('moment')
 const map = require('lodash/map')
 const get = require('lodash/get')
@@ -8,8 +7,6 @@ const reduce = require('lodash/reduce')
 const isObject = require('lodash/isObject')
 
 const Result = require('./Result')
-
-axiosRetry(axios, { reties: 5 })
 
 const url = (id, datetime) => `http://zq.win007.com/jsData/teamInfo/teamDetail/tdl${id}.js?version=${datetime}03`
 

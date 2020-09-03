@@ -9,7 +9,11 @@ const map = require('lodash/map')
 
 const init = async () => {
   const unix = Math.round(new Date())
-  const data = await axios.get(`http://zhishu.35.zqsos.com:896/xml/odds3.aspx?companyid=1&t=1&${unix}`).then(({ data }) => {
+  const data = await axios.get(`http://zhishu.35.zqsos.com:896/xml/odds3.aspx?companyid=1&t=1&${unix}`, {
+    headers: {
+      Host: 'zhishu.35.zqsos.com:896',
+    }
+  }).then(({ data }) => {
     const column = data.split('$')
     const matchs = column[1].split(';')
     return map(matchs, match => {

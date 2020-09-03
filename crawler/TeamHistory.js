@@ -27,20 +27,16 @@ const dateRange = reduce(range(13), (date, v) => {
   arr: []
 })
 
-const getJcUrl = (start, end, id) => {
+const getHistoryUrl = (start, end, id) => {
   return `https://bet.hkjc.com/football/getJSON.aspx?jsontype=search_result.aspx&startdate=${start}&enddate=${end}&teamid=${id}`
 }
 
 const fetchTeam = async id => {
-  const jcData = await Promise.all(map(dateRange.arr, async r => {
-    const url = {
-      jc: getJcUrl(r.startdate, r.enddate, id)
-    }
-
-    return fetchJc(url.jc)
+  const data = await Promise.all(map(dateRange.arr, async r => {
+    return fetchJc(getHistoryUrl(r.startdate, r.enddate, id))
   }))
 
-  return reduce(flatten(jcData), (obj, m) => {
+  return reduce(flatten(data), (obj, m) => {
     if (m.id) {
       obj[m.id] = m
     }

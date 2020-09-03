@@ -19,7 +19,7 @@ const url = id => `http://m.win007.com/analy/shijian/${id}.htm`
 const init = async ids => {
   try {
     const data = await Promise.all(map(ids, id => {
-      return axios.get(url(id), { responseType: 'arraybuffer' }).then(({ data }) => {
+      return axios.get(url(id), { responseType: 'arraybuffer', headers: { Host: 'm.win007.com', Referer: 'https://m.win007.com/' } }).then(({ data }) => {
         const $ = cheerio.load(data)
 
         const HTText = $('#scoreState span.row:not(.red)').text()
