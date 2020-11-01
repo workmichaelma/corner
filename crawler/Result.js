@@ -41,7 +41,12 @@ module.exports = {
           forEach(active.matches, m => {
             const match = new Result(m)
             if (match.id) {
-              matches[match.id] = match
+              matches[match.id] = {
+                ...match,
+                corner: match.corner ? {
+                  total: match.corner
+                } : -1
+              }
             }
           })
           return matches
