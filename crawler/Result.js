@@ -23,7 +23,9 @@ class Result {
         home: ft.home ? ~~ft.home : -1,
         away: ft.away ? ~~ft.away : -1
       }
-      this.corner = obj.cornerresult ? ~~obj.cornerresult : -1
+      this.corner = {
+        total: obj.cornerresult ? ~~obj.cornerresult : -1
+      }
     }
   }
 }
@@ -43,9 +45,9 @@ module.exports = {
             if (match.id) {
               matches[match.id] = {
                 ...match,
-                corner: match.corner ? {
-                  total: match.corner
-                } : -1
+                corner: {
+                  total: match.corner ? ~~match.corner : -1
+                }
               }
             }
           })
