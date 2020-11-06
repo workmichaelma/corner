@@ -16,9 +16,10 @@ const init = async (ids, _fields) => {
     name: true,
     imageUrl: true,
     history: true,
+    historyCount: 30,
     future: false
   }
-  const datetime = moment().utcOffset(8).format('YYYYMMDD')
+  const datetime = moment().utcOffset(8).format('YYYYMMDDHH')
   try {
     const data = await Promise.all(map(ids, id => {
       return axios.get(url(id, datetime), {
@@ -47,7 +48,7 @@ const init = async (ids, _fields) => {
             //数组格式0赛程ID,1联赛ID，2联赛颜色，3时间，4主队ID，5客队ID，6比分，7半场比分,8联赛简体名，9联赛繁体名，10联赛英文名，11主队简体，12主队繁体，13主队英文，14客队简体，15客队繁体，16客队英文,17主红，18客红，20让球盘口，21让球盘路，22大小球盘路，23赛果盘路
             // case 'future':
             case 'history':
-              obj[k] = map(take(teamCount, 20), m => {
+              obj[k] = map(take(teamCount, fields.historyCount), m => {
                 return {
                   winId: m[0],
                   homeTeam: {
@@ -90,8 +91,8 @@ const init = async (ids, _fields) => {
     }))
     return data
   } catch (err) {
-    console.log(err)
-    return err
+    console.log('win.team init() error', err)
+    return {}
   }
 }
 
