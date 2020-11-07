@@ -19,7 +19,6 @@ axios.defaults.headers.common = {
   'Cache-Control': 'max-age=0',
   'Connection': 'keep-alive',
   'Host': 'bet.hkjc.com',
-  'Referer': 'bet.hkjc.com',
   'Pragma': 'no-cache',
   'Sec-Fetch-Dest': 'document',
   'Sec-Fetch-Mode': 'navigate',

@@ -27,7 +27,6 @@ class Result {
       this.corner = {
         total: !isUndefined(obj.cornerresult) ? ~~obj.cornerresult : -1
       }
-      console.log(obj.cornerresult, this.corner.total)
     }
   }
 }

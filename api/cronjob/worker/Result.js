@@ -5,7 +5,7 @@ const axios = require('axios')
 const map = require('lodash/map')
 const compact = require('lodash/compact')
 const moment = require('moment')
-const { isEmpty } = require('lodash')
+const { isEmpty, get, isUndefined, isInteger } = require('lodash')
 
 class ResultClass {
   constructor() {
@@ -19,36 +19,48 @@ class ResultClass {
     this.winResult = {}
   }
 
+  calcHAD(home, away) {
+    try {
+      if (isInteger(home) && isInteger(away)) {
+        return home > away ? 'H' : away > home ? 'A' : 'D'
+      } else {
+        throw new Error('worker.Result.calcHAD() error: ', 'home or away is not a Integer')
+      }
+    } catch (err) {
+      console.error(err)
+      return false
+    }
+  }
+
+  calcResult({ FT, HT }) {
+    const { home: ft_home, away: ft_away } = FT || {}
+    const { home: ht_home, away: ht_away } = HT || {}
+    if (!isUndefined(ht_home) && !isUndefined(ft_away) && !isUndefined(ht_home) && !isUndefined(ht_away)) {
+      return {
+        HAD: this.calcHAD(~~ft_home, ~~ft_away),
+        FHA: this.calcHAD(~~ht_home, ~~ht_away),
+        OOE: (~~ft_home + ~~ft_away % 2) === 0 ? 'E' : 'O',
+        FT,
+        HT
+      }
+    }
+    return false
+  }
+
   async init() {
-    return Match.updateResult({
-      id: '5fb9523d-a661-4ce5-b802-20aa03af5761',
-      HAD: 'H',
-      FHA: 'H',
-      OOE: 'O',
-      FT: {
-        home: '2',
-        away: '1'
-      },
-      HT: {
-        home: '1',
-        away: '1'
-      },
-      corner: 8,
-    })
     await this.getEndedMatches()
-    // await this.getJcResult()
-    // await this.getWinResult()
+    await this.getJcResult()
+    await this.getWinResult()
 
-    // return this.mergeResult()
-
-    return { a: this.endedMatches, b: this.jcResult, c: this.winResult, d: this.matches }
+    return this.mergeResult()
   }
 
   async getEndedMatches() {
     this.endedMatches = await Match.getNoResultMatchesWithDateRange({
       start: moment().subtract(14, 'days'),
-      // end: moment().subtract(3, 'hours')
-      end: moment().add(3, 'days')
+      end: moment().subtract(4, 'hours'),
+      limit: 20,
+      result: false
     })
   }
 
@@ -65,19 +77,44 @@ class ResultClass {
 
   async mergeResult() {
     try {
-      return map(this.endedMatches, m => {
-        const { id, winId } = m
-        const jc = this.jcResult[id]
-        const win = this.winResult[winId]
-  
-        return Match.updateResult({
-          ...jc,
-          win
-        })
-      })
+      return Promise.all(map(this.endedMatches, async m => {
+        try {
+          const { id, winId } = m
+          const jc = this.jcResult[id]
+          const win = this.winResult[winId]
+
+          const hasJc = !!get(jc, 'id')
+          const hasWin = !!get(win, 'winId')
+
+          console.log({hasJc, hasWin, jc, win})
+          if (hasJc || hasWin) {
+            const result = hasJc ? jc : hasWin ? this.calcResult({ FT: win.FT, HT: win.HT }) : false
+            const cornerTotal = get(jc, 'corner.total', - 1) > -1 ? jc.corner.total : get(win, 'corner', -1) ? win.corner : false
+            if (result !== false && cornerTotal !== false) {
+              return Match.find_Update_Insert({
+                id,
+                result: {
+                  ...result,
+                  corner: {
+                    total: cornerTotal,
+                    ...win.statObj ? {
+                      home: get(win, 'statObj.CORNER.home', -1),
+                      away: get(win, 'statObj.CORNER.away', -1),
+                    } : {}
+                  }
+                }
+              })
+            }
+          }
+          return {}
+        } catch (err) {
+          console.error('Update result error: ', err)
+          return err
+        }
+      }))
     } catch (err) {
-      console.log(err)
-      return err
+      console.error('worker.mergeResult(): ', err)
+      return {}
     }
   }
 

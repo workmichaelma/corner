@@ -96,14 +96,12 @@ const init = async ids => {
       async.series(fn, function (errs, results) {
         resolve(results)
       })
+    }).then(data => {
+      return reduce(data, (obj, v) => {
+        obj[v.winId] = v
+        return obj
+      }, {})
     })
-    // const data = await Promise.all(map(ids, id => {
-      
-    // }))
-    // return reduce(data, (obj, v) => {
-    //   obj[v.winId] = v
-    //   return obj
-    // }, {})
   } catch (err) {
     console.log('win.result.js init() error')
     return {}
