@@ -2,6 +2,7 @@ const axios = require('axios')
 const get = require('lodash/get')
 const find = require('lodash/find')
 const forEach = require('lodash/forEach')
+const isUndefined = require('lodash/isUndefined')
 
 class Result {
   constructor(obj) {
@@ -24,8 +25,9 @@ class Result {
         away: ft.away ? ~~ft.away : -1
       }
       this.corner = {
-        total: obj.cornerresult ? ~~obj.cornerresult : -1
+        total: !isUndefined(obj.cornerresult) ? ~~obj.cornerresult : -1
       }
+      console.log(obj.cornerresult, this.corner.total)
     }
   }
 }
@@ -35,7 +37,7 @@ module.exports = {
   init: async () => {
     try {
       const url = `https://bet.hkjc.com/football/getJSON.aspx?jsontype=results.aspx`
-      const schedule = await axios.get(url).then(res => {
+      return axios.get(url).then(res => {
         const data = res.data
         const active = data ? find(data, { name: 'ActiveMatches' }) : false
         if (data && active && active.matches) {
@@ -46,7 +48,7 @@ module.exports = {
               matches[match.id] = {
                 ...match,
                 corner: {
-                  total: match.corner ? ~~match.corner : -1
+                  total: match.corner ? ~~match.corner.total : -1
                 }
               }
             }
@@ -56,7 +58,6 @@ module.exports = {
           return {}
         }
       })
-      return schedule
     } catch (err) {
       console.log(err)
       return {}
