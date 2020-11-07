@@ -27,11 +27,11 @@ const ResultSchema = new Schema({
   corner: {
     home: {
       type: Number,
-      required: true
+      required: false
     },
     away: {
       type: Number,
-      required: true
+      required: false
     },
     total: {
       type: Number,

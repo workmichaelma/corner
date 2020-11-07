@@ -84,12 +84,12 @@ class ResultClass {
           const win = this.winResult[winId]
 
           const hasJc = !!get(jc, 'id')
-          const hasWin = !!get(win, 'winId')
+          const hasWin = !!get(win, 'winId') && get(win, 'corner', -1) > -1
 
           console.log({hasJc, hasWin, jc, win})
           if (hasJc || hasWin) {
             const result = hasJc ? jc : hasWin ? this.calcResult({ FT: win.FT, HT: win.HT }) : false
-            const cornerTotal = get(jc, 'corner.total', - 1) > -1 ? jc.corner.total : get(win, 'corner', -1) ? win.corner : false
+            const cornerTotal = get(jc, 'corner.total', - 1) > -1 ? jc.corner.total : hasWin ? win.corner : false
             if (result !== false && cornerTotal !== false) {
               return Match.find_Update_Insert({
                 id,
@@ -97,7 +97,7 @@ class ResultClass {
                   ...result,
                   corner: {
                     total: cornerTotal,
-                    ...win.statObj ? {
+                    ...get(win, 'statObj') ? {
                       home: get(win, 'statObj.CORNER.home', -1),
                       away: get(win, 'statObj.CORNER.away', -1),
                     } : {}
