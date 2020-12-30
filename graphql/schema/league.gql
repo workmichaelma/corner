@@ -1,0 +1,6 @@
+type League {
+  leagueId: ID
+  winId: String
+  name: String
+  image: String
+}

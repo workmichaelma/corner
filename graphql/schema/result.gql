@@ -1,0 +1,24 @@
+type Result {
+  HAD: String
+  FHA: String
+  HHA: String
+  HDC: String
+  HIL: String
+  FHL: String
+  CHL: String
+  OOE: String
+  FT: ScoreResult
+  HT: ScoreResult
+  corner: CornerResult
+}
+
+type ScoreResult {
+  home: Int
+  away: Int
+}
+
+type CornerResult {
+  home: Int
+  away: Int
+  total: Int
+}

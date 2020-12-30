@@ -1,7 +1,6 @@
 const axios = require('axios')
 const find = require('lodash/find')
 const moment = require('moment')
-const multiclass = require('@kbravh/multi-class')
 const { isString, reduce, range, map, isEmpty, get, flatten } = require('lodash')
 
 const { Match } = require('./Schedule')
@@ -14,7 +13,7 @@ class HistoryMatch extends Match {
   }
 }
 
-const dateRange = reduce(range(13), (date, v) => {
+const dateRange = reduce(range(7), (date, v) => {
   const startdate = moment(date.current).subtract({days: 30}).format('YYYYMMDD')
   date.arr.push({
     startdate,
@@ -51,6 +50,9 @@ const fetchJc = async url => {
       if (!isEmpty(matches)) {
         return map(matches, m => new HistoryMatch(m))
       }
+      return {}
+    }).catch(err => {
+      console.log('TeamHistory fetchJc error, ', err)
       return {}
     })
   } catch (err) {

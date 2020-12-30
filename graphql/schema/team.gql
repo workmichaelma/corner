@@ -1,0 +1,7 @@
+type Team {
+  teamId: String
+  teamName: String
+  winId: String
+  rank: String
+  image: String
+}

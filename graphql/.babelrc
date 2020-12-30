@@ -1,0 +1,16 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          node: "current"
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    "import-graphql",
+    "@babel/plugin-transform-runtime"
+  ]
+}

@@ -1,0 +1,27 @@
+schema {
+  query: Query
+}
+
+type Match {
+  id: ID
+  winId: String
+  matchNum: String
+  matchDate: String
+  matchDay: String
+  matchTime: String
+  ended: Boolean
+  homeTeam: Team
+  awayTeam: Team
+  league: League
+  history: MatchHistory
+  result: Result
+}
+
+type MatchHistory {
+  home: [Match]
+  away: [Match]
+}
+
+type Query {
+  match(id: ID!): Match
+}
