@@ -17,8 +17,8 @@ const saveMatch = async ({ jc, win }) => {
   try {
     const winValid = !isEmpty(win) && get(win, 'winId')
     const { winLeagueId, winId, winHomeTeam, winAwayTeam } = win || {}
-    const { id: winHomeId, rank: homeRank } = winHomeTeam || {}
-    const { id: winAwayId, rank: awayRank } = winAwayTeam || {}
+    const { id: winHomeId, rank: homeRank = '' } = winHomeTeam || {}
+    const { id: winAwayId, rank: awayRank = '' } = winAwayTeam || {}
 
     const { _id: league_id } = await League.find_Update_Insert({
       id: jc.league.id,

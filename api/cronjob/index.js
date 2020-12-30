@@ -4,6 +4,7 @@ const app = express();
 const Odd = require('./worker/Odd')
 const Schedule = require('./worker/Schedule')
 const Result = require('./worker/Result')
+const TeamHistory = require('./worker/TeamHistory')
 
 app.get('/odd', async (req, res) => {
   try {
@@ -28,6 +29,16 @@ app.get('/schedule', async (req, res) => {
 app.get('/result', async (req, res) => {
   try {
     const worker = new Result()
+    res.json(await worker.init())
+  } catch (err) {
+    console.log(err)
+    res.json({})
+  }
+})
+
+app.get('/team-history', async (req, res) => {
+  try {
+    const worker = new TeamHistory()
     res.json(await worker.init())
   } catch (err) {
     console.log(err)
