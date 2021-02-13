@@ -16,7 +16,7 @@ const init = async (ids, _fields) => {
     name: true,
     imageUrl: true,
     history: true,
-    historyCount: 30,
+    historyCount: 10,
     future: false
   }
   const datetime = moment().utcOffset(8).format('YYYYMMDDHH')

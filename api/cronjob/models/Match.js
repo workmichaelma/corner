@@ -32,6 +32,59 @@ const MatchSchema = new Schema({
   updatedHistory: {
     type: Boolean,
     default: false
+  },
+  odds: {
+    chl: [
+      {
+        datetime: Date,
+        H: String,
+        L: String,
+        LINE: String
+      }
+    ],
+    had: [
+      {
+        datetime: Date,
+        H: String,
+        A: String,
+        D: String
+      }
+    ],
+    hha: [
+      {
+        datetime: Date,
+        H: String,
+        D: String,
+        A: String,
+        HG: String,
+        AG: String
+      }
+    ],
+    hil: [
+      {
+        datetime: Date,
+        H: String,
+        L: String,
+        LINE: String
+      }
+    ],
+    fhl: [
+      {
+        datetime: Date,
+        H: String,
+        L: String,
+        LINE: String
+      }
+    ],
+    hdc: [
+      {
+        datetime: Date,
+        H: String,
+        A: String,
+        HG: String,
+        AG: String
+      }
+    ],
   }
 });
 
@@ -102,6 +155,70 @@ MatchSchema.statics.updateResult = async result => {
     })
   } catch (err) {
     console.error('MatchSchema.statics.updateResult() error: ', { result, err })
+  }
+}
+
+MatchSchema.statics.insertOdds = async ({ id, odds }) => {
+  try {
+    return Match.findOneAndUpdate({
+      id
+    }, {
+      $push: odds
+    }, { new: true })
+  } catch (err) {
+    console.error('MatchSchema.statics.insertOdds() error: ', { result, err })
+  }
+}
+
+MatchSchema.statics.getFutureMatchesWithLatestOdd = async () => {
+  try {
+    return Match.aggregate(
+      [
+        {
+          '$match': {
+            'datetime': {
+              '$gt': new Date()
+            }
+          }
+        }, {
+          '$project': {
+            'id': '$id',
+            'chl': {
+              '$arrayElemAt': [
+                '$odds.chl', -1
+              ]
+            }, 
+            'had': {
+              '$arrayElemAt': [
+                '$odds.had', -1
+              ]
+            }, 
+            'hha': {
+              '$arrayElemAt': [
+                '$odds.hha', -1
+              ]
+            }, 
+            'hil': {
+              '$arrayElemAt': [
+                '$odds.hil', -1
+              ]
+            }, 
+            'fhl': {
+              '$arrayElemAt': [
+                '$odds.fhl', -1
+              ]
+            }, 
+            'hdc': {
+              '$arrayElemAt': [
+                '$odds.hdc', -1
+              ]
+            }
+          }
+        }
+      ]
+    )
+  } catch (err) {
+    return []
   }
 }
 
