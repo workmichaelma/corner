@@ -177,7 +177,7 @@ MatchSchema.statics.getFutureMatchesWithLatestOdd = async () => {
         {
           '$match': {
             'datetime': {
-              '$gt': new Date()
+              '$gt': new Date(moment())
             }
           }
         }, {
