@@ -50,6 +50,14 @@ const MatchSchema = new Schema({
         D: String
       }
     ],
+    fha: [
+      {
+        datetime: Date,
+        H: String,
+        A: String,
+        D: String
+      }
+    ],
     hha: [
       {
         datetime: Date,
@@ -196,6 +204,11 @@ MatchSchema.statics.getFutureMatchesWithLatestOdd = async () => {
             'hha': {
               '$arrayElemAt': [
                 '$odds.hha', -1
+              ]
+            }, 
+            'fha': {
+              '$arrayElemAt': [
+                '$odds.fha', -1
               ]
             }, 
             'hil': {

@@ -12,10 +12,17 @@ const requiredOddType = [
   'had',
   'hha',
   'hil',
+  'fha',
   'fhl',
   'chl',
   'hdc',
 ]
+
+
+const fixOddSlash = odd => {
+  const [front, end] = odd.split('/')
+  return front === end ? front : odd
+}
 
 const trim = w => {
   return (w || '').replace(/100@/g, '')
@@ -44,14 +51,23 @@ class HAD extends Dt {
   }
 }
 
+class FHA extends Dt {
+  constructor(v = {}) {
+    super()
+    this.H = trim(v.H)
+    this.D = trim(v.D)
+    this.A = trim(v.A)
+  }
+}
+
 class HHA extends Dt {
   constructor(v = {}) {
     super()
     this.H = trim(v.H)
     this.D = trim(v.D)
     this.A = trim(v.A)
-    this.HG = v.HG
-    this.AG = v.AG
+    this.HG = fixOddSlash(v.HG)
+    this.AG = fixOddSlash(v.AG)
   }
 }
 
@@ -62,7 +78,7 @@ class HIL extends Dt {
     if (obj) {
       this.H = trim(obj.H)
       this.L = trim(obj.L)
-      this.LINE = obj.LINE
+      this.LINE = fixOddSlash(obj.LINE)
     }
   }
 }
@@ -74,7 +90,7 @@ class FHL extends Dt {
     if (obj) {
       this.H = trim(obj.H)
       this.L = trim(obj.L)
-      this.LINE = obj.LINE
+      this.LINE = fixOddSlash(obj.LINE)
     }
   }
 }
@@ -86,7 +102,7 @@ class CHL extends Dt {
     if (obj) {
       this.H = trim(obj.H)
       this.L = trim(obj.L)
-      this.LINE = obj.LINE.split('/')[0]
+      this.LINE = fixOddSlash(obj.LINE.split('/')[0])
     }
   }
 }
@@ -96,8 +112,8 @@ class HDC extends Dt {
     super()
     this.H = trim(v.H)
     this.A = trim(v.A)
-    this.HG = v.HG
-    this.AG = v.AG
+    this.HG = fixOddSlash(v.HG)
+    this.AG = fixOddSlash(v.AG)
   }
 }
 
@@ -107,6 +123,8 @@ const oddSwitcher = (obj, type) => {
       return new HAD(obj)
     case 'hha':
       return new HHA(obj)
+    case 'fha':
+      return new FHA(obj)
     case 'hil':
       return new HIL(obj)
     case 'fhl':

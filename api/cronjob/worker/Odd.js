@@ -11,11 +11,6 @@ class Odd {
     this.targetMatches = []
   }
 
-  fixOddSlash(odd) {
-    const [front, end] = odd.split('/')
-    return front === end ? front : odd
-  }
-
   preprocessOdds({ newOdds, oldOdds }) {
     return reduce(newOdds, (obj, odd, type) => {
       let needUpdate = false
@@ -32,15 +27,6 @@ class Odd {
       if (needUpdate) {
         obj[`odds.${type}`] = {
           ...odd,
-          ...(odd.LINE ? {
-            LINE: this.fixOddSlash(odd.LINE)
-          } : {}),
-          ...(odd.HG ? {
-            LINE: this.fixOddSlash(odd.HG)
-          } : {}),
-          ...(odd.AG ? {
-            LINE: this.fixOddSlash(odd.AG)
-          } : {}),
           datetime: new Date(odd.datetime)
         }
       }

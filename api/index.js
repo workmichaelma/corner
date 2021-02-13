@@ -1,9 +1,11 @@
 const express = require('express');
-const map = require('lodash/map')
 const app = express();
 const mongoose = require('./mongoose')
+const CronJob = require('cron').CronJob;
 
 const cronjob = require('./cronjob/index')
+const Schedule = require('./cronjob/worker/Schedule')
+const Odd = require('./cronjob/worker/Odd')
 
 // const Odd = require('./Odd')
 // const Schedule = require('./Schedule')
@@ -19,32 +21,17 @@ app.use((req, res, next) => {
   next()
 })
 
-// app.get('/odd', async (req, res) => {
-//   try {
-//     res.json(await Odd.init())
-//   } catch (err) {
-//     console.log(err)
-//     res.status(404).json({})
-//   }
-// })
+const scheduleJob = new CronJob('0 0 8 * * *', () => {
+  const worker = new Schedule()
+  worker.init()
+})
+scheduleJob.start()
 
-// app.get('/schedule', async (req, res) => {
-//   try {
-//     res.json(await Schedule.init())
-//   } catch (err) {
-//     console.log(err)
-//     res.json({})
-//   }
-// })
-
-// app.get('/result', async (req, res) => {
-//   try {
-//     res.json(await Result.init())
-//   } catch (err) {
-//     console.log(err)
-//     res.json({})
-//   }
-// })
+const oddJob = new CronJob('0 */1 * * * *', () => {
+  const worker = new Odd()
+  worker.update()
+})
+oddJob.start()
 
 const port = 8083;
 

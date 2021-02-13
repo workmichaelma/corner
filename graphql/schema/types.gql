@@ -1,0 +1,21 @@
+scalar Date
+
+enum DatetimeFormatEnum {
+  DEFAULT
+  UNIX
+  FULL_FORMATTED
+  HH_mm
+  DD_MM
+}
+
+enum OddTypeEnum {
+  FULL
+  FIRST_LATEST
+  FIRST
+  LATEST
+}
+
+enum OrderByEnum {
+  DESC
+  ASC
+}

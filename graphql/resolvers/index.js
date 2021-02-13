@@ -1,11 +1,15 @@
 const merge = require('lodash/merge')
 const match = require('./match')
 const schedule = require('./schdule')
+const types = require('./types')
+const odds = require('./odds')
 
 const obj = merge(
   {},
   schedule,
-  match
+  match,
+  types,
+  odds,
 )
 
 module.exports = obj

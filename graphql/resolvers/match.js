@@ -1,6 +1,8 @@
-const { get } = require('lodash')
+const { get, reduce, upperCase } = require('lodash')
 const moment = require('moment')
 const MatchSchema = require('../mongo/schema/Match')
+
+const { filterOdds } = require('../utils/odds')
 
 module.exports = {
   Query: {
@@ -76,6 +78,17 @@ module.exports = {
       try {
         const { result } = parent
         return result
+      } catch (err) {
+        return {}
+      }
+    },
+    odds: async (parent, args, context, info) => {
+      try {
+        const { odds } = parent
+        return reduce(odds, (obj, oddArray, key) => {
+          obj[upperCase(key)] = filterOdds({ odds: oddArray, args })
+          return obj
+        }, {})
       } catch (err) {
         return {}
       }

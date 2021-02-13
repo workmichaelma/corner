@@ -1,0 +1,63 @@
+type Odds {
+  HAD(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [HAD]
+  HHA(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [HHA]
+  FHA(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [FHA]
+  HIL(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [HIL]
+  FHL(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [FHL]
+  HDC(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [HDC]
+  CHL(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [CHL]
+}
+
+type HAD {
+  H: String
+  A: String
+  D: String
+  datetime(format: DatetimeFormatEnum): Date
+}
+
+type HHA {
+  H: String
+  A: String
+  D: String
+  HG: String
+  AG: String
+  datetime(format: DatetimeFormatEnum): Date
+}
+
+type FHA {
+  H: String
+  A: String
+  D: String
+  HG: String
+  AG: String
+  datetime(format: DatetimeFormatEnum): Date
+}
+
+type HDC {
+  H: String
+  A: String
+  HG: String
+  AG: String
+  datetime(format: DatetimeFormatEnum): Date
+}
+
+type HIL {
+  H: String
+  L: String
+  LINE: String
+  datetime(format: DatetimeFormatEnum): Date
+}
+
+type FHL {
+  H: String
+  L: String
+  LINE: String
+  datetime(format: DatetimeFormatEnum): Date
+}
+
+type CHL {
+  H: String
+  L: String
+  LINE: String
+  datetime(format: DatetimeFormatEnum): Date
+}
