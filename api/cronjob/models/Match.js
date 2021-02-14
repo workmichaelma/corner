@@ -154,13 +154,7 @@ MatchSchema.statics.updateResult = async result => {
       id: result.id
     }, {
       result
-    }, { new: true, runValidators: true }, e => {
-      return {
-        id: result.id,
-        result,
-        error: true
-      }
-    })
+    }, { new: true })
   } catch (err) {
     console.error('MatchSchema.statics.updateResult() error: ', { result, err })
   }

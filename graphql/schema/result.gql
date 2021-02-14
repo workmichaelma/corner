@@ -1,15 +1,19 @@
 type Result {
   HAD: String
   FHA: String
-  HHA: String
-  HDC: String
-  HIL: String
-  FHL: String
-  CHL: String
-  OOE: String
+  HHA: OddsResult
+  HDC: OddsResult
+  HIL: OddsResult
+  FHL: OddsResult
+  CHL: OddsResult
   FT: ScoreResult
   HT: ScoreResult
   corner: CornerResult
+}
+
+type OddsResult {
+  first: String
+  latest: String
 }
 
 type ScoreResult {
@@ -17,8 +21,13 @@ type ScoreResult {
   away: Int
 }
 
-type CornerResult {
+type CornerDetailResult {
+  total: Int
   home: Int
   away: Int
-  total: Int
+}
+
+type CornerResult {
+  full: CornerDetailResult
+  half: CornerDetailResult
 }

@@ -62,11 +62,16 @@ const fetchResult = async id => {
       statObj
     }
 
-    if (!isEmpty(output.FT.home) && !isEmpty(output.HT.home) && !isEmpty(output.HT.away) && !isUndefined(get(statObj, 'CORNER.home')) && !isUndefined(get(statObj, 'HALF_CORNER.home')) !== false) {
+    if (
+      !isEmpty(output.FT.home) &&
+      !isEmpty(output.HT.home) &&
+      !isEmpty(output.HT.away) &&
+      isObject(statObj)
+    ) {
       return {
         ...output,
-        corner: statObj.CORNER.home + statObj.CORNER.away,
-        half_corner: statObj.HALF_CORNER.home + statObj.HALF_CORNER.away
+        corner: get(statObj, 'CORNER.home', 0) + get(statObj, 'CORNER.away', 0),
+        half_corner: get(statObj, 'HALF_CORNER.home', 0) + get(statObj, 'HALF_CORNER.away', 0)
       }
     }
     return {}
