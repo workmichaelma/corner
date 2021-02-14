@@ -2,6 +2,7 @@ const { get, reduce, upperCase } = require('lodash')
 const moment = require('moment')
 const MatchSchema = require('../mongo/schema/Match')
 
+const { formatDate } = require('../utils/date')
 const { filterOdds } = require('../utils/odds')
 
 module.exports = {
@@ -17,14 +18,13 @@ module.exports = {
     matchNum: async (parent, args, context, info) => {
       return parent.num
     },
-    matchDate: async (parent, args, context, info) => {
-      return moment(parent.datetime).format('YYYY-MM-DD')
+    matchDatetime: async (parent, args, context, info) => {
+      const { datetime } = parent
+      const { format } = args
+      return formatDate({ datetime, format })
     },
     matchDay: async (parent, args, context, info) => {
       return parent.day
-    },
-    matchTime: async (parent, args, context, info) => {
-      return moment(parent.datetime).format()
     },
     ended: async (parent, args, context, info) => {
       const current = moment()

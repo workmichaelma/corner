@@ -29,7 +29,6 @@ const filterByType = ({ _odds, type }) => {
 const filterOdds = ({ odds, args }) => {
   if (isArray(odds) && !isEmpty(odds)) {
     const { type, orderBy, limit } = args
-    console.log({args})
     let _odds = odds || []
     if (type) {
       _odds = filterByType({ _odds, type })

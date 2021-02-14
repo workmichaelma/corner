@@ -1,11 +1,11 @@
 type Odds {
-  HAD(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [HAD]
-  HHA(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [HHA]
-  FHA(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [FHA]
-  HIL(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [HIL]
-  FHL(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [FHL]
-  HDC(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [HDC]
-  CHL(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): [CHL]
+  HAD: [HAD]
+  HHA: [HHA]
+  FHA: [FHA]
+  HIL: [HIL]
+  FHL: [FHL]
+  HDC: [HDC]
+  CHL: [CHL]
 }
 
 type HAD {
