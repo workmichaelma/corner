@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const isString = require('lodash/isstring')
+const isString = require('lodash/isString')
 const Schedule = require('./Schedule')
 const Result = require('./Result')
 const Team = require('./Team')

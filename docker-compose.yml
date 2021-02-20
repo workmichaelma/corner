@@ -68,7 +68,8 @@ services:
     networks:
       - corner-networks
     environment:
-      - TZ=Asia/Hong_Kong
+      WAIT_HOSTS: mongo:27017
+
   graphql:
     restart: always
     build: ./graphql
@@ -81,7 +82,7 @@ services:
     networks:
       - corner-networks
     environment:
-      - TZ=Asia/Hong_Kong
+      WAIT_HOSTS: mongo:27017
 
 networks:
   corner-networks:
