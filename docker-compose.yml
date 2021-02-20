@@ -16,6 +16,7 @@ services:
       - corner-networks
     environment:
       - TZ=Asia/Hong_Kong
+    command: sh -c "npm install --legacy-peer-deps && npm run dev"
 
   # api:
   #   container_name: api
