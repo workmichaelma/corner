@@ -61,10 +61,10 @@ module.exports = {
     },
     history: async (parent, args, context, info) => {
       try {
-        const { home, away, matchTime } = parent
+        const { home, away, datetime } = parent
   
-        const homeHistory = await MatchSchema.getTeamHistory({ _id: home._id, after: matchTime })
-        const awayHistory = await MatchSchema.getTeamHistory({ _id: away._id, after: matchTime })
+        const homeHistory = await MatchSchema.getTeamHistory({ _id: home._id, before: datetime })
+        const awayHistory = await MatchSchema.getTeamHistory({ _id: away._id, before: datetime })
         return {
           home: homeHistory,
           away: awayHistory

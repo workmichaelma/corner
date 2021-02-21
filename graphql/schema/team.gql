@@ -2,6 +2,10 @@ type Team {
   teamId: String
   teamName: String
   winId: String
-  rank: String
   image: String
+  history (leagueId: String, after: String, before: String, teamId: String): [Match]
+}
+
+type Query {
+  team(id: ID, name: String): Team
 }

@@ -9,12 +9,21 @@ type Match {
   matchDatetime(format: DatetimeFormatEnum): Date
   matchDay: String
   ended: Boolean
-  homeTeam: Team
-  awayTeam: Team
+  homeTeam: MatchTeam
+  awayTeam: MatchTeam
   league: League
   history: MatchHistory
   result: Result
   odds(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): Odds
+}
+
+type MatchTeam {
+  teamId: String
+  teamName: String
+  winId: String
+  rank: String
+  image: String
+  history (leagueId: String, before: String): [Match]
 }
 
 type MatchHistory {

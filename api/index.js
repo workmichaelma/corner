@@ -6,6 +6,7 @@ const CronJob = require('cron').CronJob;
 const cronjob = require('./cronjob/index')
 const Schedule = require('./cronjob/worker/Schedule')
 const Odd = require('./cronjob/worker/Odd')
+const Result = require('./cronjob/worker/Result')
 
 // const Odd = require('./Odd')
 // const Schedule = require('./Schedule')
@@ -32,6 +33,12 @@ const oddJob = new CronJob('0 */1 * * * *', () => {
   worker.update()
 })
 oddJob.start()
+
+const resultJob = new CronJob('0 */120 * * * *', () => {
+  const worker = new Result()
+  worker.init()
+})
+resultJob.start()
 
 const port = 8083;
 

@@ -32,13 +32,14 @@ MatchSchema.statics.get = async ({ id, winId }) => {
   }).populate(populate).lean()
 }
 
-MatchSchema.statics.getTeamHistory = async ({ _id, teamId, after }) => {
+
+MatchSchema.statics.getTeamHistory = async ({ _id, teamId, before, after }) => {
   let team_id = _id
   if (!team_id) {
     if (teamId) {
       const { _id } = await TeamSchema.findOne({
         id: teamId
-      })
+      }) || {}
       if (_id) {
         team_id = _id
       }
@@ -47,9 +48,12 @@ MatchSchema.statics.getTeamHistory = async ({ _id, teamId, after }) => {
   if (team_id) {
     return Match.find({
       datetime: {
-        $lt: after ? new Date(after) : new Date()
+        $lt: before ? new Date(before) : new Date(),
+        ...(after ? {
+          $gt: new Date(after)
+        } : {})
       },
-      $or: [
+      $and: [
         {
           home: team_id
         },
@@ -57,8 +61,9 @@ MatchSchema.statics.getTeamHistory = async ({ _id, teamId, after }) => {
           away: team_id
         }
       ]
-    }).sort({ datetime: -1 }).populate(populate).lean()
+    }).sort({ datetime: -1 }).populate(populate).lean() || []
   }
+  return []
 }
 
 MatchSchema.statics.getSchedule = async () => {
