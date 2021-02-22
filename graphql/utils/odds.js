@@ -18,9 +18,9 @@ const filterByType = ({ _odds, type }) => {
     case 'FIRST_LATEST':
       return [head(_odds), last(_odds)];
     case 'FIRST':
-      return [head(_odds)];
+      return head(_odds) || {};
     case 'LATEST':
-      return [last(_odds)];
+      return last(_odds) || {};
     default:
       return _odds;
   }
