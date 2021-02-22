@@ -22,18 +22,14 @@ const TeamSchema = new Schema({
   },
 });
 
-TeamSchema.statics.getTeam = async ({ id, team }) => {
-  if (!isUndefined(id) || !isUndefined(team)) {
-    const { _id, id: teamId, winId, name: teamName } = await Team.findOne({
-      $or: [
-        {
-          id
-        },
-        {
-          team
-        }
-      ]
-    })
+TeamSchema.statics.getTeam = async ({ id, name }) => {
+  if (!isUndefined(id) || !isUndefined(name)) {
+    const search = id ? {
+      id
+    } : {
+      name
+    }
+    const { _id, id: teamId, winId, name: teamName } = await Team.findOne(search) || {}
 
     if (teamId && teamName) {
       return {
