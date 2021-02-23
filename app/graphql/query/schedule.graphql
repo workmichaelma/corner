@@ -1,0 +1,83 @@
+query schedule ($ended: Boolean!) {
+  schedule (ended: $ended) {
+    ...match
+  }
+}
+
+fragment match on Match{
+  id
+  matchDatetime (format: HH_mm)
+  ended
+  homeTeam {
+    teamName
+    rank
+  }
+  awayTeam {
+    teamName
+    rank
+  }
+  league {
+    name
+  }
+  ...result
+  ...odds
+}
+
+fragment result on Match {
+  result {
+    FT {
+      home
+      away
+    }
+    HT {
+      home
+      away
+    }
+    corner {
+      full {
+        total
+        home
+        away
+      }
+    }
+    HAD
+    HDC {
+      first
+      latest
+    }
+    HIL {
+      first
+      latest
+    }
+    CHL {
+      first
+      latest
+    }    
+  }
+}
+
+fragment odds on Match {
+  odds (type: LATEST){
+    HAD {
+      H
+      D
+      A
+    }
+    HDC {
+      H
+      A
+      HG
+      AG
+    }
+    HIL {
+      H
+      L
+      LINE
+    }
+    CHL {
+      H
+      L
+      LINE
+    }
+  }
+}

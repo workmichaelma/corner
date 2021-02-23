@@ -1,11 +1,16 @@
 <template>
-  <v-expansion-panel>
-    <match-header v-bind="{ match }"/>
-    <match-content v-bind="{ match }"/>
+  <v-expansion-panel class="panel">
+    <template v-if="match">
+      <match-header v-bind="{ match }"/>
+      <match-content v-bind="{ match }"/>
+    </template>
+    <template v-else>
+      {{ id }}
+    </template>
   </v-expansion-panel>
 </template>
 <script>
-import Header from './header'
+import Header from './header/index'
 import Content from './content'
 export default {
   components: {
@@ -13,18 +18,17 @@ export default {
     'match-content': Content,
   },
   props: {
-    id: {
+    match: {
       required: true,
-      default: ''
+      default: {}
     }
   },
   computed: {
-    match () {
-      return this.$store.state.match[this.id]
-    }
   },
 }
 </script>
 <style lang="stylus" scoped>
-
+.panel
+  >>> button
+    padding 0
 </style>

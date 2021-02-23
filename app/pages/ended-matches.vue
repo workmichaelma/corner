@@ -9,13 +9,20 @@
 <script>
 import MatchList from '~/components/matchList'
 
+
 export default {
+  async asyncData ({ params, store }) {
+    await store.dispatch('schedulePage/init', {
+      ended: true
+    })
+  },
   components: {
     MatchList
   },
   computed: {
     matches () {
-      return this.$store.state.matchList.ended || []
+      // return this.$store.state.matchList.ended || []
+      return this.$store.state.schedulePage.ended || []
     }
   },
 }

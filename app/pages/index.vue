@@ -13,12 +13,18 @@
 import MatchList from '~/components/matchList'
 
 export default {
+  async asyncData ({ params, store }) {
+    await store.dispatch('schedulePage/init', {
+      ended: false
+    })
+  },
   components: {
     MatchList
   },
   computed: {
     matches () {
-      return this.$store.state.matchList.upcoming || []
+      // return this.$store.state.matchList.upcoming || []
+      return this.$store.state.schedulePage.future || []
     }
   },
 }

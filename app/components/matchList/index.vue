@@ -1,9 +1,9 @@
 <template>
   <v-expansion-panels multiple>
     <match
-      v-for="(id,i) in matches"
+      v-for="(match,i) in matches"
       :key="i"
-      v-bind="{id}"
+      v-bind="{match}"
     />
   </v-expansion-panels>
 </template>
