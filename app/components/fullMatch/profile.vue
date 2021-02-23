@@ -1,17 +1,16 @@
 <template>
-  <v-flex id="match__profile" class="d-flex col-12 caption justify-space-between align-center">
+  <v-flex id="match__profile" class="d-flex col-12 caption justify-space-between align-center pt-0">
     <div>
-      {{ format(new Date(match.matchTime), 'YYYY-MM-DD HH:mm') }}
+      {{ get(match, 'matchDatetime', '') }}
     </div>
     <div>
-      {{ match.league.name }}
+      {{ get(match, 'league.name', '') }}
     </div>
   </v-flex>
 </template>
 <script>
 import Match from '~/mixins/match'
-import get from 'lodash/get'
-import format from 'date-fns/format'
+import { get } from 'lodash'
 export default {
   mixins: [
     Match
@@ -23,7 +22,7 @@ export default {
     }
   },
   methods: {
-    format
+    get
   }
 }
 </script>

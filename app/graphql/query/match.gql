@@ -1,0 +1,113 @@
+query match ($id: ID!) {
+  match (id: $id) {
+    id
+    winId
+    matchDatetime
+    matchDay
+    ended
+    homeTeam {
+      teamId
+      winId
+      teamName
+      rank
+    }
+    awayTeam {
+      teamId
+      winId
+      teamName
+      rank
+    }
+    league {
+      leagueId
+      winId
+      name
+    }
+  ...result
+  ...odds
+  }
+}
+
+fragment result on Match {
+  result {
+    FT {
+      home
+      away
+    }
+    HT {
+      home
+      away
+    }
+    HAD
+    FHA
+    HHA {
+      first
+      latest
+    }
+    HDC {
+      first
+      latest
+    }
+    HIL {
+      first
+      latest
+    }
+    FHL {
+      first
+      latest
+    }
+    CHL {
+      first
+      latest
+    }    
+  }
+}
+
+fragment odds on Match {
+  odds (type: FIRST_LATEST){
+    HAD {
+      H
+      D
+      A
+      datetime
+    }
+    FHA {
+      H
+      D
+      A
+      datetime
+    }
+    HHA {
+      H
+      D
+      A
+      HG
+      AG
+      datetime
+    }
+    HDC {
+      H
+      A
+      HG
+      AG
+      datetime
+    }
+    HIL {
+      H
+      L
+      LINE
+      datetime
+    }
+    FHL {
+      H
+      L
+      LINE
+      datetime
+    }
+    CHL {
+      H
+      L
+      LINE
+      datetime
+    }
+  }
+}

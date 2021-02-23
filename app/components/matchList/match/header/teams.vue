@@ -1,7 +1,9 @@
 <template>
   <v-flex class="header-info pt-1 body-2 align-center d-flex">
     <v-flex class="text-right team flex-grow-1">
-      {{home}}
+      <template v-if="!isEmpty(home)">
+        {{`[${away.rank}] ${home.teamName}`}}
+      </template>
     </v-flex>
     <v-flex class="result flex-grow-0 flex-shrink-0 text-center font-weight-bold">
       <template v-if="!isEmpty(FT)">
@@ -9,7 +11,9 @@
       </template>
     </v-flex>
     <v-flex class="text-left team flex-grow-1">
-      {{away}}
+      <template v-if="!isEmpty(away)">
+        {{`${away.teamName} [${away.rank}]`}}
+      </template>
     </v-flex>
   </v-flex>
 </template>
@@ -20,10 +24,10 @@ export default {
   name: 'match-header-teams',
   props: {
     home: {
-      default: ''
+      default: {}
     },
     away: {
-      default: ''
+      default: {}
     },
     FT: {
       default: {}

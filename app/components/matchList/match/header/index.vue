@@ -8,8 +8,8 @@
         result: get(match, 'result.corner.full.total', ''),
       }" />
       <teams v-bind="{
-        home: get(match, 'homeTeam.teamName', ''),
-        away: get(match, 'awayTeam.teamName', ''),
+        home: get(match, 'homeTeam', {}),
+        away: get(match, 'awayTeam', {}),
         FT: get(match, 'result.FT', {})
       }" />
       <odds v-bind="{
