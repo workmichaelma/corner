@@ -10,6 +10,7 @@ const reduce = require('lodash/reduce')
 const compact = require('lodash/compact')
 const forEach = require('lodash/forEach')
 const toInteger = require('lodash/toInteger')
+const take = require('lodash/take')
 const { API_DOMAIN } = require('../../config')
 const { get, isEmpty, difference } = require('lodash')
 
@@ -110,7 +111,7 @@ class MatchClass {
   }
 
   async update() {
-    const future = this.matches.future.map(m => m.id)
+    const future = take(this.matches.future.map(m => m.id), 30)
 
     const newIds = compact(map(future, id => {
       const { winId } = find(this.matches.current, { id }) || {}

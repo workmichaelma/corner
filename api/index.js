@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   next()
 })
 
-const scheduleJob = new CronJob('0 0 8 * * *', () => {
+const scheduleJob = new CronJob('0 0 */2 * * *', () => {
   const worker = new Schedule()
   worker.init()
 })
