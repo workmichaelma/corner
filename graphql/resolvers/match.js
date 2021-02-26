@@ -82,6 +82,21 @@ module.exports = {
         return {}
       }
     },
+    resultInLatestOdds: async (parent, args, context, info) => {
+      try {
+        const { result } = parent
+        return {
+          ...result,
+          HHA: get(result, 'HHA.latest'),
+          HDC: get(result, 'HDC.latest'),
+          HIL: get(result, 'HIL.latest'),
+          FHL: get(result, 'FHL.latest'),
+          CHL: get(result, 'CHL.latest'),
+        }
+      } catch (err) {
+        return {}
+      }
+    },
     odds: async (parent, args, context, info) => {
       try {
         const { odds } = parent

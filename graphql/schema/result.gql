@@ -11,6 +11,19 @@ type Result {
   corner: CornerResult
 }
 
+type ResultInLatestOdds {
+  HAD: String
+  FHA: String
+  HHA: String
+  HDC: String
+  HIL: String
+  FHL: String
+  CHL: String
+  FT: ScoreResult
+  HT: ScoreResult
+  corner: CornerResult
+}
+
 type OddsResult {
   first: String
   latest: String

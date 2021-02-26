@@ -14,6 +14,7 @@ type Match {
   league: League
   history: MatchHistory
   result: Result
+  resultInLatestOdds: ResultInLatestOdds
   odds(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): Odds
 }
 
