@@ -27,7 +27,7 @@
           :key="`history-${page}`"
         >
           <all v-if="page === 'all'" v-bind="{ match, config }" />
-          <!-- <side v-else v-bind="{ match, side: page, config }" /> -->
+          <side v-else v-bind="{ match, side: page, config }" />
         </v-carousel-item>
       </v-carousel>
     </v-flex>
@@ -36,11 +36,13 @@
 <script>
 import { get } from "lodash";
 import All from "./all";
+import Side from "./Side";
 import ControlBar from "./controlBar";
 import TeamPicker from "./teamPicker";
 export default {
   components: {
     All,
+    Side,
     ControlBar,
     TeamPicker,
   },

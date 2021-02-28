@@ -36,7 +36,7 @@ export default {
   */
   css: [
     // '~/assets/style/grid.styl',
-    // '~/assets/style/main.styl'
+    '~/assets/style/main.styl'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -60,6 +60,7 @@ export default {
   */
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/apollo',
     'nuxt-svg-loader',
   ],
   /*
@@ -83,6 +84,16 @@ export default {
       }
     }
   },
+  apollo: {
+    clientConfigs: {
+      default: {
+        // httpEndpoint: 'http://graphql:8084/graphql',
+        httpEndpoint: 'http://128.199.246.210:2004/graphql'
+        // httpEndpoint: 'http://128.199.192.1/graphql'
+      },
+    },
+    includeNodeModules: true,
+  },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
@@ -103,11 +114,11 @@ export default {
       //   })
       // }
 
-      config.module.rules.push({
-        test: /\.(graphql|gql)$/,
-        exclude: /node_modules/,
-        loader: 'graphql-tag/loader',
-      })
+      // config.module.rules.push({
+      //   test: /\.(graphql|gql)$/,
+      //   exclude: /node_modules/,
+      //   loader: 'graphql-tag/loader',
+      // })
     }
   }
 }

@@ -1,59 +1,85 @@
 <template>
-  <div class="match-row ma-0" :class="{half, right}" v-if="exposed" v-on:dblclick="toggleOverlay()">
+  <v-flex
+    class="`match-row d-flex ma-0`"
+    :class="{ half, right, [`flex-row${right && '-reverse'}`]: true }"
+    @dblclick="toggleOverlay()"
+  >
     <!-- 角球數 -->
-    <corner-count v-bind="{ count: get(match, 'result.corner') }" />
+    <corner-count
+      v-bind="{
+        count: get(match, 'result.corner.full.total'),
+        result: get(match, 'result.CHL.latest'),
+        right,
+      }"
+      class="corner-count flex-grow-0 flex-shrink-0"
+    />
     <!-- 角球數 -->
     <v-divider vertical inset />
-    <!-- 角球球數及結果 -->
-    <corner-result v-bind="{ H: CHL_1.H, L: CHL_1.L, LINE: CHL_1.LINE, result: get(match, 'result.CHL') }" />
-    <!-- 角球球數及結果 -->
-    <v-divider vertical inset />
-    <!--日期及讓盤-->
-    <date-hha v-bind="{dateDiff: match.dateDiff, HHA: side === 'home' ? `主${HHA_1.HG}` : `客${HHA_1.AG}`}" />
-    <!--日期及讓盤-->
+    <!-- 主要賠率及結果 -->
+    <odds
+      v-bind="{
+        dateDiff: match.dateDiff || 10,
+        odds: get(match, 'odds'),
+        result: get(match, 'result'),
+        reverse: right,
+        side
+      }"
+      class="flex-grow-1"
+    />
+    <!-- 主要賠率及結果 -->
 
-    <keep-alive>
+    <Profile v-if="!half" v-bind="{match, teamId, leagueId}" />
+    <!-- <keep-alive>
       <template v-if="!half">
-        <match-profile v-bind="{match, teamId}" v-show="!half" />
+        <match-profile v-bind="{ match, teamId, leagueId, }" v-show="!half" />
       </template>
-    </keep-alive>
-    <overlay v-bind="{show: overlay && !half, url: `/match/${match.id}`, toggleOverlay}" />
-  </div>
+    </keep-alive> -->
+    <overlay
+      v-bind="{
+        show: showOverlay && !half,
+        url: `/match/${match.id}`,
+        toggleOverlay,
+      }"
+    />
+  </v-flex>
 </template>
 <script>
-import Match from '~/mixins/match'
-import get from 'lodash/get'
-import isObject from 'lodash/isObject'
-import format from 'date-fns/format'
+import CornerCount from "./cornerCount";
+import DateHHA from "./date_HHA";
+import Odds from './odds'
+import Overlay from './overlay'
+import Profile from './Profile'
+// import Match from "~/mixins/match";
+import get from "lodash/get";
+import isObject from "lodash/isObject";
+import format from "date-fns/format";
 export default {
-  mixins: [
-    Match
-  ],
-  data () {
+  // mixins: [Match],
+  data() {
     return {
-      overlay: false
-    }
+      showOverlay: false,
+    };
   },
   props: {
-    id: {
+    match: {
       required: true,
-      default: ''
+      default: {},
     },
     leagueId: {
       required: true,
-      default: ''
+      default: "",
     },
     teamId: {
       required: true,
-      default: ''
+      default: "",
     },
     half: {
       required: false,
-      default: false
+      default: false,
     },
     right: {
       required: false,
-      default: false
+      default: false,
     },
     config: {
       required: true,
@@ -61,58 +87,61 @@ export default {
         showSameSide: false,
         showSameLeague: false,
         showSimilarOdd: false,
-        oddsRange: null
-      }
-    }
+        oddsRange: null,
+      },
+    },
   },
   computed: {
-    exposed () {
-      let exposed = true
-      if (this.config.showSameSide) {
-        const side = this.right ? 'away' : 'home'
-        exposed = this.teamId === get(this.match, `${side}Team.teamID`)
-      }
-      if (this.config.showSameLeague && exposed) {
-        exposed = this.leagueId === get(this.match, 'league.id')
-      }
-      if (isObject(this.config.oddsRange) && exposed) {
-        const { min, max } = this.config.oddsRange || {}
-        exposed = this.HAD_1.H >= min && this.HAD_1.H <= max
-      }
-      return exposed
+    side() {
+      const homeId = get(this, "match.homeTeam.teamId");
+      return homeId === this.teamId ? "home" : "away";
     },
-    match () {
-      return this.$store.state.match[this.id] || {}
-    },
-    side () {
-      const homeId = get(this, 'match.homeTeam.teamID')
-      return homeId === this.teamId ? 'home' : 'away'
-    }
   },
   methods: {
     get,
-    toggleOverlay () {
-      console.log(this.overlay)
-      this.overlay = !this.overlay
-    }
-  }
-}
+    toggleOverlay() {
+      console.log({o: this.showOverlay})
+      this.showOverlay = !this.showOverlay;
+    },
+  },
+  components: {
+    CornerCount,
+    "date-hha": DateHHA,
+    Odds,
+    Overlay,
+    Profile,
+  },
+};
 </script>
 
 <style lang="stylus" scoped>
-.match-row
-  display grid
-  width 100%
-  max-width 100%
-  grid-template-columns 40px 1px minmax(0, 1fr) 1px 40px 50%
-  &.half
-    grid-template-columns 40px 1px minmax(0, 1fr) 1px 40px
-  &.right
-    grid-template-columns 50% 40px 1px minmax(0, 1fr) 1px 40px
-    &.half
-      grid-template-columns 40px 1px minmax(0, 1fr) 1px 40px
-    for num in 1...6
-      > *:nth-child({num})
-        order 7 - num
+.match-row {
+  // display: grid;
+  width: 100%;
+  max-width: 100%;
+  // grid-template-columns: 40px 1px minmax(0, 1fr) 1px 40px 50%;
 
+  // &.half {
+    // grid-template-columns: 30px 1px minmax(0, 1fr);
+    // grid-template-columns: 40px 1px minmax(0, 1fr) 1px 40px;
+  // }
+
+  // &.right {
+  //   grid-template-columns: 50% 40px 1px minmax(0, 1fr) 1px 40px;
+
+  //   &.half {
+  //     grid-template-columns: 40px 1px minmax(0, 1fr) 1px 40px;
+  //   }
+
+  //   for num in 1...6 {
+  //     > *:nth-child({num}) {
+  //       order: 7 - num;
+  //     }
+  //   }
+  // }
+
+}
+.corner-count
+  width 30px
+  flex-basis 30px
 </style>

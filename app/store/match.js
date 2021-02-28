@@ -4,6 +4,9 @@ import Vue from 'vue'
 import toString from 'lodash/toString'
 import toSafeInteger from 'lodash/toSafeInteger'
 import last from 'lodash/last'
+import { map, isUndefined } from 'lodash'
+
+import Match from '../graphql/module/match'
 
 const CHLLines = [8.5, 9.5, 10.5, 11.5, 12.5]
 const teams = {
@@ -328,7 +331,7 @@ const odds = {
     }
   ]
 }
-
+// export const state = {}
 export const state = () => ({
   '2c87579b-c8fa-4fc2-abe8-599a7680ed02': {
     id: '2c87579b-c8fa-4fc2-abe8-599a7680ed02',
@@ -665,3 +668,32 @@ export const state = () => ({
 
   
 })
+
+export const actions = {
+  async fetchMatch ({ dispatch, commit, state }, { id }) {
+    if (isUndefined(state[id])) {
+      const match = await Match.fetchMatch({
+        apolloProvider: this.app.apolloProvider.clients.defaultClient,
+        id
+      })
+      commit('addMatch', match)
+      return !isUndefined(match)
+    }
+    return true
+  }
+}
+
+export const mutations = {
+  addMatch: (state, match) => {
+    const { id } = match || {}
+    state[id] = match
+  },
+  addMatches: (state, matches) => {
+    map(matches, match => {
+      const { id } = match || {}
+      if (id && isUndefined(state[id])) {
+        state[id] = match
+      }
+    })
+  }
+}

@@ -9,6 +9,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxtjs/apollo": "^4.0.1-rc.5",
     "@nuxtjs/axios": "^5.5.4",
     "axios": "^0.19.0",
     "babel-plugin-import-graphql": "^2.7.0",
