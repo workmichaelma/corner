@@ -1,15 +1,25 @@
-const moment = require('moment')
-const MatchSchema = require('../mongo/schema/Match')
+const moment = require("moment");
+const MatchSchema = require("../mongo/schema/Match");
 
 module.exports = {
   Query: {
     schedule: async (obj, args, context, info) => {
-      const { ended } = args
+      const { ended, page } = args;
       if (ended) {
-        return MatchSchema.getEndedMatches()
+        const { docs, ...metadata } = await MatchSchema.getEndedMatches({
+          page,
+        });
+        return {
+          docs,
+          metadata,
+        };
       } else {
-        return MatchSchema.getSchedule()
+        const { docs, ...metadata } = await MatchSchema.getSchedule({ page });
+        return {
+          docs,
+          metadata,
+        };
       }
-    }
-  }
-}
+    },
+  },
+};

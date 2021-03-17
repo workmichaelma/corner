@@ -1,3 +1,8 @@
 type Query {
-  schedule(ended: Boolean!): [Match]
+  schedule(ended: Boolean!, page: Int): Schedule
+}
+
+type Schedule {
+  docs: [Match]
+  metadata: Pagination
 }
