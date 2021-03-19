@@ -7,6 +7,8 @@ const head = require("lodash/head");
 const LeagueSchema = require("./League");
 const TeamSchema = require("./Team");
 
+const { dbObjectToObject } = require("../../utils/index");
+
 const populate = [
   {
     path: "home",
@@ -79,7 +81,7 @@ MatchSchema.statics.getTeamHistory = async ({ _id, teamId, before, after }) => {
 };
 
 MatchSchema.statics.getSchedule = async ({ page = 1, limit = 10 }) => {
-  return Match.paginate(
+  const { docs, ...metadata } = await Match.paginate(
     {
       datetime: {
         $gte: new Date(),
@@ -90,13 +92,17 @@ MatchSchema.statics.getSchedule = async ({ page = 1, limit = 10 }) => {
       limit,
       sort: { datetime: 1, num: 1 },
       populate,
-      lean: true,
     }
   );
+
+  return {
+    docs: dbObjectToObject(docs),
+    ...metadata,
+  };
 };
 
 MatchSchema.statics.getEndedMatches = async ({ page = 1, limit = 10 }) => {
-  return Match.paginate(
+  const { docs, ...metadata } = await Match.paginate(
     {
       datetime: {
         $lt: new Date(),
@@ -107,9 +113,13 @@ MatchSchema.statics.getEndedMatches = async ({ page = 1, limit = 10 }) => {
       limit,
       sort: { datetime: -1, num: 1 },
       populate,
-      lean: true,
     }
   );
+
+  return {
+    docs: dbObjectToObject(docs),
+    ...metadata,
+  };
 };
 
 module.exports = Match = mongoose.model("match", MatchSchema, "matches");
