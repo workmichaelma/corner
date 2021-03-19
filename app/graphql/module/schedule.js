@@ -4,8 +4,11 @@ const { get } = require("lodash");
 
 const { getUpcomingSchedule, getEndedSchedule } = require("../dummy/schedule");
 
+const isSSR = process.server;
+
 module.exports = {
-  getSchedule: async ({ client, ended }) => {
+  getSchedule: async ({ clients, ended }) => {
+    const client = isSSR ? clients.defaultClient : clients.alternativeClient;
     const { data } = await client.query({
       query: ScheduleQuery,
       variables: {

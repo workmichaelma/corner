@@ -16,7 +16,7 @@ export const actions = {
   async init({ dispatch, commit, state }, { ended }) {
     const stateType = ended ? "ended" : "future";
     const matches = await Schedule.getSchedule({
-      client: this.app.apolloProvider.clients.defaultClient,
+      clients: this.app.apolloProvider.clients,
       ended
     });
 

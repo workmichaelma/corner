@@ -88,7 +88,7 @@ export default {
       },
       alternativeClient: {
         // required
-        httpEndpoint: "http://10.104.0.2:2004/graphql"
+        httpEndpoint: "http://128.199.246.210:2004/graphql"
       }
     },
     includeNodeModules: true

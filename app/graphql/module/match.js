@@ -3,8 +3,11 @@ const { get } = require("lodash");
 
 const { getMatch } = require("../dummy/match");
 
+const isSSR = process.server;
+
 module.exports = {
-  fetchMatch: async ({ client, id }) => {
+  fetchMatch: async ({ clients, id }) => {
+    const client = isSSR ? clients.defaultClient : clients.alternativeClient;
     const { data } = await client.query({
       query: MatchQuery,
       variables: {
