@@ -1,5 +1,5 @@
 type Query {
-  schedule(ended: Boolean!, page: Int): Schedule
+  schedule(ended: Boolean!, page: Int, limit: Int): Schedule
 }
 
 type Schedule {

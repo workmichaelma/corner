@@ -1,26 +1,46 @@
-query schedule ($ended: Boolean!) {
-  schedule (ended: $ended) {
-    ...match
+query getSchedule($ended: Boolean!, $page: Int) {
+  schedule(ended: $ended, page: $page) {
+    metadata {
+      totalDocs
+      limit
+      hasNextPage
+    }
+    docs {
+      ...match
+      history {
+        home {
+          ...match
+        }
+        away {
+          ...match
+        }
+      }
+    }
   }
 }
 
-fragment match on Match{
+fragment match on Match {
   id
-  matchDatetime (format: HH_mm)
+  matchDatetime(format: FULL_FORMATTED)
+  matchDate: matchDatetime(format: DD_MM)
+  matchTime: matchDatetime(format: HH_mm)
   ended
   homeTeam {
+    teamId
     teamName
     rank
   }
   awayTeam {
+    teamId
     teamName
     rank
   }
   league {
+    leagueId
     name
   }
+  ...odds_firstlatest
   ...result
-  ...odds
 }
 
 fragment result on Match {
@@ -33,14 +53,12 @@ fragment result on Match {
       home
       away
     }
-    corner {
-      full {
-        total
-        home
-        away
-      }
-    }
     HAD
+    FHA
+    HHA {
+      first
+      latest
+    }
     HDC {
       first
       latest
@@ -49,35 +67,63 @@ fragment result on Match {
       first
       latest
     }
+    FHL {
+      first
+      latest
+    }
     CHL {
       first
       latest
-    }    
+    }
   }
 }
 
-fragment odds on Match {
-  odds (type: LATEST){
+fragment odds_firstlatest on Match {
+  odds(type: FIRST_LATEST) {
     HAD {
       H
       D
       A
+      datetime
+    }
+    FHA {
+      H
+      D
+      A
+      datetime
+    }
+    HHA {
+      H
+      D
+      A
+      HG
+      AG
+      datetime
     }
     HDC {
       H
       A
       HG
       AG
+      datetime
     }
     HIL {
       H
       L
       LINE
+      datetime
+    }
+    FHL {
+      H
+      L
+      LINE
+      datetime
     }
     CHL {
       H
       L
       LINE
+      datetime
     }
   }
 }

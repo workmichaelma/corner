@@ -78,7 +78,7 @@ MatchSchema.statics.getTeamHistory = async ({ _id, teamId, before, after }) => {
   return [];
 };
 
-MatchSchema.statics.getSchedule = async ({ page = 1 }) => {
+MatchSchema.statics.getSchedule = async ({ page = 1, limit = 10 }) => {
   return Match.paginate(
     {
       datetime: {
@@ -87,7 +87,7 @@ MatchSchema.statics.getSchedule = async ({ page = 1 }) => {
     },
     {
       page,
-      limit: 10,
+      limit,
       sort: { datetime: 1, num: 1 },
       populate,
       lean: true,
@@ -95,7 +95,7 @@ MatchSchema.statics.getSchedule = async ({ page = 1 }) => {
   );
 };
 
-MatchSchema.statics.getEndedMatches = async ({ page = 1 }) => {
+MatchSchema.statics.getEndedMatches = async ({ page = 1, limit = 10 }) => {
   return Match.paginate(
     {
       datetime: {
@@ -104,7 +104,7 @@ MatchSchema.statics.getEndedMatches = async ({ page = 1 }) => {
     },
     {
       page,
-      limit: 10,
+      limit,
       sort: { datetime: -1, num: 1 },
       populate,
       lean: true,
