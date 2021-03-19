@@ -1,20 +1,21 @@
 <template>
-  <v-flex id="match__profile" class="d-flex col-12 caption justify-space-between align-center pt-0">
+  <v-flex
+    id="match__profile"
+    class="d-flex col-12 caption justify-space-between align-center pt-0"
+  >
     <div>
-      {{ get(match, 'matchDatetime', '') }}
+      {{ get(match, "matchDatetime", "") }}
     </div>
     <div>
-      {{ get(match, 'league.name', '') }}
+      {{ get(match, "league.name", "") }}
     </div>
   </v-flex>
 </template>
 <script>
-import Match from '~/mixins/match'
-import { get } from 'lodash'
+import Match from "~/mixins/match";
+import { get } from "lodash";
 export default {
-  mixins: [
-    Match
-  ],
+  mixins: [Match],
   props: {
     match: {
       required: true,
@@ -24,5 +25,5 @@ export default {
   methods: {
     get
   }
-}
+};
 </script>

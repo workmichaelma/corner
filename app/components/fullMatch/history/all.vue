@@ -4,6 +4,7 @@
       <v-list dense>
         <v-list-item-group color="white">
           <template v-for="i in historyLength">
+            <v-divider v-if="i > 1" :key="i" />
             <v-list-item
               :inactive="false"
               :key="`history-all-v-list-item__${i}`"
@@ -18,7 +19,7 @@
                       teamId: match.homeTeam.teamId,
                       leagueId: match.league.leagueId,
                       config,
-                      half: true,
+                      half: true
                     }"
                     :key="`matchRow_home_${i - 1}`"
                   />
@@ -32,14 +33,13 @@
                       leagueId: match.league.leagueId,
                       config,
                       half: true,
-                      right: true,
+                      right: true
                     }"
                     :key="`matchRow_away_${i - 1}`"
                   />
                 </v-flex>
               </v-list-item-content>
             </v-list-item>
-            <v-divider v-if="i + 1 < historyLength" :key="i" />
           </template>
         </v-list-item-group>
       </v-list>
@@ -54,12 +54,12 @@ export default {
   props: {
     match: {
       required: true,
-      default: {},
+      default: {}
     },
     config: {
       required: true,
-      default: {},
-    },
+      default: {}
+    }
   },
   computed: {
     historyLength() {
@@ -67,17 +67,17 @@ export default {
         get(this.match, "history.home", []).length,
         get(this.match, "history.away", []).length
       );
-    },
+    }
   },
   components: {
-    MatchRow,
-  },
+    MatchRow
+  }
 };
 </script>
 
 <style lang="stylus" scoped>
 .content
-  height 40px
+  height 50px
   > div
     height 100%
 </style>

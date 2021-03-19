@@ -22,7 +22,7 @@ query getSchedule($ended: Boolean!, $page: Int) {
 fragment match on Match {
   id
   matchDatetime(format: FULL_FORMATTED)
-  matchDate: matchDatetime(format: DD_MM)
+  matchDate: matchDatetime(format: DD)
   matchTime: matchDatetime(format: HH_mm)
   ended
   homeTeam {

@@ -6,10 +6,11 @@
   >
     <!-- 角球數 -->
     <corner-count
+      v-if="cornerCount > -1"
       v-bind="{
-        count: get(match, 'result.corner.full.total'),
+        count: cornerCount,
         result: get(match, 'result.CHL.latest'),
-        right,
+        right
       }"
       class="corner-count flex-grow-0 flex-shrink-0"
     />
@@ -28,7 +29,7 @@
     />
     <!-- 主要賠率及結果 -->
 
-    <Profile v-if="!half" v-bind="{match, teamId, leagueId}" />
+    <Profile v-if="!half" v-bind="{ match, teamId, leagueId }" />
     <!-- <keep-alive>
       <template v-if="!half">
         <match-profile v-bind="{ match, teamId, leagueId, }" v-show="!half" />
@@ -38,7 +39,7 @@
       v-bind="{
         show: showOverlay && !half,
         url: `/match/${match.id}`,
-        toggleOverlay,
+        toggleOverlay
       }"
     />
   </v-flex>
@@ -46,9 +47,9 @@
 <script>
 import CornerCount from "./cornerCount";
 import DateHHA from "./date_HHA";
-import Odds from './odds'
-import Overlay from './overlay'
-import Profile from './Profile'
+import Odds from "./odds";
+import Overlay from "./overlay";
+import Profile from "./profile";
 // import Match from "~/mixins/match";
 import get from "lodash/get";
 import isObject from "lodash/isObject";
@@ -57,29 +58,29 @@ export default {
   // mixins: [Match],
   data() {
     return {
-      showOverlay: false,
+      showOverlay: false
     };
   },
   props: {
     match: {
       required: true,
-      default: {},
+      default: {}
     },
     leagueId: {
       required: true,
-      default: "",
+      default: ""
     },
     teamId: {
       required: true,
-      default: "",
+      default: ""
     },
     half: {
       required: false,
-      default: false,
+      default: false
     },
     right: {
       required: false,
-      default: false,
+      default: false
     },
     config: {
       required: true,
@@ -87,30 +88,33 @@ export default {
         showSameSide: false,
         showSameLeague: false,
         showSimilarOdd: false,
-        oddsRange: null,
-      },
-    },
+        oddsRange: null
+      }
+    }
   },
   computed: {
     side() {
       const homeId = get(this, "match.homeTeam.teamId");
       return homeId === this.teamId ? "home" : "away";
     },
+    cornerCount() {
+      return get(this.match, "result.corner.full.total");
+    }
   },
   methods: {
     get,
     toggleOverlay() {
-      console.log({o: this.showOverlay})
+      console.log({ o: this.showOverlay });
       this.showOverlay = !this.showOverlay;
-    },
+    }
   },
   components: {
     CornerCount,
     "date-hha": DateHHA,
     Odds,
     Overlay,
-    Profile,
-  },
+    Profile
+  }
 };
 </script>
 

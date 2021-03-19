@@ -4,14 +4,14 @@
       v-bind="{
         home: get(match, 'homeTeam.teamName', ''),
         away: get(match, 'awayTeam.teamName', ''),
-        to,
+        to
       }"
     />
     <control-bar
       v-bind="{
-        HAD_H: get(match, 'odds_firstlatest.HAD[1].H'),
+        HAD_H: get(match, 'odds.HAD[1].H'),
         updateControlConfig,
-        disabled: pages[currentPage] === 'all',
+        disabled: pages[currentPage] === 'all'
       }"
     />
     <v-flex class="d-flex">
@@ -36,7 +36,7 @@
 <script>
 import { get } from "lodash";
 import All from "./all";
-import Side from "./Side";
+import Side from "./side";
 import ControlBar from "./controlBar";
 import TeamPicker from "./teamPicker";
 export default {
@@ -44,7 +44,7 @@ export default {
     All,
     Side,
     ControlBar,
-    TeamPicker,
+    TeamPicker
   },
   data() {
     return {
@@ -54,15 +54,15 @@ export default {
         showSameSide: false,
         showSameLeague: false,
         showSimilarOdd: false,
-        oddsRange: null,
-      },
+        oddsRange: null
+      }
     };
   },
   props: {
     match: {
       required: true,
-      default: {},
-    },
+      default: {}
+    }
   },
   methods: {
     get,
@@ -71,12 +71,12 @@ export default {
     },
     updateControlConfig(v) {
       this.config = v;
-    },
+    }
   },
   watch: {
     config(v) {
       console.log("diu", v);
-    },
-  },
+    }
+  }
 };
 </script>

@@ -2,7 +2,7 @@
   <v-flex class="header-info pt-1 body-2 align-center d-flex">
     <v-flex class="side">
       <span>{{ league }}</span>
-      <span>{{ matchDatetime }}</span>
+      <span>{{ `${matchDate} ${matchTime}` }}</span>
     </v-flex>
     <v-flex class="corner text-center flex-grow-0">
       <template v-if="result">
@@ -10,15 +10,18 @@
       </template>
     </v-flex>
     <v-flex class="side d-flex justify-end">
-      <v-flex class="odds d-flex justify-between text-center flex-grow-0" v-if="isEmpty(result) && !isEmpty(chl)">
+      <v-flex
+        class="odds d-flex justify-between text-center flex-grow-0"
+        v-if="isEmpty(result) && !isEmpty(chl)"
+      >
         <v-flex class="grey--text lighten-2">
-          {{chl.H}}
+          {{ chl.H }}
         </v-flex>
         <v-flex>
-          {{chl.LINE}}
+          {{ chl.LINE }}
         </v-flex>
         <v-flex class="grey--text lighten-2">
-          {{chl.L}}
+          {{ chl.L }}
         </v-flex>
       </v-flex>
     </v-flex>
@@ -26,27 +29,30 @@
 </template>
 
 <script>
-import { isEmpty } from 'lodash'
+import { isEmpty } from "lodash";
 export default {
-  name: 'match-header-info',
+  name: "match-header-info",
   props: {
     league: {
-      default: ''
+      default: ""
     },
-    matchDatetime: {
-      default: ''
+    matchDate: {
+      default: ""
+    },
+    matchTime: {
+      default: ""
     },
     chl: {
       default: {}
     },
     result: {
-      default: ''
+      default: ""
     }
   },
   methods: {
-    isEmpty,
+    isEmpty
   }
-}
+};
 </script>
 
 <style lang="stylus">
@@ -57,4 +63,4 @@ export default {
   width 50px
 .odds
   width 90px
-</style>>
+</style>

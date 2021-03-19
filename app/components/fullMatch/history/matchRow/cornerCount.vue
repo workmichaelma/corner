@@ -1,7 +1,16 @@
 <template>
-  <v-flex :class="`corner-count d-flex flex-column align-center justify-center title font-weight-bold ${isHigh ? 'red' : 'green'}--text lighten-1`">
-    <v-flex class="badge align-center justify-center" :class="{_right: right}">
-      {{isHigh ? '大' : '細'}}
+  <v-flex
+    :class="
+      `corner-count d-flex flex-column align-center justify-center title font-weight-bold ${
+        isHigh ? 'red' : 'green'
+      }--text lighten-1`
+    "
+  >
+    <v-flex
+      class="badge align-center justify-center"
+      :class="{ _right: right }"
+    >
+      {{ isHigh ? "大" : "細" }}
     </v-flex>
     <span class="count">{{ count }}</span>
   </v-flex>
@@ -12,11 +21,11 @@ export default {
   props: {
     count: {
       required: true,
-      default: ''
+      default: ""
     },
     result: {
       required: true,
-      default: ''
+      default: ""
     },
     right: {
       required: true,
@@ -24,11 +33,11 @@ export default {
     }
   },
   computed: {
-    isHigh () {
-      return this.result === 'H'
+    isHigh() {
+      return this.result === "H";
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -41,6 +50,7 @@ export default {
     height 10px
     left 1px
     font-size xx-small !important
+    line-height 12px
     &._right
       right 1px
       left unset

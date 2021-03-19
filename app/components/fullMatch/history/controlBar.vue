@@ -61,28 +61,28 @@
   </v-toolbar>
 </template>
 <script>
-import { isEmpty, map } from "lodash";
+import { isEmpty, map, head, last } from "lodash";
 export default {
   props: {
     HAD_H: {
       required: true,
-      default: "",
+      default: ""
     },
     updateControlConfig: {
       required: true,
-      type: Function,
+      type: Function
     },
     disabled: {
       required: true,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       showSameSide: false,
       showSameLeague: false,
       showSimilarOdd: false,
-      sliderPositions: [0, 4],
+      sliderPositions: [0, 4]
     };
   },
   computed: {
@@ -96,10 +96,10 @@ export default {
             (H * 0.95).toFixed(2),
             H,
             (H * 1.05).toFixed(2),
-            (H * 1.1).toFixed(2),
+            (H * 1.1).toFixed(2)
           ],
           parseFloat
-        ),
+        )
       };
     },
     oddsRange() {
@@ -107,7 +107,7 @@ export default {
       if (isEmpty(this.sliderPositions)) return null;
       return {
         min: this.slider.tick[min] || head(this.slider.tick),
-        max: this.slider.tick[max] || last(this.slider.tick),
+        max: this.slider.tick[max] || last(this.slider.tick)
       };
     },
     config() {
@@ -115,14 +115,14 @@ export default {
         showSameSide: this.showSameSide,
         showSameLeague: this.showSameLeague,
         showSimilarOdd: this.showSimilarOdd,
-        oddsRange: this.showSimilarOdd ? this.oddsRange : null,
+        oddsRange: this.showSimilarOdd ? this.oddsRange : null
       };
-    },
+    }
   },
   methods: {
     update(e) {
       this.sliderPositions = e;
-    },
+    }
   },
   watch: {
     config: {
@@ -132,9 +132,9 @@ export default {
         }
         this.updateControlConfig(v);
       },
-      deep: true,
-    },
-  },
+      deep: true
+    }
+  }
 };
 </script>
 <style lang="stylus" scoped>

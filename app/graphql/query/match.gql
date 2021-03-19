@@ -1,30 +1,37 @@
-query match ($id: ID!) {
-  match (id: $id) {
-    id
-    winId
-    matchDatetime
-    matchDay
-    ended
-    homeTeam {
-      teamId
-      winId
-      teamName
-      rank
+query match($id: ID!) {
+  match(id: $id) {
+    ...match
+    history {
+      home {
+        ...match
+      }
+      away {
+        ...match
+      }
     }
-    awayTeam {
-      teamId
-      winId
-      teamName
-      rank
-    }
-    league {
-      leagueId
-      winId
-      name
-    }
-  ...result
-  ...odds
   }
+}
+
+fragment match on Match {
+  id
+  matchDatetime(format: FULL_FORMATTED)
+  ended
+  homeTeam {
+    teamId
+    teamName
+    rank
+  }
+  awayTeam {
+    teamId
+    teamName
+    rank
+  }
+  league {
+    leagueId
+    name
+  }
+  ...odds_firstlatest
+  ...result
 }
 
 fragment result on Match {
@@ -58,23 +65,21 @@ fragment result on Match {
     CHL {
       first
       latest
-    }    
+    }
   }
 }
 
-fragment odds on Match {
-  odds (type: FIRST_LATEST){
+fragment odds_firstlatest on Match {
+  odds(type: FIRST_LATEST) {
     HAD {
       H
       D
       A
-      datetime
     }
     FHA {
       H
       D
       A
-      datetime
     }
     HHA {
       H
@@ -82,32 +87,27 @@ fragment odds on Match {
       A
       HG
       AG
-      datetime
     }
     HDC {
       H
       A
       HG
       AG
-      datetime
     }
     HIL {
       H
       L
       LINE
-      datetime
     }
     FHL {
       H
       L
       LINE
-      datetime
     }
     CHL {
       H
       L
       LINE
-      datetime
     }
   }
 }
