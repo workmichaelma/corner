@@ -13,6 +13,8 @@ const formatDate = ({ datetime, format }) => {
       return date.format("HH:mm");
     case "DD_MM":
       return date.format("DD/MM");
+    case "DD":
+      return date.format("DD");
     default:
       return date;
   }

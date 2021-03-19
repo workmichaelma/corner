@@ -6,6 +6,7 @@ enum DatetimeFormatEnum {
   FULL_FORMATTED
   HH_mm
   DD_MM
+  DD
 }
 
 enum OddTypeEnum {
