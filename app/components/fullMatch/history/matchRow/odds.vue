@@ -1,36 +1,23 @@
 <template>
   <v-flex
-    class="odds d-flex flex-column justify-center px-1 text-center accent-1"
+    class="odds d-flex flex-column justify-center px-1 text-center accent-1 overline"
   >
     <v-flex :class="`d-flex ${flexRowString} pt-1`">
-      <v-flex
-        class="d-flex align-center justify-center"
-        :class="
-          side === 'home' && teamResult !== '和'
-            ? getTeamResultColor(teamResult)
-            : ''
-        "
-      >
-        {{ HAD[side === "home" ? "H" : "A"] }}
-      </v-flex>
       <v-flex :class="`d-flex align-center justify-center ${flexRowString}`">
         <div>{{ side === "home" ? "主" : "客" }}</div>
         <div class="score">
-          [
-          {{ `${get(result, "FT.home", "")} : ${get(result, "FT.away", "")}` }}
-          ]
+          {{ `${get(result, "FT.home", "")}:${get(result, "FT.away", "")}` }}
         </div>
         <div :class="getTeamResultColor(teamResult)">{{ teamResult }}</div>
       </v-flex>
-      <v-flex
-        class="d-flex align-center justify-center"
-        :class="
-          side === 'away' && teamResult !== '和'
-            ? getTeamResultColor(teamResult)
-            : ''
-        "
-      >
-        {{ HAD[side === "home" ? "A" : "H"] }}
+      <v-flex class="d-flex align-center justify-center">
+        <v-flex
+          v-for="t in ['H', 'D', 'A']"
+          :key="t"
+          :class="getHADResultStyle(t, result.HAD)"
+        >
+          {{ HAD[t] }}
+        </v-flex>
       </v-flex>
       <v-flex
         class="d-flex align-center justify-space-around dateDiff flex-grow-0 flex-shrink-0"
@@ -43,7 +30,7 @@
       <v-flex class="bot d-flex flex-row">
         <v-flex
           class="d-flex align-center justify-center"
-          :class="getColor('H', get(result, 'CHL.latest'))"
+          :class="getOddClass('H', get(result, 'CHL.latest'))"
         >
           {{ CHL.H }}
         </v-flex>
@@ -54,7 +41,7 @@
         </v-flex>
         <v-flex
           class="d-flex align-center justify-center"
-          :class="getColor('L', get(result, 'CHL.latest'))"
+          :class="getOddClass('L', get(result, 'CHL.latest'))"
         >
           {{ CHL.L }}
         </v-flex>
@@ -65,7 +52,7 @@
       <v-flex class="bot d-flex flex-row" v-if="!isEmpty(HIL)">
         <v-flex
           class="d-flex align-center justify-center"
-          :class="getColor('H', get(result, 'HIL.latest'))"
+          :class="getOddClass('H', get(result, 'HIL.latest'))"
         >
           {{ HIL.H }}
         </v-flex>
@@ -76,7 +63,7 @@
         </v-flex>
         <v-flex
           class="d-flex align-center justify-center"
-          :class="getColor('L', get(result, 'HIL.latest'))"
+          :class="getOddClass('L', get(result, 'HIL.latest'))"
         >
           {{ HIL.L }}
         </v-flex>
@@ -87,7 +74,7 @@
 
 <script>
 import { get, isEmpty } from "lodash";
-import { getTeamResultColor } from "~/utils";
+import { getTeamResultColor, getHADResultStyle } from "~/utils";
 export default {
   props: {
     dateDiff: {
@@ -137,19 +124,26 @@ export default {
   },
   methods: {
     get,
-    getColor(self, result) {
-      return `${self === result ? "lime" : "grey"}--text`;
+    getOddClass(self, result) {
+      return `${
+        self === result ? "text-decoration-underline lime" : "grey"
+      }--text`;
     },
     getTeamResultColor,
+    getHADResultStyle,
     isEmpty
   }
 };
 </script>
 
 <style lang="stylus" scoped>
+// .odds
+//   font-size xx-small
+//   line-height 12px
 .odds
-  font-size xx-small
+  max-width calc( 100% - 1px - 26px )
   line-height 12px
+  letter-spacing normal !important
 
 .bot
   flex-basis 50%

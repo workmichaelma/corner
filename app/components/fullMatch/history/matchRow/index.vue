@@ -146,6 +146,6 @@ export default {
 
 }
 .corner-count
-  width 30px
-  flex-basis 30px
+  width 26px
+  flex-basis 26px
 </style>

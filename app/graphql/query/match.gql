@@ -44,6 +44,18 @@ fragment result on Match {
       home
       away
     }
+    corner {
+      full {
+        total
+        home
+        away
+      }
+      half {
+        total
+        home
+        away
+      }
+    }
     HAD
     FHA
     HHA {
