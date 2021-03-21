@@ -84,7 +84,7 @@ MatchSchema.statics.getSchedule = async ({ page = 1, limit = 10 }) => {
   const { docs, ...metadata } = await Match.paginate(
     {
       datetime: {
-        $gte: new Date(),
+        $gt: new Date(),
       },
     },
     {
