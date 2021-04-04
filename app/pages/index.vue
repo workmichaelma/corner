@@ -1,34 +1,35 @@
 <template>
-  <v-layout
-    justify-center
-    align-center
-  >
+  <v-layout justify-center align-center>
     <v-flex xs12 sm8 md10>
-      <match-list v-bind="{matches}" />
+      <match-list v-bind="{ matches }" />
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import MatchList from '~/components/matchList'
+import MatchList from "~/components/matchList";
 
 export default {
-  async asyncData ({ params, store }) {
-    await store.dispatch('schedulePage/init', {
+  async asyncData({ params, store }) {
+    await store.dispatch("schedulePage/init", {
       ended: false
-    })
+    });
+  },
+  head() {
+    return {
+      title: "賽程"
+    };
   },
   components: {
     MatchList
   },
   computed: {
-    matches () {
+    matches() {
       // return this.$store.state.matchList.upcoming || []
-      return this.$store.state.schedulePage.future || []
+      return this.$store.state.schedulePage.future || [];
     }
-  },
-}
+  }
+};
 </script>
 
-<style lang="stylus">
-</style>
+<style lang="stylus"></style>
