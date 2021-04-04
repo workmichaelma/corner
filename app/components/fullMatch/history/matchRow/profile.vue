@@ -17,7 +17,7 @@
         {{ get(match, "awayTeam.teamName") }}
       </v-flex>
     </v-flex>
-    <v-flex class="d-flex flex-column justify-space-between text-center">
+    <v-flex class="d-flex flex-column justify-space-between text-center stat">
       <v-flex class="d-flex justify-center align-center">
         入球
       </v-flex>
@@ -30,7 +30,7 @@
         <span class="pl-1">[ {{ get(match, "result.HT.away") }} ]</span>
       </v-flex>
     </v-flex>
-    <v-flex class="d-flex flex-column justify-space-between text-center">
+    <v-flex class="d-flex flex-column justify-space-between text-center stat">
       <v-flex class="d-flex justify-center align-center">
         角球
       </v-flex>
@@ -116,6 +116,10 @@ export default {
 
 .league
   transform scale(0.8)
+
+.stat
+  width 50px
+  flex-basis 50px
 
 span
   font-size xx-small

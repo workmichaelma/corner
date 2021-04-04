@@ -5,7 +5,7 @@
     @dblclick="toggleOverlay()"
   >
     <!-- 角球數 -->
-    <corner-count
+    <!-- <corner-count
       v-if="cornerCount > -1"
       v-bind="{
         count: cornerCount,
@@ -13,11 +13,20 @@
         right
       }"
       class="corner-count flex-grow-0 flex-shrink-0"
+    /> -->
+    <match-odds
+      v-bind="{
+        match,
+        count: cornerCount,
+        result: get(match, 'result'),
+        right,
+        teamId
+      }"
     />
     <!-- 角球數 -->
-    <v-divider vertical inset />
+    <!-- <v-divider vertical inset /> -->
     <!-- 主要賠率及結果 -->
-    <odds
+    <!-- <odds
       v-bind="{
         dateDiff: match.dateDiff || 10,
         odds: get(match, 'odds'),
@@ -26,7 +35,7 @@
         side
       }"
       class="flex-grow-1"
-    />
+    /> -->
     <!-- 主要賠率及結果 -->
 
     <Profile v-if="!half" v-bind="{ match, teamId, leagueId }" />
@@ -45,11 +54,12 @@
   </v-flex>
 </template>
 <script>
-import CornerCount from "./cornerCount";
+// import CornerCount from "./cornerCount";
 import DateHHA from "./date_HHA";
 import Odds from "./odds";
 import Overlay from "./overlay";
 import Profile from "./profile";
+import MatchOdds from "./matchOdds/index";
 // import Match from "~/mixins/match";
 import get from "lodash/get";
 import isObject from "lodash/isObject";
@@ -109,7 +119,8 @@ export default {
     }
   },
   components: {
-    CornerCount,
+    MatchOdds,
+    // CornerCount,
     "date-hha": DateHHA,
     Odds,
     Overlay,
