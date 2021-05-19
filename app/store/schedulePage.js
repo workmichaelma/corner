@@ -17,7 +17,8 @@ export const actions = {
     const stateType = ended ? "ended" : "future";
     const matches = await Schedule.getSchedule({
       clients: this.app.apolloProvider.clients,
-      ended
+      ended,
+      limit: 20
     });
 
     commit("init", {

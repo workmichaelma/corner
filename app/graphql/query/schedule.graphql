@@ -1,5 +1,5 @@
-query getSchedule($ended: Boolean!, $page: Int) {
-  schedule(ended: $ended, page: $page) {
+query getSchedule($ended: Boolean!, $page: Int, $limit: Int) {
+  schedule(ended: $ended, page: $page, limit: $limit) {
     metadata {
       totalDocs
       limit

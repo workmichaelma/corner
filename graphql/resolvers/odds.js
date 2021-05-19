@@ -1,10 +1,11 @@
-const { formatDate } = require('../utils/date')
+const { formatDate } = require("../utils/date");
+const { prettyHDCLine } = require("../utils/odds");
 
 const datetime = (parent, args, context, info) => {
-  const { datetime } = parent
-  const { format } = args
-  return formatDate({ datetime, format })
-}
+  const { datetime } = parent;
+  const { format } = args;
+  return formatDate({ datetime, format });
+};
 
 module.exports = {
   HAD: {
@@ -18,6 +19,9 @@ module.exports = {
   },
   HDC: {
     datetime,
+    HG: (parent, args, context, info) => {
+      return parent.HG ? prettyHDCLine(parent.HG) : undefined;
+    },
   },
   HIL: {
     datetime,
@@ -28,4 +32,4 @@ module.exports = {
   CHL: {
     datetime,
   },
-}
+};

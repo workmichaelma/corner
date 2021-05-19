@@ -7,12 +7,13 @@ const { getUpcomingSchedule, getEndedSchedule } = require("../dummy/schedule");
 const isSSR = process.server;
 
 module.exports = {
-  getSchedule: async ({ clients, ended }) => {
+  getSchedule: async ({ clients, ended, limit }) => {
     const client = isSSR ? clients.defaultClient : clients.alternativeClient;
     const { data } = await client.query({
       query: ScheduleQuery,
       variables: {
-        ended
+        ended,
+        limit
       }
     });
     // const { data } = ended
