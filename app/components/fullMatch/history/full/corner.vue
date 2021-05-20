@@ -1,7 +1,8 @@
 <template>
   <v-flex
+    class="corner px-3 text-center"
     :class="
-      `corner-count d-flex flex-column align-center justify-center font-weight-bold ${
+      `${
         count > -1 && highLow !== null
           ? `${isHigh ? 'red' : 'green'}--text`
           : ''
@@ -37,9 +38,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.corner-count
-  width 25px
-  flex-basis 25px
-  max-width 25px
-  height 100%
+.corner
+  width 50px
 </style>

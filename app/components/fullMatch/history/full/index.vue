@@ -3,7 +3,8 @@
     <Profile
       v-bind="{
         matchDate: match.matchDate,
-        leagueName: match.league.name
+        leagueName: match.league.name,
+        result: match.result
       }"
     />
     <div class="d-flex align-center justify-center">
@@ -16,20 +17,17 @@
         }"
       />
       <Result v-bind="{ odds: match.odds, result: match.result }" />
-      <Corner v-bind="{ result: match.result }" />
     </div>
   </div>
 </template>
 
 <script>
-import Corner from "./corner";
 import Profile from "./profile";
 import Result from "./result/index";
 import Score from "./score";
 export default {
   name: "full-history",
   components: {
-    Corner,
     Profile,
     Result,
     Score

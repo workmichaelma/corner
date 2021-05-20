@@ -6,13 +6,23 @@
     <div class="px-1 league">
       {{ leagueName }}
     </div>
+    <Corner v-bind="{ result }" />
   </div>
 </template>
 
 <script>
+import get from "lodash/get";
+import Corner from "./corner";
 export default {
   name: "full-history-profile",
+  components: {
+    Corner
+  },
   props: {
+    result: {
+      default: {},
+      required: true
+    },
     leagueName: {
       default: "",
       required: true
@@ -21,6 +31,9 @@ export default {
       default: "",
       required: true
     }
+  },
+  methods: {
+    get
   }
 };
 </script>
