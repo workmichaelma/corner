@@ -6,10 +6,16 @@
           <v-list-item
             :inactive="false"
             :key="`history-side-v-list-item__${i}`"
-            class="px-1"
+            class="px-0"
           >
             <v-list-item-content class="content pa-0 py-1">
-              <match-row
+              <Full
+                v-bind="{
+                  match: m,
+                  teamId: match[`${side}Team`].teamId
+                }"
+              />
+              <!-- <match-row
                 v-bind="{
                   match: m,
                   teamId: match[`${side}Team`].teamId,
@@ -18,7 +24,7 @@
                   half: false
                 }"
                 :key="`matchHistory__${i}`"
-              />
+              /> -->
             </v-list-item-content>
           </v-list-item>
           <v-divider v-if="i + 1 < match.history[side].length" :key="i" />
@@ -31,9 +37,11 @@
 // import Match from '~/mixins/match'
 import { isObject, get, reduce } from "lodash";
 import MatchRow from "./matchRow/index";
+import Full from "./full/index";
 export default {
   components: {
-    MatchRow
+    MatchRow,
+    Full
   },
   // mixins: [
   //   Match
@@ -117,7 +125,7 @@ export default {
 //   >>> .v-list-item
 //     min-height 0 !important
 .content
-  height 50px
+  min-height 50px
   > div
     height 100%
 </style>

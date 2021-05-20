@@ -4,16 +4,6 @@
     :class="{ half, right, [`flex-row${right && '-reverse'}`]: true }"
     @dblclick="toggleOverlay()"
   >
-    <!-- 角球數 -->
-    <!-- <corner-count
-      v-if="cornerCount > -1"
-      v-bind="{
-        count: cornerCount,
-        result: get(match, 'result.CHL.latest'),
-        right
-      }"
-      class="corner-count flex-grow-0 flex-shrink-0"
-    /> -->
     <match-odds
       v-bind="{
         match,
@@ -23,20 +13,6 @@
         teamId
       }"
     />
-    <!-- 角球數 -->
-    <!-- <v-divider vertical inset /> -->
-    <!-- 主要賠率及結果 -->
-    <!-- <odds
-      v-bind="{
-        dateDiff: match.dateDiff || 10,
-        odds: get(match, 'odds'),
-        result: get(match, 'result'),
-        reverse: right,
-        side
-      }"
-      class="flex-grow-1"
-    /> -->
-    <!-- 主要賠率及結果 -->
 
     <Profile v-if="!half" v-bind="{ match, teamId, leagueId }" />
     <!-- <keep-alive>
@@ -54,9 +30,6 @@
   </v-flex>
 </template>
 <script>
-// import CornerCount from "./cornerCount";
-import DateHHA from "./date_HHA";
-import Odds from "./odds";
 import Overlay from "./overlay";
 import Profile from "./profile";
 import MatchOdds from "./matchOdds/index";
@@ -66,6 +39,11 @@ import isObject from "lodash/isObject";
 import format from "date-fns/format";
 export default {
   // mixins: [Match],
+  components: {
+    MatchOdds,
+    Overlay,
+    Profile
+  },
   data() {
     return {
       showOverlay: false
@@ -117,14 +95,6 @@ export default {
       console.log({ o: this.showOverlay });
       this.showOverlay = !this.showOverlay;
     }
-  },
-  components: {
-    MatchOdds,
-    // CornerCount,
-    "date-hha": DateHHA,
-    Odds,
-    Overlay,
-    Profile
   }
 };
 </script>

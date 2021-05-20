@@ -1,9 +1,12 @@
 <template>
-  <v-flex class="odd-col text-center flex-grow-0">
+  <v-flex
+    class="odd-col text-center flex-grow-0"
+    v-if="result !== '' && odd.LINE"
+  >
     <div>
       {{ odd.LINE }}
     </div>
-    <div>
+    <div class="odd">
       {{ odd.H }}
     </div>
     <div
@@ -17,7 +20,7 @@
 
 <script>
 export default {
-  name: "HIL-result",
+  name: "full-history-result-CHL",
   props: {
     odd: {
       required: false,
@@ -43,4 +46,9 @@ export default {
 .odd-col
   width 36px
   flex-basis 36px
+
+.odd
+  padding 1px 0
+  transform scale(0.8)
+  transform-origin center center
 </style>

@@ -15,6 +15,7 @@ query match($id: ID!) {
 fragment match on Match {
   id
   matchDatetime(format: FULL_FORMATTED)
+  matchDate: matchDatetime(format: DD_MM)
   ended
   homeTeam {
     teamId

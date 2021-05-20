@@ -1,20 +1,20 @@
 <template>
-  <div class="had caption" v-if="HAD.H && HAD.D && HAD.A">
-    <div class="odd" :class="{'grey--text darken-1': result !== 'H'}">
+  <div class="had" v-if="HAD.H && HAD.D && HAD.A">
+    <div class="odd" :class="{ 'grey--text darken-1': result !== 'H' }">
       {{ HAD.H }}
     </div>
-    <div class="odd" :class="{'grey--text darken-1': result !== 'D'}">
+    <div class="odd" :class="{ 'grey--text darken-1': result !== 'D' }">
       {{ HAD.D }}
     </div>
-    <div class="odd" :class="{'grey--text darken-1': result !== 'A'}">
+    <div class="odd" :class="{ 'grey--text darken-1': result !== 'A' }">
       {{ HAD.A }}
     </div>
-  </div>  
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'history-matchrow-matchprofile-had',
+  name: "history-matchrow-matchprofile-had",
   props: {
     HAD: {
       required: true,
@@ -22,10 +22,10 @@ export default {
     },
     result: {
       required: true,
-      default: ''
+      default: ""
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

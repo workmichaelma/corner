@@ -31,7 +31,13 @@ export default {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Reggae+One&display=swap"
+      }
+    ]
   },
   /*
    ** Global CSS
@@ -53,7 +59,21 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ["@nuxtjs/vuetify"],
+  buildModules: [
+    // Simple usage
+    "@nuxtjs/google-fonts",
+    "@nuxtjs/vuetify",
+
+    // With options
+    [
+      "@nuxtjs/google-fonts",
+      {
+        families: {
+          "Reggae+One": true
+        }
+      }
+    ]
+  ],
   /*
    ** Nuxt.js modules
    */

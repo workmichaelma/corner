@@ -1,11 +1,11 @@
 <template>
   <v-flex class="d-flex">
-    <div class="col-6 caption pa-0">
+    <div class="col-6 pa-0">
       <v-btn tile v-on:click="to(0)">
         {{ home }}
       </v-btn>
     </div>
-    <div class="d-flex col-6 caption pa-0 justify-end">
+    <div class="d-flex col-6 pa-0 justify-end">
       <v-btn tile v-on:click="to(2)">
         {{ away }}
       </v-btn>
@@ -19,19 +19,18 @@ export default {
   props: {
     home: {
       default: "",
-      type: String,
+      type: String
     },
     away: {
       default: "",
-      type: String,
+      type: String
     },
     to: {
       type: Function,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

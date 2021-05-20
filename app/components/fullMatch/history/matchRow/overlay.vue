@@ -1,20 +1,21 @@
-<template>  
-  <v-overlay
-    absolute
-    :value="show"
-    opacity="0.9"
-    v-if="show"
-    class="overlay"
-  >
+<template>
+  <v-overlay absolute :value="show" opacity="0.9" v-if="show" class="overlay">
     <v-card transparent>
-      <v-flex class="d-flex align-center justify-center caption">
+      <v-flex class="d-flex align-center justify-center">
         <v-btn x-small class="ma-2" tile color="teal" icon @click="redirect()">
           <v-icon>mdi-check</v-icon>
         </v-btn>
         <div>
           前往比賽?
         </div>
-        <v-btn x-small class="ma-2" tile color="teal" icon @click="toggleOverlay()">
+        <v-btn
+          x-small
+          class="ma-2"
+          tile
+          color="teal"
+          icon
+          @click="toggleOverlay()"
+        >
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-flex>
@@ -31,7 +32,7 @@ export default {
     },
     url: {
       required: true,
-      default: ''
+      default: ""
     },
     toggleOverlay: {
       required: true,
@@ -39,12 +40,12 @@ export default {
     }
   },
   methods: {
-    redirect () {
-      console.log(this.url)
-      this.$router.push(this.url)
+    redirect() {
+      console.log(this.url);
+      this.$router.push(this.url);
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="d-flex justify-space-around align-center">
+  <v-flex class="d-flex justify-space-around align-center had">
     <div :class="getHADResultStyle('H', result)">
       {{ odd.H }}
     </div>
@@ -15,7 +15,7 @@
 <script>
 import { getHADResultStyle } from "~/utils";
 export default {
-  name: "HAD-result",
+  name: "full-history-result-HAD",
   props: {
     odd: {
       required: true,
@@ -32,4 +32,7 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="stylus">
+.had
+  width 100px
+</style>

@@ -1,20 +1,20 @@
 <template>
-  <div class="hil caption" v-if="HIL.H && HIL.LINE && HIL.L">
-    <div class="odd" :class="{'grey--text darken-1': result !== 'H'}">
+  <div class="hil" v-if="HIL.H && HIL.LINE && HIL.L">
+    <div class="odd" :class="{ 'grey--text darken-1': result !== 'H' }">
       {{ HIL.H }}
     </div>
     <div class="odd">
       {{ HIL.LINE }}
     </div>
-    <div class="odd" :class="{'grey--text darken-1': result !== 'L'}">
+    <div class="odd" :class="{ 'grey--text darken-1': result !== 'L' }">
       {{ HIL.L }}
     </div>
-  </div>  
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'history-matchrow-matchprofile-hil',
+  name: "history-matchrow-matchprofile-hil",
   props: {
     HIL: {
       required: true,
@@ -22,10 +22,10 @@ export default {
     },
     result: {
       required: true,
-      default: ''
+      default: ""
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

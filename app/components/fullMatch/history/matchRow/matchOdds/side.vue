@@ -1,6 +1,6 @@
 <template>
   <v-flex
-    class="had d-flex flex-column justify-space-around flex-grow-0 text-center caption"
+    class="had d-flex flex-column justify-space-around flex-grow-0 text-center"
     :class="resultColor"
   >
     <div>

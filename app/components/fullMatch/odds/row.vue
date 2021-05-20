@@ -1,8 +1,6 @@
 <template>
   <v-flex class="d-flex text-center py-1" v-if="valid">
-    <v-flex
-      class="oddsType flex-grow-1 caption d-flex align-center justify-center"
-    >
+    <v-flex class="oddsType flex-grow-1 d-flex align-center justify-center">
       <template v-if="!isDefault">
         {{ getTypeName(type) }}
       </template>
@@ -36,18 +34,18 @@ export default {
   props: {
     type: {
       required: true,
-      default: "default",
+      default: "default"
     },
     odds: {
       required: false,
       default: () => {
         return [];
-      },
+      }
     },
     result: {
       required: false,
-      default: null,
-    },
+      default: null
+    }
   },
   computed: {
     isDefault() {
@@ -55,13 +53,13 @@ export default {
     },
     valid() {
       return get(this, "odds", []).length === 2 || this.isDefault;
-    },
+    }
   },
   components: {
     HAD,
     HHA,
     HL,
-    HDC,
+    HDC
   },
   methods: {
     getComponent(type) {
@@ -85,10 +83,10 @@ export default {
         HDC: "讓球",
         HIL: "大細",
         FHL: "半場大細",
-        CHL: "角球",
+        CHL: "角球"
       }[type];
-    },
-  },
+    }
+  }
 };
 </script>
 

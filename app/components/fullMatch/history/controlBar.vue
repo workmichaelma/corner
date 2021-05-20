@@ -41,7 +41,7 @@
             />
           </div>
         </v-flex>
-        <v-flex class="d-flex slider caption">
+        <v-flex class="d-flex slider">
           <v-range-slider
             :value="sliderPositions"
             class="align-center"

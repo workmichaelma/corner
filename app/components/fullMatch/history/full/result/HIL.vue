@@ -1,25 +1,23 @@
 <template>
   <v-flex class="odd-col text-center flex-grow-0">
-    <template v-if="result !== '' && odd.LINE">
-      <div>
-        {{ odd.LINE }}
-      </div>
-      <div>
-        {{ odd.H }}
-      </div>
-      <div
-        class="lighten-1"
-        :class="`${result !== '' ? (isHigh ? 'red' : 'green') : ''}--text`"
-      >
-        {{ resultString }}
-      </div>
-    </template>
+    <div>
+      {{ odd.LINE }}
+    </div>
+    <div class="odd ">
+      {{ odd.H }}
+    </div>
+    <div
+      class="lighten-1"
+      :class="`${result !== '' ? (isHigh ? 'red' : 'green') : ''}--text`"
+    >
+      {{ resultString }}
+    </div>
   </v-flex>
 </template>
 
 <script>
 export default {
-  name: "CHL-result",
+  name: "full-history-result-HIL",
   props: {
     odd: {
       required: false,
@@ -45,4 +43,9 @@ export default {
 .odd-col
   width 36px
   flex-basis 36px
+
+.odd
+  padding 1px 0
+  transform scale(0.8)
+  transform-origin center center
 </style>

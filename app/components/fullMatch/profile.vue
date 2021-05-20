@@ -1,7 +1,7 @@
 <template>
   <v-flex
     id="match__profile"
-    class="d-flex col-12 caption justify-space-between align-center pt-0"
+    class="d-flex col-12 justify-space-between align-center pt-0"
   >
     <div>
       {{ get(match, "matchDatetime", "") }}
