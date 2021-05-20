@@ -4,6 +4,7 @@ const MatchSchema = require("../mongo/schema/Match");
 
 const { formatDate } = require("../utils/date");
 const { filterOdds } = require("../utils/odds");
+const { trimLeagueName } = require("../utils/league");
 
 module.exports = {
   Query: {
@@ -60,7 +61,7 @@ module.exports = {
         ? {
             leagueId: league.id,
             winId: league.winId,
-            name: league.name,
+            name: trimLeagueName(league.name),
             image: "",
           }
         : null;
