@@ -37,7 +37,7 @@ module.exports = {
             teamId: home.id,
             teamName: home.name,
             winId: home.winId,
-            rank: homeRank,
+            rank: (homeRank || "").replace(/[^a-z\d\s]+/gi, ""),
             image: home.image,
           }
         : null;
@@ -49,7 +49,7 @@ module.exports = {
             teamId: away.id,
             teamName: away.name,
             winId: away.winId,
-            rank: awayRank,
+            rank: (awayRank || "").replace(/[^a-z\d\s]+/gi, ""),
             image: away.image,
           }
         : null;
