@@ -3,7 +3,7 @@
     <div class="px-1">
       {{ matchDate }}
     </div>
-    <div class="px-1">
+    <div class="px-1 league">
       {{ leagueName }}
     </div>
   </div>
@@ -31,4 +31,7 @@ export default {
   height 0
   transform scale(0.8)
   transform-origin center left
+
+.league
+  white-space nowrap
 </style>
