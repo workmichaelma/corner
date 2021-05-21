@@ -1,11 +1,11 @@
 const getTeamResultColor = result => {
   switch (result) {
     case "羸":
-      return "red--text accent-1";
+      return "red--text text--accent-1";
     case "輸":
-      return "green--text accent-1";
+      return "green--text text--accent-1";
     default:
-      return "blue--text accent-1";
+      return "blue--text text--accent-1";
   }
 };
 
@@ -23,7 +23,13 @@ module.exports = {
       return result === "H" ? "輸" : "羸";
     }
   },
-  getTeamResultcolorBySide(HAD, side, sideId, id) {
+  getTeamResultcolorBySide(
+    HAD,
+    side,
+    sideId,
+    id,
+    defaultColor = "grey--text text--lighten-1"
+  ) {
     let color = "";
     if (sideId === id) {
       if (HAD === "D") return "light-blue--text darken-1";
@@ -34,6 +40,6 @@ module.exports = {
         color = side === "away" ? "羸" : "輸";
       }
     }
-    return color !== "" ? getTeamResultColor(color) : "";
+    return color !== "" ? getTeamResultColor(color) : defaultColor;
   }
 };

@@ -1,12 +1,15 @@
 <template>
   <div class="d-flex text-center">
     <div
-      class="team"
+      class="d-flex"
       :class="
         getTeamResultcolorBySide(HAD, 'home', teamId, get(homeTeam, 'teamId'))
       "
     >
-      <span class="rank">[{{ homeTeam.rank }}]</span>{{ homeTeam.teamName }}
+      <div class="rank">{{ homeTeam.rank }}</div>
+      <div class="team">
+        {{ homeTeam.teamName }}
+      </div>
     </div>
     <div class="score d-flex">
       <div class="score-FT">
@@ -39,12 +42,15 @@
       <div class="score-HT">({{ result.HT.home }}-{{ result.HT.away }})</div>
     </div>
     <div
-      class="team"
+      class="d-flex"
       :class="
         getTeamResultcolorBySide(HAD, 'away', teamId, get(awayTeam, 'teamId'))
       "
     >
-      <span class="rank">[{{ awayTeam.rank }}]</span>{{ awayTeam.teamName }}
+      <div class="team">
+        {{ awayTeam.teamName }}
+      </div>
+      <div class="rank">{{ awayTeam.rank }}</div>
     </div>
   </div>
 </template>
@@ -100,8 +106,12 @@ export default {
   transform-origin center center
   width 35px
 
+.rank
+  width 20px
+  font-weight bold
+
 .team
-  width 67px
+  width 47px
   white-space nowrap
   overflow hidden
 
