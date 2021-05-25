@@ -9,7 +9,7 @@
       } lighten-1`
     "
   >
-    {{ count > -1 ? count : "-" }}
+    {{ count > -1 ? `${home} - ${away} [${count}]` : "-" }}
   </v-flex>
 </template>
 
@@ -32,6 +32,12 @@ export default {
     },
     isHigh() {
       return this.highLow === "H";
+    },
+    home() {
+      return get(this.result, "corner.full.home");
+    },
+    away() {
+      return get(this.result, "corner.full.away");
     }
   }
 };
@@ -39,5 +45,5 @@ export default {
 
 <style lang="stylus" scoped>
 .corner
-  width 50px
+  width 130px
 </style>
