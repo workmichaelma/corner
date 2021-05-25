@@ -55,7 +55,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .side
   flex-basis calc( 50% - 50px )
   width calc( 50% - 50px )

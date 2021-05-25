@@ -42,7 +42,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .odd-col
   width 36px
   flex-basis 36px

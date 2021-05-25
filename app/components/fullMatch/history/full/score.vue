@@ -90,7 +90,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .score
   padding 0 2px
 

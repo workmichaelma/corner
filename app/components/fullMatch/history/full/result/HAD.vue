@@ -32,7 +32,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .had
   width 100px
 </style>

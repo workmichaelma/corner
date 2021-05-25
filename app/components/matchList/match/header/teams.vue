@@ -41,7 +41,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .result
   flex-basis 50px
   width 50px

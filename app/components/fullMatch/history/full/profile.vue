@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .profile
   align-self center
   height 0

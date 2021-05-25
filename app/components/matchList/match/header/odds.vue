@@ -3,42 +3,42 @@
     <v-flex class="d-flex text-right odd flex-grow-1 justify-end">
       <template v-if="!isEmpty(HDC)">
         <v-flex class="flex-grow-0 grey--text lighten-2">
-          {{HDC.H}}
+          {{ HDC.H }}
         </v-flex>
         <v-flex class="flex-grow-0 mx-2">
-          {{HDC.HG}}
+          {{ HDC.HG }}
         </v-flex>
         <v-flex class="flex-grow-0 grey--text lighten-2">
-          {{HDC.A}}
+          {{ HDC.A }}
         </v-flex>
       </template>
       <template v-else>
         <v-flex class="flex-grow-0">
-          {{HAD.H}}
+          {{ HAD.H }}
         </v-flex>
         <v-flex class="flex-grow-0 mx-2">
-          {{HAD.D}}
+          {{ HAD.D }}
         </v-flex>
         <v-flex class="flex-grow-0">
-          {{HAD.A}}
+          {{ HAD.A }}
         </v-flex>
       </template>
     </v-flex>
     <v-flex class="result flex-grow-0 flex-shrink-0 text-center">
       <template v-if="!isEmpty(HT)">
-        {{`${HT.home}-${HT.away}`}}
+        {{ `${HT.home}-${HT.away}` }}
       </template>
     </v-flex>
     <v-flex class="d-flex text-left odd flex-grow-1">
       <template v-if="!isEmpty(HIL)">
         <v-flex class="flex-grow-0 grey--text lighten-2">
-          {{HIL.H}}
+          {{ HIL.H }}
         </v-flex>
         <v-flex class="flex-grow-0 mx-2">
-          {{HIL.LINE}}
+          {{ HIL.LINE }}
         </v-flex>
         <v-flex class="flex-grow-0 grey--text lighten-2">
-          {{HIL.L}}
+          {{ HIL.L }}
         </v-flex>
       </template>
     </v-flex>
@@ -46,9 +46,9 @@
 </template>
 
 <script>
-import { isEmpty } from 'lodash'
+import { isEmpty } from "lodash";
 export default {
-  name: 'match-header-odds',
+  name: "match-header-odds",
   props: {
     HIL: {
       default: {}
@@ -64,17 +64,16 @@ export default {
     }
   },
   methods: {
-    isEmpty,
+    isEmpty
   }
-}
+};
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .result
   flex-basis 50px
   width 50px
 
 .odd
   flex-basis calc( 100% - 50px )
-
-</style>>
+</style>

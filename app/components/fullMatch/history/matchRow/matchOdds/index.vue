@@ -87,7 +87,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .odd-wrapper
   width 50%
   flex-basis 50%
