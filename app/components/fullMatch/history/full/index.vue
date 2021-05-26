@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column" v-if="match.ended && match.isResultValid">
     <Profile
       v-bind="{
         matchDate: match.matchDate,
@@ -7,7 +7,7 @@
         result: match.result
       }"
     />
-    <div class="d-flex align-center justify-center">
+    <div class="d-flex align-center">
       <Score
         v-bind="{
           homeTeam: match.homeTeam,

@@ -17,6 +17,7 @@ fragment match on Match {
   matchDatetime(format: FULL_FORMATTED)
   matchDate: matchDatetime(format: DD_MM)
   ended
+  isResultValid
   homeTeam {
     teamId
     teamName
@@ -35,13 +36,67 @@ fragment match on Match {
   ...result
 }
 
+# fragment result on Match {
+#   result {
+#     FT {
+#       home
+#       away
+#     }
+#     HT {
+#       home
+#       away
+#     }
+#     corner {
+#       full {
+#         total
+#         home
+#         away
+#       }
+#       half {
+#         total
+#         home
+#         away
+#       }
+#     }
+#     HAD
+#     FHA
+#     HHA {
+#       first
+#       latest
+#     }
+#     HDC {
+#       first
+#       latest
+#     }
+#     HIL {
+#       first
+#       latest
+#     }
+#     FHL {
+#       first
+#       latest
+#     }
+#     CHL {
+#       first
+#       latest
+#     }
+#   }
+# }
+
 fragment result on Match {
-  result {
-    FT {
+  result: resultInLatestOdds {
+    HAD
+    FHA
+    HHA
+    HDC
+    HIL
+    FHL
+    CHL
+    HT {
       home
       away
     }
-    HT {
+    FT {
       home
       away
     }
@@ -56,28 +111,6 @@ fragment result on Match {
         home
         away
       }
-    }
-    HAD
-    FHA
-    HHA {
-      first
-      latest
-    }
-    HDC {
-      first
-      latest
-    }
-    HIL {
-      first
-      latest
-    }
-    FHL {
-      first
-      latest
-    }
-    CHL {
-      first
-      latest
     }
   }
 }

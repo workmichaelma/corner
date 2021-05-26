@@ -1,14 +1,8 @@
 <template>
   <div class="d-flex">
-    <HAD
-      v-bind="{ odd: get(odds, 'HAD[0]'), result: get(result, 'HAD.first') }"
-    />
-    <HIL
-      v-bind="{ odd: get(odds, 'HIL[0]'), result: get(result, 'HIL.first') }"
-    />
-    <CHL
-      v-bind="{ odd: get(odds, 'CHL[0]'), result: get(result, 'CHL.first') }"
-    />
+    <HAD v-bind="{ odd: get(odds, 'HAD[0]'), result: get(result, 'HAD') }" />
+    <HIL v-bind="{ odd: get(odds, 'HIL[0]'), result: get(result, 'HIL') }" />
+    <CHL v-bind="{ odd: get(odds, 'CHL[0]'), result: get(result, 'CHL') }" />
   </div>
 </template>
 

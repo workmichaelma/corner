@@ -28,7 +28,7 @@ export default {
       return get(this.result, "corner.full.total");
     },
     highLow() {
-      return get(this.result, "CHL.first", null);
+      return get(this.result, "CHL", null);
     },
     isHigh() {
       return this.highLow === "H";
