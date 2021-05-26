@@ -5,6 +5,7 @@ const MatchSchema = require("../mongo/schema/Match");
 const { formatDate } = require("../utils/date");
 const { filterOdds } = require("../utils/odds");
 const { trimLeagueName } = require("../utils/league");
+const { matchResultPreprocess } = require("../utils/match");
 
 module.exports = {
   Query: {
@@ -89,14 +90,15 @@ module.exports = {
     result: async (parent, args, context, info) => {
       try {
         const { result } = parent;
-        return result;
+        return matchResultPreprocess(result);
       } catch (err) {
         return {};
       }
     },
     resultInLatestOdds: async (parent, args, context, info) => {
       try {
-        const { result } = parent;
+        const { result: _result } = parent;
+        const result = matchResultPreprocess(_result);
         if (!isUndefined(result)) {
           return {
             ...result,
