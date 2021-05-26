@@ -6,13 +6,13 @@
     <corner-count
       v-bind="{
         count,
-        result: get(result, 'CHL.latest')
+        result: get(result, 'CHL')
       }"
     />
     <chl
       v-bind="{
         odd: get(match, 'odds.CHL[0]'),
-        result: get(result, 'CHL.latest')
+        result: get(result, 'CHL')
       }"
     />
     <had
@@ -25,7 +25,7 @@
     <hil
       v-bind="{
         odd: get(match, 'odds.HIL[0]'),
-        result: get(result, 'HIL.latest')
+        result: get(result, 'HIL')
       }"
     />
     <side
