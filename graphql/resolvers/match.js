@@ -1,4 +1,4 @@
-const { get, reduce, upperCase } = require("lodash");
+const { get, isUndefined, reduce, upperCase } = require("lodash");
 const moment = require("moment");
 const MatchSchema = require("../mongo/schema/Match");
 
@@ -97,14 +97,17 @@ module.exports = {
     resultInLatestOdds: async (parent, args, context, info) => {
       try {
         const { result } = parent;
-        return {
-          ...result,
-          HHA: get(result, "HHA.latest"),
-          HDC: get(result, "HDC.latest"),
-          HIL: get(result, "HIL.latest"),
-          FHL: get(result, "FHL.latest"),
-          CHL: get(result, "CHL.latest"),
-        };
+        if (!isUndefined(result)) {
+          return {
+            ...result,
+            HHA: get(result, "HHA.latest"),
+            HDC: get(result, "HDC.latest"),
+            HIL: get(result, "HIL.latest"),
+            FHL: get(result, "FHL.latest"),
+            CHL: get(result, "CHL.latest"),
+          };
+        }
+        return null;
       } catch (err) {
         return {};
       }
@@ -122,6 +125,14 @@ module.exports = {
         );
       } catch (err) {
         return {};
+      }
+    },
+    isResultValid: async (parent, args, context, info) => {
+      try {
+        const { result } = parent;
+        return get(result, "HAD", null) !== null;
+      } catch (err) {
+        return null;
       }
     },
   },

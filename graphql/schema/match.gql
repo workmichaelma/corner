@@ -16,6 +16,7 @@ type Match {
   result: Result
   resultInLatestOdds: ResultInLatestOdds
   odds(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): Odds
+  isResultValid: Boolean
 }
 
 type MatchTeam {
@@ -24,7 +25,7 @@ type MatchTeam {
   winId: String
   rank: String
   image: String
-  history (leagueId: String, before: String): [Match]
+  history(leagueId: String, before: String): [Match]
 }
 
 type MatchHistory {
