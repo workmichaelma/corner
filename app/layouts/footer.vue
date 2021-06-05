@@ -1,13 +1,8 @@
 <template>
-  <v-bottom-navigation
-    dark
-    fixed
-    grow
-    shift
-  >
+  <v-bottom-navigation dark fixed grow shift color="teal" v-model="active">
     <template v-for="item in items">
       <v-btn :key="item.title" @click="redirect(item.to)">
-        <span>賽程</span>
+        <span>{{ item.title }}</span>
         <v-icon :large="item.large">{{ item.icon }}</v-icon>
       </v-btn>
     </template>
@@ -15,33 +10,45 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        items: [
-          {
-            icon: 'mdi-home-currency-usd',
-            title: '賽程',
-            to: '/',
-            large: true
-          },
-          {
-            icon: 'mdi-calendar-multiple-check',
-            title: '賽果',
-            to: '/ended-matches'
-          },
-          {
-            icon: 'mdi-calendar-search',
-            title: '搜尋賽事',
-            to: '/search'
-          },
-        ],
-      }
-    },
-    methods: {
-      redirect (url) {
-        this.$router.push(url)
-      }
+import { findIndex } from "lodash";
+export default {
+  computed: {
+    active() {
+      return findIndex(this.items, i => {
+        return i.to === this.$route.path;
+      });
+    }
+  },
+  data() {
+    return {
+      items: [
+        {
+          icon: "mdi-home-currency-usd",
+          title: "賽程",
+          to: "/"
+        },
+        {
+          icon: "mdi-calendar-multiple-check",
+          title: "賽果",
+          to: "/ended-matches"
+        },
+        {
+          icon: "mdi-calendar-search",
+          title: "搜尋賽事",
+          to: "/search"
+        },
+        {
+          icon: "mdi-video-image",
+          title: "直播",
+          to: "/live"
+        }
+      ]
+    };
+  },
+  methods: {
+    redirect(url) {
+      this.$router.push(url);
     }
   }
+};
 </script>

@@ -1,5 +1,6 @@
 <template>
   <v-layout align-center justify-center>
+    <loading-overlay />
     <v-flex class="text-center" xs12 sm8 md10>
       <match-list v-bind="{ matches }" />
     </v-flex>
@@ -7,6 +8,7 @@
 </template>
 
 <script>
+import LoadingOverlay from "~/components/LoadingOverlay";
 import MatchList from "~/components/matchList";
 
 export default {
@@ -21,6 +23,7 @@ export default {
     };
   },
   components: {
+    LoadingOverlay,
     MatchList
   },
   computed: {

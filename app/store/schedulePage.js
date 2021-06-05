@@ -15,11 +15,15 @@ export const mutations = {
 export const actions = {
   async init({ dispatch, commit, state }, { ended }) {
     const stateType = ended ? "ended" : "future";
+
+    dispatch("theme/setLoading", { payload: true }, { root: true });
     const matches = await Schedule.getSchedule({
       clients: this.app.apolloProvider.clients,
       ended,
       limit: 20
     });
+
+    dispatch("theme/setLoading", { payload: false }, { root: true });
 
     commit("init", {
       type: stateType,
