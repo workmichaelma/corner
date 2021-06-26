@@ -17,7 +17,7 @@
 
       <v-list-item-action>
         <v-btn icon>
-          <v-icon color="grey lighten-1" v-on:click="play(match.id)"
+          <v-icon color="grey lighten-1" v-on:click="play(match.url)"
             >mdi-play-circle</v-icon
           >
         </v-btn>
@@ -43,7 +43,7 @@ export default {
   methods: {
     moment,
     play(id) {
-      this.setSrc(`https://www.heibaizhibo.com/play-iframe/${id}`);
+      this.setSrc(url);
     }
   }
 };
