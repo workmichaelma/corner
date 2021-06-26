@@ -42,8 +42,8 @@ export default {
   },
   methods: {
     moment,
-    play(id) {
-      this.setSrc(url);
+    play(url) {
+      if (url) this.setSrc(url);
     }
   }
 };
