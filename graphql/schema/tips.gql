@@ -1,0 +1,34 @@
+type Query {
+  tips: Tips
+}
+
+type Tips {
+  matches: [TipsMatch]
+}
+
+type TipsMatch {
+  match: Match
+  stat: TipsMatchStat
+}
+
+type TipsMatchStat {
+  home: TipsMatchStatDetail
+  away: TipsMatchStatDetail
+}
+
+type TipsMatchStatDetail {
+  CHL: TipsMatchStatCHL
+  HIL: TipsMatchStatHIL
+}
+
+type TipsMatchStatCHL {
+  H: Int
+  L: Int
+  percent: Float
+}
+
+type TipsMatchStatHIL {
+  H: Int
+  L: Int
+  percent: Float
+}
