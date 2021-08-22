@@ -1,0 +1,61 @@
+query getTips {
+  tips {
+    matches {
+      match {
+        ...match
+      }
+      stat {
+        home {
+          CHL {
+            H
+            L
+            percent
+          }
+        }
+        away {
+          CHL {
+            H
+            L
+            percent
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment match on Match {
+  id
+  matchDatetime(format: FULL_FORMATTED)
+  homeTeam {
+    teamId
+    teamName
+    rank
+  }
+  awayTeam {
+    teamId
+    teamName
+    rank
+  }
+  league {
+    leagueId
+    name
+  }
+  odds(type: FIRST_LATEST) {
+    HAD {
+      H
+      D
+      A
+    }
+    HIL {
+      H
+      L
+      LINE
+    }
+    CHL {
+      H
+      L
+      LINE
+    }
+  }
+}

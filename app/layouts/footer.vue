@@ -34,8 +34,8 @@ export default {
         },
         {
           icon: "mdi-calendar-search",
-          title: "搜尋賽事",
-          to: "/search"
+          title: "貼士",
+          to: "/tips"
         },
         {
           icon: "mdi-video-image",
