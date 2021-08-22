@@ -54,9 +54,9 @@ const fetchStat = (matches) => {
         }
         stat.HIL[match.result.HIL.first] = stat.HIL[match.result.HIL.first] + 1;
         stat.CHL.percent =
-          (stat.CHL.H / (stat.CHL.H + stat.CHL.L)).toFixed(2) * 100;
+          (stat.CHL.H / (stat.CHL.H + stat.CHL.L)).toFixed(2) * 100 || 0;
         stat.HIL.percent =
-          (stat.HIL.H / (stat.HIL.H + stat.HIL.L)).toFixed(2) * 100;
+          (stat.HIL.H / (stat.HIL.H + stat.HIL.L)).toFixed(2) * 100 || 0;
       }
       return stat;
     },
@@ -94,7 +94,11 @@ module.exports = {
             before: datetime,
           });
 
-          const { HAD } = transformOdds(m.odds);
+          const { CHL, HAD } = transformOdds(m.odds);
+
+          if (!CHL) {
+            return false;
+          }
 
           const homeSameMatches = findSameMatch({
             HAD,
