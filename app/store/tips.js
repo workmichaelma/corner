@@ -1,4 +1,4 @@
-const Tips = require("../graphql/module/Tips");
+const Tips = require("../graphql/module/tips");
 
 export const state = () => {
   return {
