@@ -25,7 +25,7 @@ const transformOdds = (odds) => {
   );
 };
 
-const findSameMatch = ({ HAD, name, side, history }) => {
+const findSameMatch = ({ HAD, name, side, history, leagueId }) => {
   const { H } = HAD;
   const [from, to] = [(H * 0.9).toFixed(2), (H * 1.1).toFixed(2)];
 
@@ -37,7 +37,9 @@ const findSameMatch = ({ HAD, name, side, history }) => {
       return parseFloat(from) <= parseFloat(H) &&
         parseFloat(to) >= parseFloat(H) &&
         name === teamName &&
-        !isEmpty(CHL)
+        leagueId === m.league.id &&
+        !isEmpty(CHL) &&
+        get(m.result, "HAD", null) !== null
         ? m
         : false;
     })
@@ -85,7 +87,7 @@ module.exports = {
 
       const matches = await Promise.all(
         map(docs, async (m) => {
-          const { home, away, datetime } = m;
+          const { home, away, datetime, league } = m;
           const homeHistory = await MatchSchema.getTeamHistory({
             _id: home._id,
             before: datetime,
@@ -106,12 +108,14 @@ module.exports = {
             name: home.name,
             side: "home",
             history: homeHistory,
+            leagueId: league.id,
           });
           const awaySameMatches = findSameMatch({
             HAD,
             name: away.name,
             side: "away",
             history: awayHistory,
+            leagueId: league.id,
           });
 
           if (isEmpty(homeSameMatches) && isEmpty(awaySameMatches)) {

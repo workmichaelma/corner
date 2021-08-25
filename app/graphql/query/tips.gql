@@ -3,6 +3,14 @@ query getTips {
     matches {
       match {
         ...match
+        history {
+          home {
+            ...match
+          }
+          away {
+            ...match
+          }
+        }
       }
       stat {
         home {
@@ -56,6 +64,23 @@ fragment match on Match {
       H
       L
       LINE
+    }
+  }
+  result {
+    corner {
+      full {
+        total
+        home
+        away
+      }
+      half {
+        total
+        home
+        away
+      }
+    }
+    CHL {
+      first
     }
   }
 }
