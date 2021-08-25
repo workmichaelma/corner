@@ -31,12 +31,13 @@ const findSameMatch = ({ HAD, name, side, history }) => {
 
   return compact(
     map(history, (m) => {
-      const { HAD } = transformOdds(m.odds);
+      const { HAD, CHL } = transformOdds(m.odds);
       const { H } = HAD;
       const teamName = m[side].name;
       return parseFloat(from) <= parseFloat(H) &&
         parseFloat(to) >= parseFloat(H) &&
-        name === teamName
+        name === teamName &&
+        !isEmpty(CHL)
         ? m
         : false;
     })
