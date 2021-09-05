@@ -25,7 +25,7 @@ const scheduleJob = new CronJob("0 0 */2 * * *", () => {
 scheduleJob.start();
 
 const profileJob = new CronJob("0 0 */1 * * *", () => {
-  const worker = new Profile();
+  const worker = Profile();
   worker.init();
 });
 profileJob.start();
