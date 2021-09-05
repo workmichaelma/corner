@@ -25,17 +25,23 @@ const transformOdds = (odds) => {
   );
 };
 
+const withinOddRange = (odd, target) => {
+  const [from, to] = [(target * 0.9).toFixed(2), (target * 1.1).toFixed(2)];
+
+  return (
+    parseFloat(from) <= parseFloat(odd) && parseFloat(to) >= parseFloat(odd)
+  );
+};
+
 const findSameMatch = ({ HAD, name, side, history, leagueId }) => {
-  const { H } = HAD;
-  const [from, to] = [(H * 0.9).toFixed(2), (H * 1.1).toFixed(2)];
+  const { H, A } = HAD;
 
   return compact(
     map(history, (m) => {
       const { HAD, CHL } = transformOdds(m.odds);
-      const { H } = HAD;
       const teamName = m[side].name;
-      return parseFloat(from) <= parseFloat(H) &&
-        parseFloat(to) >= parseFloat(H) &&
+
+      return (withinOddRange(HAD.H, H) || withinOddRange(HAD.A, A)) &&
         name === teamName &&
         leagueId === m.league.id &&
         !isEmpty(CHL) &&
@@ -82,7 +88,7 @@ module.exports = {
   Query: {
     tips: async (obj, args, context, info) => {
       const { docs } = await MatchSchema.getSchedule({
-        limit: 20,
+        limit: 30,
       });
 
       const matches = await Promise.all(

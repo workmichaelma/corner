@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="">
+  <v-flex class="" @click="to()">
     <v-flex class="d-flex mb-2">
       <v-flex class="text-right mr-1"> {{ match.league.name }} </v-flex>
       <v-flex class="text-left ml-1"> {{ days }}日前 </v-flex>
@@ -95,7 +95,10 @@ export default {
   methods: {
     get,
     take,
-    getTeamResultColor
+    getTeamResultColor,
+    to() {
+      this.$router.push(`/match/${this.match.id}`);
+    }
   }
 };
 </script>
