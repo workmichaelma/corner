@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 });
 
 const scheduleJob = new CronJob("0 0 */2 * * *", () => {
-  const worker = new Schedule();
+  const worker = Schedule();
   worker.init();
 });
 scheduleJob.start();

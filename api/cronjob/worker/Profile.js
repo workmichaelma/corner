@@ -16,14 +16,13 @@ const Profile = () => {
     m: [],
     async init() {
       await _.getCurrent();
-      return _.current;
-      // if (_.current.length > 0) {
-      //   await _.getWin();
-      //   await _.buildWinsBy();
-      //   await _.mapMatches();
-      //   return _.saveMatches();
-      // }
-      // return _;
+      if (_.current.length > 0) {
+        await _.getWin();
+        await _.buildWinsBy();
+        await _.mapMatches();
+        return _.saveMatches();
+      }
+      return _;
     },
     async getCurrent() {
       const matches = await Match.getFutureMatches();
