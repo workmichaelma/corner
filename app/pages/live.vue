@@ -1,6 +1,5 @@
 <template>
   <v-layout justify-center align-center>
-    <loading-overlay />
     <v-flex xs12 sm8 md10>
       <player v-bind="{ src }" />
       <live-list v-bind="{ matches, setSrc }" />
@@ -9,7 +8,6 @@
 </template>
 
 <script>
-import LoadingOverlay from "~/components/LoadingOverlay";
 import LiveList from "~/components/live/liveList/index.vue";
 import Player from "~/components/live/player/index.vue";
 
@@ -28,7 +26,6 @@ export default {
     };
   },
   components: {
-    LoadingOverlay,
     LiveList,
     Player
   },

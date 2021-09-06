@@ -20,7 +20,7 @@ export const actions = {
     const matches = await Schedule.getSchedule({
       clients: this.app.apolloProvider.clients,
       ended,
-      limit: 20
+      limit: 100
     });
 
     dispatch("theme/setLoading", { payload: false }, { root: true });

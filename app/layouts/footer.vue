@@ -1,5 +1,13 @@
 <template>
-  <v-bottom-navigation dark fixed grow shift color="teal" v-model="active">
+  <v-bottom-navigation
+    dark
+    dense
+    fixed
+    grow
+    shift
+    color="teal"
+    v-model="active"
+  >
     <template v-for="item in items">
       <v-btn :key="item.title" @click="redirect(item.to)">
         <span>{{ item.title }}</span>
@@ -45,10 +53,14 @@ export default {
     }
   },
   watch: {
-    $route() {
-      this.active = findIndex(this.items, i => {
-        return i.to === this.$route.path;
-      });
+    $route: {
+      handler: function() {
+        this.active = findIndex(this.items, i => {
+          return i.to === this.$route.path;
+        });
+      },
+      immediate: true,
+      deep: true
     }
   }
 };

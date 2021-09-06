@@ -1,15 +1,14 @@
 <template>
-  <v-layout align-center justify-center>
-    <loading-overlay />
+  <v-layout align-center justify-center class="pb-15 pt-14">
     <v-flex class="text-center" xs12 sm8 md10>
-      <match-list v-bind="{ matches }" />
+      <match-list v-bind="{ matches: schedule }" />
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import LoadingOverlay from "~/components/LoadingOverlay";
-import MatchList from "~/components/matchList";
+import MatchesByDate from "~/mixins/matchesByDate";
+import MatchList from "~/components/schedule/matchList";
 
 export default {
   async asyncData({ params, store }) {
@@ -17,13 +16,13 @@ export default {
       ended: true
     });
   },
+  mixins: [MatchesByDate],
   head() {
     return {
       title: "完場比賽"
     };
   },
   components: {
-    LoadingOverlay,
     MatchList
   },
   computed: {

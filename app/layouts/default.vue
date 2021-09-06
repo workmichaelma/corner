@@ -1,7 +1,9 @@
 <template>
   <v-app dark>
     <v-main>
-      <v-container class="pb-14 px-1">
+      <app-header />
+      <v-container>
+        <loading-overlay />
         <nuxt />
       </v-container>
       <app-footer />
@@ -10,11 +12,15 @@
 </template>
 
 <script>
-import Footer from './footer'
+import LoadingOverlay from "~/components/LoadingOverlay";
+import Footer from "./footer";
+import Header from "./header";
 
 export default {
   components: {
-    AppFooter: Footer
+    AppFooter: Footer,
+    AppHeader: Header,
+    LoadingOverlay
   }
-}
+};
 </script>
