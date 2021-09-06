@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <full-match-profile v-bind="{ match }" />
+  <v-flex class="pt-15">
+    <v-flex class="pa-2">
+      <full-match-profile v-bind="{ match }" />
+    </v-flex>
     <v-divider />
     <full-match-stat v-bind="{ match }" />
     <v-divider />
@@ -10,7 +12,7 @@
     <full-match-odds v-bind="{ match }" />
     <v-divider />
     <full-match-history v-bind="{ match }" />
-  </div>
+  </v-flex>
 </template>
 <script>
 import Teams from "./teams";

@@ -2,7 +2,7 @@
   <v-app dark>
     <v-main>
       <app-header />
-      <v-container>
+      <v-container class="pa-0">
         <loading-overlay />
         <nuxt />
       </v-container>
