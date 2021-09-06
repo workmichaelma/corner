@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ScheduleDateList from "~/components/schedule/DateList/index.vue";
+import ScheduleDateList from "~/components/schedule/dateList/index.vue";
 export default {
   name: "app-header",
   components: {
