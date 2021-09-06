@@ -27,7 +27,6 @@ export default {
   },
   computed: {
     matches() {
-      // return this.$store.state.matchList.ended || []
       return this.$store.state.schedulePage.ended || [];
     }
   }

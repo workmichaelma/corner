@@ -7,14 +7,6 @@ query getSchedule($ended: Boolean!, $page: Int, $limit: Int) {
     }
     docs {
       ...match
-      history {
-        home {
-          ...match
-        }
-        away {
-          ...match
-        }
-      }
     }
   }
 }
@@ -54,26 +46,14 @@ fragment result on Match {
       away
     }
     HAD
-    FHA
-    HHA {
-      first
-      latest
-    }
     HDC {
       first
-      latest
     }
     HIL {
       first
-      latest
-    }
-    FHL {
-      first
-      latest
     }
     CHL {
       first
-      latest
     }
   }
 }
@@ -86,20 +66,6 @@ fragment odds_firstlatest on Match {
       A
       datetime
     }
-    FHA {
-      H
-      D
-      A
-      datetime
-    }
-    HHA {
-      H
-      D
-      A
-      HG
-      AG
-      datetime
-    }
     HDC {
       H
       A
@@ -108,12 +74,6 @@ fragment odds_firstlatest on Match {
       datetime
     }
     HIL {
-      H
-      L
-      LINE
-      datetime
-    }
-    FHL {
       H
       L
       LINE

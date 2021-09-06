@@ -28,7 +28,6 @@ export default {
   },
   computed: {
     matches() {
-      // return this.$store.state.matchList.upcoming || []
       return this.$store.state.schedulePage.future || [];
     }
   }

@@ -5,6 +5,7 @@
     fixed
     grow
     shift
+    hide-on-scroll
     color="teal"
     v-model="active"
   >
