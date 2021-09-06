@@ -12,13 +12,6 @@
 <script>
 import { findIndex } from "lodash";
 export default {
-  computed: {
-    active() {
-      return findIndex(this.items, i => {
-        return i.to === this.$route.path;
-      });
-    }
-  },
   data() {
     return {
       items: [
@@ -42,12 +35,20 @@ export default {
           title: "直播",
           to: "/live"
         }
-      ]
+      ],
+      active: -1
     };
   },
   methods: {
     redirect(url) {
       this.$router.push(url);
+    }
+  },
+  watch: {
+    $route() {
+      this.active = findIndex(this.items, i => {
+        return i.to === this.$route.path;
+      });
     }
   }
 };
