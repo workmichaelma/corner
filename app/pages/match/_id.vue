@@ -1,6 +1,6 @@
 <template>
   <v-layout justify-center align-center>
-    <v-flex xs12 sm8 md10>
+    <v-flex xs12 sm8 md10 class="py-15">
       <full-match
         v-if="!isUndefined(match) && !isEmpty(match)"
         v-bind="{ match }"

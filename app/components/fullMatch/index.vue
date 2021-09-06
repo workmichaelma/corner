@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="pt-15">
+  <v-flex>
     <v-flex class="pa-2">
       <full-match-profile v-bind="{ match }" />
     </v-flex>

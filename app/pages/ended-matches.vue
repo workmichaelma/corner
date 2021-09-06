@@ -1,5 +1,5 @@
 <template>
-  <v-layout align-center justify-center class="pb-15 pt-14">
+  <v-layout align-center justify-center class="py-15">
     <v-flex class="text-center" xs12 sm8 md10>
       <match-list v-bind="{ matches: schedule }" />
     </v-flex>
