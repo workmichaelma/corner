@@ -16,8 +16,10 @@ fragment match on Match {
   id
   matchDatetime(format: FULL_FORMATTED)
   matchDate: matchDatetime(format: DD_MM)
+  matchTime: matchDatetime(format: HH_mm)
   ended
   isResultValid
+  matchNum
   homeTeam {
     teamId
     teamName

@@ -12,7 +12,7 @@
 import moment from "moment";
 import { head, get, isObject, map, orderBy } from "lodash";
 export default {
-  name: "schedule-datelist",
+  name: "header-datelist",
   data() {
     return {
       date: false

@@ -35,7 +35,9 @@ export default {
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Reggae+One&display=swap"
+        // href: "https://fonts.googleapis.com/css2?family=Reggae+One&display=swap",
+        href:
+          "https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@100;300;400;500;700;800;900&display=swap"
       }
     ]
   },
