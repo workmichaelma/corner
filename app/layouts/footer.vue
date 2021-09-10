@@ -4,15 +4,14 @@
     dense
     fixed
     grow
-    shift
-    hide-on-scroll
+    height="30px"
     color="teal"
     v-model="active"
   >
     <template v-for="item in items">
       <v-btn :key="item.title" @click="redirect(item.to)">
         <span>{{ item.title }}</span>
-        <v-icon :large="item.large">{{ item.icon }}</v-icon>
+        <!-- <v-icon :large="item.large">{{ item.icon }}</v-icon> -->
       </v-btn>
     </template>
   </v-bottom-navigation>
