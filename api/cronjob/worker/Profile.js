@@ -104,7 +104,7 @@ const Profile = () => {
           }
         }
       } catch (err) {
-        console.log("Schedule -> buildWinBy(), error");
+        console.log("Schedule -> buildWinBy(), error", err);
       }
     },
     async buildWinsBy() {
