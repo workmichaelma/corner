@@ -6,6 +6,12 @@ type Odds {
   FHL: [FHL]
   HDC: [HDC]
   CHL: [CHL]
+  FAKE_HDC: FAKE_HDC
+}
+
+type FAKE_HDC {
+  value: String
+  isFake: Boolean
 }
 
 type HAD {

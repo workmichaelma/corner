@@ -1,5 +1,6 @@
+const { isEmpty, get } = require("lodash");
 const { formatDate } = require("../utils/date");
-const { prettyHDCLine } = require("../utils/odds");
+const { prettyHDCLine, getFakeHDC } = require("../utils/odds");
 
 const datetime = (parent, args, context, info) => {
   const { datetime } = parent;
@@ -8,28 +9,36 @@ const datetime = (parent, args, context, info) => {
 };
 
 module.exports = {
-  HAD: {
-    datetime,
-  },
-  FHA: {
-    datetime,
-  },
-  HHA: {
-    datetime,
-  },
-  HDC: {
-    datetime,
-    HG: (parent, args, context, info) => {
-      return parent.HG ? prettyHDCLine(parent.HG) : undefined;
+  Odds: {
+    HAD: {
+      datetime,
     },
-  },
-  HIL: {
-    datetime,
-  },
-  FHL: {
-    datetime,
-  },
-  CHL: {
-    datetime,
+    FHA: {
+      datetime,
+    },
+    HHA: {
+      datetime,
+    },
+    HDC: {
+      datetime,
+      HG: (parent, args, context, info) => {
+        return parent.HG ? prettyHDCLine(parent.HG) : undefined;
+      },
+    },
+    HIL: {
+      datetime,
+    },
+    FHL: {
+      datetime,
+    },
+    CHL: {
+      datetime,
+    },
+    FAKE_HDC: (parent, args, context, info) => {
+      const { HAD, HDC } = parent;
+      const isFake = isEmpty(HDC);
+      const [had, ...r] = HAD;
+      return getFakeHDC(isFake ? had.H : get(HDC, "[0].HG", null), isFake);
+    },
   },
 };

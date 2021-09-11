@@ -1,4 +1,13 @@
-const { head, last, reverse, isEmpty, isArray, take } = require("lodash");
+const {
+  get,
+  head,
+  last,
+  reverse,
+  isEmpty,
+  isArray,
+  take,
+  reduce,
+} = require("lodash");
 
 const filterByOrder = ({ _odds, orderBy }) => {
   switch (orderBy) {
@@ -62,7 +71,77 @@ const prettyHDCLine = (line) => {
   return `${prettyHDCLine(_1)}/${prettyHDCLine(_2)}`;
 };
 
+const FakeHDC = {
+  1: "-X",
+  1.03: "-2.5/-3.0",
+  1.065: "-2.0/-2.5",
+  1.085: "-2.0",
+  1.135: "-1.5/-2.0",
+  1.24: "-1.0/-1.5",
+  1.36: "-1.0",
+  1.51: "-0.5/-1.0",
+  1.8: "+0.0/-0.5",
+  2.2: "+0.0",
+  2.8: "+0.0/+0.5",
+  3.8: "+0.5/+1.0",
+  5.1: "+1.0",
+  6.6: "+1.0/+1.5",
+  9.3: "+1.5/+2.0",
+  13.7: "+2.0",
+  18: "+2.0/+2.5",
+  32: "+2.5/+3.0",
+  45: "+X",
+};
+
+const getFakeHDC = (v, isFake) => {
+  let result = v;
+  if (isFake && v) {
+    result = reduce(
+      FakeHDC,
+      (result, s, k) => {
+        if (parseFloat(v) > k) {
+          result = s;
+        }
+        return result;
+      },
+      null
+    );
+  }
+  return {
+    isFake,
+    value: getChinHDC(result),
+  };
+};
+
+const chinHDCMap = {
+  "-X": "讓好多球",
+  "-2.5/-3.0": "兩球半/三",
+  "-2.0/-2.5": "兩/兩球半",
+  "-2.0": "兩球",
+  "-1.5/-2.0": "一球半/兩",
+  "-1.0/-1.5": "一/一球半",
+  "-1.0": "一球",
+  "-0.5/-1.0": "半/一",
+  "+0.0/-0.5": "平/半",
+  "+0.0": "平手",
+  "+0.0/+0.5": "-平/半",
+  "+0.5/+1.0": "-半/一",
+  "+1.0": "-一球",
+  "+1.0/+1.5": "-一/一球半",
+  "+1.5/+2.0": "-一球半/兩",
+  "+2.0": "-兩球",
+  "+2.0/+2.5": "-兩/兩球半",
+  "+2.5/+3.0": "-兩球半/三",
+  "+X": "受讓好多球",
+};
+
+const getChinHDC = (v) => {
+  console.log(v, get(chinHDCMap, v, null));
+  return get(chinHDCMap, v, null);
+};
+
 module.exports = {
   filterOdds,
   prettyHDCLine,
+  getFakeHDC,
 };
