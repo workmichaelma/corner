@@ -34,6 +34,12 @@ fragment match on Match {
     leagueId
     name
   }
+  FAKE_HDC: odds {
+    FAKE_HDC {
+      isFake
+      value
+    }
+  }
   ...odds_firstlatest
   ...result
 }

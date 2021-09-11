@@ -1,28 +1,16 @@
 <template>
   <v-flex class="header-info pt-1 body-2 align-center d-flex">
     <v-flex class="d-flex text-right odd flex-grow-1 justify-end">
-      <template v-if="!isEmpty(HDC)">
-        <v-flex class="flex-grow-0 grey--text lighten-2">
-          {{ HDC.H }}
-        </v-flex>
-        <v-flex class="flex-grow-0 mx-2">
-          {{ HDC.HG }}
-        </v-flex>
-        <v-flex class="flex-grow-0 grey--text lighten-2">
-          {{ HDC.A }}
-        </v-flex>
-      </template>
-      <template v-else>
-        <v-flex class="flex-grow-0">
-          {{ HAD.H }}
-        </v-flex>
-        <v-flex class="flex-grow-0 mx-2">
-          {{ HAD.D }}
-        </v-flex>
-        <v-flex class="flex-grow-0">
-          {{ HAD.A }}
-        </v-flex>
-      </template>
+      <v-flex class="flex-grow-0">
+        {{ HAD.H }}
+      </v-flex>
+      <v-flex class="flex-grow-0 mx-2">
+        {{ HAD.D }}
+      </v-flex>
+      <v-flex class="flex-grow-0">
+        {{ HAD.A }}
+      </v-flex>
+      <fake-hdc class="flex-grow-1" v-bind="{ value: FAKE_HDC.value }" />
     </v-flex>
     <v-flex class="result flex-grow-0 flex-shrink-0 text-center">
       <template v-if="!isEmpty(HT)">
@@ -47,13 +35,11 @@
 
 <script>
 import { isEmpty } from "lodash";
+import FakeHDC from "~/components/fakeHdc";
 export default {
   name: "match-header-odds",
   props: {
     HIL: {
-      default: {}
-    },
-    HDC: {
       default: {}
     },
     HT: {
@@ -61,10 +47,16 @@ export default {
     },
     HAD: {
       default: {}
+    },
+    FAKE_HDC: {
+      default: {}
     }
   },
   methods: {
     isEmpty
+  },
+  components: {
+    FakeHDC
   }
 };
 </script>

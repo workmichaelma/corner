@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panel-header class="pr-2 pl-4" :hide-actions="true">
+  <v-expansion-panel-header class="px-2" :hide-actions="true">
     <v-flex class="my-1">
       <info
         v-bind="{
@@ -21,7 +21,7 @@
         v-bind="{
           HAD: get(match, 'odds.HAD[0]', {}),
           HIL: get(match, 'odds.HIL[0]', {}),
-          HDC: get(match, 'odds.HDC[0]', {}),
+          FAKE_HDC: get(match, 'FAKE_HDC.FAKE_HDC', {}),
           HT: get(match, 'result.HT', {})
         }"
       />

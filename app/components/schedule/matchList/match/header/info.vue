@@ -1,7 +1,7 @@
 <template>
   <v-flex class="header-info pt-1 body-2 align-center d-flex">
     <v-flex class="side">
-      <span>{{ league }}</span>
+      <span class="mx-2">{{ league }}</span>
       <span>{{ `${matchDate} ${matchTime}` }}</span>
     </v-flex>
     <v-flex class="corner text-center flex-grow-0">
