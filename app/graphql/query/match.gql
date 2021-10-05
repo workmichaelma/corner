@@ -38,6 +38,7 @@ fragment match on Match {
     FAKE_HDC {
       isFake
       value
+      result
     }
   }
   ...odds_firstlatest

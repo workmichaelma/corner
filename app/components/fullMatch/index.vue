@@ -1,9 +1,5 @@
 <template>
   <v-flex>
-    <v-flex class="pa-2">
-      <full-match-profile v-bind="{ match }" />
-    </v-flex>
-    <v-divider />
     <full-match-stat v-bind="{ match }" />
     <v-divider />
     <full-match-teams v-bind="{ match }" />
@@ -16,14 +12,12 @@
 </template>
 <script>
 import Teams from "./teams";
-import Profile from "./profile";
 import Result from "./result";
 import Odds from "./odds/index";
 import History from "./history/index";
 import Stat from "./Stat/index";
 export default {
   components: {
-    "full-match-profile": Profile,
     "full-match-stat": Stat,
     "full-match-teams": Teams,
     "full-match-result": Result,

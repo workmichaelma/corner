@@ -12,30 +12,27 @@
             >
               <v-list-item-content class="content pa-0">
                 <v-flex class="d-flex col-6 pa-0 ma-0">
-                  <match-row
+                  <half
                     v-if="match.history.home[i - 1]"
                     v-bind="{
                       match: match.history.home[i - 1],
                       teamId: match.homeTeam.teamId,
                       leagueId: match.league.leagueId,
-                      config,
-                      half: true
+                      right: false
                     }"
                     :key="`matchRow_home_${i - 1}`"
                   />
                 </v-flex>
                 <v-flex class="d-flex col-6 pa-0 ma-0">
-                  <match-row
+                  <half
                     v-if="match.history.away[i - 1]"
                     v-bind="{
                       match: match.history.away[i - 1],
                       teamId: match.awayTeam.teamId,
                       leagueId: match.league.leagueId,
-                      config,
-                      half: true,
                       right: true
                     }"
-                    :key="`matchRow_away_${i - 1}`"
+                    :key="`matchRow_home_${i - 1}`"
                   />
                 </v-flex>
               </v-list-item-content>
@@ -50,6 +47,7 @@
 import get from "lodash/get";
 import format from "date-fns/format";
 import MatchRow from "./matchRow/index";
+import Half from "./half/index";
 export default {
   props: {
     match: {
@@ -70,7 +68,8 @@ export default {
     }
   },
   components: {
-    MatchRow
+    MatchRow,
+    Half
   }
 };
 </script>
