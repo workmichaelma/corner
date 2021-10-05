@@ -4,10 +4,10 @@
       class="d-flex flex-column align-center justify-center text-mini text-0_7"
     >
       <template v-if="corner.home > -1 && corner.away > -1">
-        {{ `${corner.home} - ${corner.away}` }} [ {{ corner.total }} ]
+        {{ `${corner.home}-${corner.away}` }}
       </template>
     </v-flex>
-    <v-flex class="d-flex flex-row px-2">
+    <v-flex class="d-flex flex-row px-3">
       <v-flex
         class="text-right"
         :class="
@@ -29,17 +29,15 @@
       </v-flex>
     </v-flex>
     <v-flex class="d-flex flex-row px-2 text-mini text-0_7">
-      [
       <v-flex class="text-right">
-        {{ result.HT.home }}
+        {{ `[${result.HT.home}` }}
       </v-flex>
       <v-flex class="mx-1">
         :
       </v-flex>
       <v-flex class="text-left">
-        {{ result.HT.away }}
+        {{ `${result.HT.away}]` }}
       </v-flex>
-      ]
     </v-flex>
   </v-layout>
 </template>

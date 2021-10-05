@@ -10,7 +10,7 @@
           }"
         />
       </v-col> -->
-      <v-col cols="3" class="pa-0 d-flex">
+      <v-col cols="4" class="pa-0 d-flex">
         <HDC
           v-bind="{
             result: get(match, 'result.HDC'),
@@ -28,7 +28,7 @@
           }"
         />
       </v-col>
-      <v-col cols="5" class="pa-0 d-flex">
+      <v-col cols="4" class="pa-0 d-flex">
         <Score
           v-bind="{
             result: get(match, 'result'),
