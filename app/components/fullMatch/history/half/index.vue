@@ -1,8 +1,5 @@
 <template>
-  <v-row
-    class="half-history ma-0"
-    :class="`${right ? 'flex-row-reverse' : ''}`"
-  >
+  <v-row class="ma-0" :class="`${right ? 'flex-row-reverse' : ''}`">
     <template v-if="match.isResultValid">
       <!-- <v-col cols="1" class="pa-0 d-flex">
         <corner-count
@@ -103,11 +100,3 @@ export default {
   }
 };
 </script>
-
-<style lang="stylus" scoped>
-.half-history
-  width 100%
-  .detail
-    width calc( 100% - 25px )
-    max-width calc( 100% - 25px )
-</style>

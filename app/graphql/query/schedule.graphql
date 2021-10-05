@@ -7,7 +7,6 @@ query getSchedule($ended: Boolean!, $page: Int, $limit: Int) {
     }
     docs {
       ...match
-      ...tips
     }
   }
 }
@@ -66,57 +65,22 @@ fragment odds_first on Match {
       H
       D
       A
-      datetime
     }
     HDC {
       H
       A
       HG
       AG
-      datetime
     }
     HIL {
       H
       L
       LINE
-      datetime
     }
     CHL {
       H
       L
       LINE
-      datetime
-    }
-  }
-}
-
-fragment tips on Match {
-  tips {
-    stat {
-      home {
-        CHL {
-          H
-          L
-          percent
-        }
-        HIL {
-          H
-          L
-          percent
-        }
-      }
-      away {
-        CHL {
-          H
-          L
-          percent
-        }
-        HIL {
-          H
-          L
-          percent
-        }
-      }
     }
   }
 }
