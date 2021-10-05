@@ -1,10 +1,8 @@
 <template>
   <v-layout class="text-center d-flex flex-column">
-    <v-flex
-      class="d-flex flex-column align-center justify-center text-mini text-0_7"
-    >
+    <v-flex class="d-flex flex-column align-center justify-center text-mini">
       <template v-if="corner.home > -1 && corner.away > -1">
-        {{ `${corner.home}-${corner.away}` }}
+        {{ `${corner.home} - ${corner.away}` }}
       </template>
     </v-flex>
     <v-flex class="d-flex flex-row px-3">
@@ -28,7 +26,7 @@
         {{ result.FT.away }}
       </v-flex>
     </v-flex>
-    <v-flex class="d-flex flex-row px-2 text-mini text-0_7">
+    <v-flex class="d-flex flex-row px-2 text-mini">
       <v-flex class="text-right">
         {{ `[${result.HT.home}` }}
       </v-flex>
