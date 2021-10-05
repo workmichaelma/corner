@@ -150,6 +150,7 @@ module.exports = {
           history,
         });
       } catch (err) {
+        console.log("Graphql -> Resolvers -> Match -> Tips, Error");
         return null;
       }
     },

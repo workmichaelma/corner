@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="header-info pt-1 body-2 align-center d-flex">
+  <v-flex class="my-1 body-2 align-center d-flex">
     <v-flex class="text-right team flex-grow-1">
       <template v-if="!isEmpty(home)">
         {{ home.rank ? `[${home.rank}]` : "" }} {{ home.teamName }}

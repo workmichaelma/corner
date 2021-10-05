@@ -1,5 +1,5 @@
 const Schedule = require("../graphql/module/schedule");
-const { find, map, uniq } = require("lodash");
+const { find, map, uniq, isEmpty } = require("lodash");
 
 export const state = {
   ended: [],
@@ -16,18 +16,20 @@ export const actions = {
   async init({ dispatch, commit, state }, { ended }) {
     const stateType = ended ? "ended" : "future";
 
-    dispatch("theme/setLoading", { payload: true }, { root: true });
-    const matches = await Schedule.getSchedule({
-      clients: this.app.apolloProvider.clients,
-      ended,
-      limit: 100
-    });
+    if (isEmpty(state[stateType])) {
+      dispatch("theme/setLoading", { payload: true }, { root: true });
+      const matches = await Schedule.getSchedule({
+        clients: this.app.apolloProvider.clients,
+        ended,
+        limit: 100
+      });
 
-    dispatch("theme/setLoading", { payload: false }, { root: true });
+      dispatch("theme/setLoading", { payload: false }, { root: true });
 
-    commit("init", {
-      type: stateType,
-      matches
-    });
+      commit("init", {
+        type: stateType,
+        matches
+      });
+    }
   }
 };

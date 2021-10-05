@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="header-info pt-1 body-2 align-center d-flex">
+  <v-flex class="body-2 align-center d-flex">
     <v-flex class="d-flex text-right odd flex-grow-1 justify-end">
       <v-flex class="flex-grow-0">
         {{ HAD.H }}
