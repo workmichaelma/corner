@@ -1,12 +1,12 @@
 <template>
-  <v-flex class="py-1 px-2  grey darken-4" @click="redirect()">
+  <v-flex class="pa-2  grey darken-4" @click="redirect()">
     <info
       v-bind="{
         league: get(match, 'league.name', ''),
         matchDate: get(match, 'matchDate', ''),
         matchTime: get(match, 'matchTime', ''),
         chl: get(match, 'odds.CHL[0]', {}),
-        result: get(match, 'result.corner.full.total', '')
+        corner: get(match, 'result.corner.full', '')
       }"
     />
     <teams

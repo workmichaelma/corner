@@ -5,8 +5,8 @@
       <span>{{ `${matchDate} ${matchTime}` }}</span>
     </v-flex>
     <v-flex class="corner text-center flex-grow-0">
-      <template v-if="result">
-        <div>{{ result }}</div>
+      <template v-if="corner.home > -1 && corner.away > -1">
+        {{ `${corner.home} - ${corner.away}` }} [{{ corner.total }}]
       </template>
     </v-flex>
     <v-flex class="side d-flex justify-end">
@@ -45,8 +45,8 @@ export default {
     chl: {
       default: {}
     },
-    result: {
-      default: ""
+    corner: {
+      default: {}
     }
   },
   methods: {
