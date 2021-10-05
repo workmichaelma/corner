@@ -35,10 +35,14 @@ module.exports = {
       datetime,
     },
     FAKE_HDC: (parent, args, context, info) => {
-      const { HAD, HDC } = parent;
+      const { HAD, HDC, result } = parent;
       const isFake = isEmpty(HDC);
       const [had, ...r] = HAD;
-      return getFakeHDC(isFake ? had.H : get(HDC, "[0].HG", null), isFake);
+      return getFakeHDC(
+        isFake ? had.H : get(HDC, "[0].HG", null),
+        isFake,
+        result
+      );
     },
   },
 };

@@ -12,6 +12,7 @@ type Odds {
 type FAKE_HDC {
   value: String
   isFake: Boolean
+  result: String
 }
 
 type HAD {

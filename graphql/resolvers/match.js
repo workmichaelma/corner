@@ -120,14 +120,16 @@ module.exports = {
     },
     odds: async (parent, args, context, info) => {
       try {
-        const { odds } = parent;
+        const { odds, result } = parent;
         return reduce(
           odds,
           (obj, oddArray, key) => {
             obj[upperCase(key)] = filterOdds({ odds: oddArray, args });
             return obj;
           },
-          {}
+          {
+            result,
+          }
         );
       } catch (err) {
         return {};

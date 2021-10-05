@@ -1,6 +1,6 @@
 <template>
   <v-flex class="body-2 align-center d-flex">
-    <v-flex class="side">
+    <v-flex class="side text-left">
       <span class="mr-1">{{ league }}</span>
       <span>{{ `${matchDate} ${matchTime}` }}</span>
     </v-flex>

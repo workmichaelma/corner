@@ -7,6 +7,8 @@ const {
   isArray,
   take,
   reduce,
+  map,
+  isUndefined,
 } = require("lodash");
 
 const filterByOrder = ({ _odds, orderBy }) => {
@@ -93,23 +95,35 @@ const FakeHDC = {
   45: "+X",
 };
 
-const getFakeHDC = (v, isFake) => {
-  let result = v;
+const getFakeHDC = (v, isFake, result) => {
+  let line = v;
+  let _result = "";
+  if (!isFake && !isEmpty(result)) {
+    _result = get(result, "HDC.first", "");
+  }
   if (isFake && v) {
-    result = reduce(
+    line = reduce(
       FakeHDC,
-      (result, s, k) => {
+      (line, s, k) => {
         if (parseFloat(v) > k) {
-          result = s;
+          line = s;
         }
-        return result;
+        return line;
       },
       null
     );
   }
+  if ((isFake && !isEmpty(result)) || (_result === null && !isEmpty(result))) {
+    _result = getHDCResult({
+      odd: line || "",
+      home: get(result, "FT.home", -1),
+      away: get(result, "FT.away", -1),
+    });
+  }
   return {
     isFake,
-    value: getChinHDC(result),
+    value: getChinHDC(line),
+    result: _result,
   };
 };
 
@@ -124,19 +138,79 @@ const chinHDCMap = {
   "-0.5/-1.0": "半/一",
   "+0.0/-0.5": "平/半",
   "+0.0": "平手",
-  "+0.0/+0.5": "-平/半",
-  "+0.5/+1.0": "-半/一",
-  "+1.0": "-一球",
-  "+1.0/+1.5": "-一/一球半",
-  "+1.5/+2.0": "-一球半/兩",
-  "+2.0": "-兩球",
-  "+2.0/+2.5": "-兩/兩球半",
-  "+2.5/+3.0": "-兩球半/三",
+  "+0.0/+0.5": "受平/半",
+  "+0.5/+1.0": "受半/一",
+  "+1.0": "受一球",
+  "+1.0/+1.5": "受一/一球半",
+  "+1.5/+2.0": "受一球半/兩",
+  "+2.0": "受兩球",
+  "+2.0/+2.5": "受兩/兩球半",
+  "+2.5/+3.0": "受兩球半/三",
   "+X": "受讓好多球",
 };
 
 const getChinHDC = (v) => {
   return get(chinHDCMap, v, null);
+};
+
+const getHHAResult = ({ LINE, home, away }) => {
+  if (LINE < 0) {
+    const diff = home - away + LINE;
+    return diff === 0 ? "D" : diff > 0 ? "H" : diff < 0 ? "A" : null;
+  } else if (LINE > 0) {
+    const diff = away - home + LINE;
+    return diff === 0 ? "D" : diff > 0 ? "A" : diff < 0 ? "H" : null;
+  } else if (LINE === 0) {
+    const diff = home - away;
+    return diff === 0 ? "D" : diff > 0 ? "H" : diff < 0 ? "A" : null;
+  }
+  return null;
+};
+
+const getHDCResult = ({ odd, home, away }) => {
+  let [LINE1, LINE2] = map(odd.split("/"), parseFloat);
+  if (!isUndefined(LINE1) && isUndefined(LINE2) && !isNaN(LINE1)) {
+    if (LINE1 < 0) {
+      const diff = home - away + ~~LINE1;
+      return diff === 0 ? "D" : diff > 0 ? "H" : diff < 0 ? "A" : null;
+    }
+    // 客讓
+    else if (LINE1 > 0) {
+      const diff = away - home + ~~LINE1;
+      return diff === 0 ? "D" : diff > 0 ? "A" : diff < 0 ? "H" : null;
+    }
+    // 平手
+    else {
+      const diff = home - away;
+      return diff === 0 ? "D" : diff > 0 ? "H" : diff < 0 ? "A" : null;
+    }
+  } else if (
+    !isUndefined(LINE1) &&
+    !isUndefined(LINE2) &&
+    !isNaN(LINE1) &&
+    !isNaN(LINE2)
+  ) {
+    const result = [
+      getHHAResult({ LINE: LINE1, home, away }),
+      getHHAResult({ LINE: LINE2, home, away }),
+    ].join("");
+    switch (result) {
+      case "HH":
+        return "H";
+      case "AA":
+        return "A";
+      case "DA":
+        return "AF";
+      case "DH":
+        return "HF";
+      case "HD":
+        return "HF";
+      case "AD":
+        return "AF";
+      default:
+        return null;
+    }
+  }
 };
 
 module.exports = {
