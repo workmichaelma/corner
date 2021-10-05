@@ -54,6 +54,8 @@ fragment result on Match {
     corner {
       full {
         total
+        home
+        away
       }
     }
   }

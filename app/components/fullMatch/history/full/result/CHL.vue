@@ -1,6 +1,6 @@
 <template>
   <v-flex
-    class="odd-col text-center flex-grow-0"
+    class="odd-col text-center flex-grow-1"
     v-if="result !== '' && odd.LINE"
   >
     <div>
@@ -43,9 +43,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.odd-col
-  width 36px
-  flex-basis 36px
 
 .odd
   padding 1px 0

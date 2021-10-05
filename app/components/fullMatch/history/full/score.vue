@@ -1,18 +1,19 @@
 <template>
-  <div class="d-flex text-center">
-    <div
-      class="d-flex"
+  <v-row class="d-flex text-center flex-grow-1 px-1 py-0 ma-0">
+    <v-col
+      class="d-flex pa-0 ma-0 align-center justify-between"
+      cols="4"
       :class="
         getTeamResultcolorBySide(HAD, 'home', teamId, get(homeTeam, 'teamId'))
       "
     >
-      <div class="rank">{{ homeTeam.rank }}</div>
-      <div class="team">
+      <v-flex class="rank">{{ homeTeam.rank }}</v-flex>
+      <v-flex class="team flex-grow-1">
         {{ homeTeam.teamName }}
-      </div>
-    </div>
-    <div class="score d-flex">
-      <div class="score-FT">
+      </v-flex>
+    </v-col>
+    <v-col cols="4" class="score d-flex pa-0 justify-center align-center">
+      <v-flex class="d-flex justify-end score-FT">
         <data
           :class="
             getTeamResultcolorBySide(
@@ -38,21 +39,24 @@
         >
           {{ result.FT.away }}
         </data>
-      </div>
-      <div class="score-HT">({{ result.HT.home }}-{{ result.HT.away }})</div>
-    </div>
-    <div
-      class="d-flex"
+      </v-flex>
+      <v-flex class="score-HT"
+        >({{ result.HT.home }}-{{ result.HT.away }})</v-flex
+      >
+    </v-col>
+    <v-col
+      cols="4"
+      class="d-flex pa-0 ma-0 align-center justify-between"
       :class="
         getTeamResultcolorBySide(HAD, 'away', teamId, get(awayTeam, 'teamId'))
       "
     >
-      <div class="team">
+      <div class="team flex-grow-1">
         {{ awayTeam.teamName }}
       </div>
       <div class="rank">{{ awayTeam.rank }}</div>
-    </div>
-  </div>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -91,32 +95,32 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.score
-  padding 0 2px
+// .score
+//   padding 0 2px
 
-.score-FT
-  display inline-block
-  transform scale(0.9)
-  transform-origin center center
-  width 35px
+// .score-FT
+//   display inline-block
+//   transform scale(0.9)
+//   transform-origin center center
+//   width 35px
 
-.score-HT
-  display inline-block
-  transform scale(0.8)
-  transform-origin center center
-  width 35px
+// .score-HT
+//   display inline-block
+//   transform scale(0.8)
+//   transform-origin center center
+//   width 35px
 
-.rank
-  width 20px
-  font-weight bold
+// .rank
+//   width 20px
+//   font-weight bold
 
-.team
-  width 47px
-  white-space nowrap
-  overflow hidden
+// .team
+//   width 47px
+//   white-space nowrap
+//   overflow hidden
 
-.rank
-  display inline-block
-  transform scale(0.8)
-  transform-origin center center
+// .rank
+//   display inline-block
+//   transform scale(0.8)
+//   transform-origin center center
 </style>

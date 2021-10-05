@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex profile">
+  <div class="profile d-flex">
     <div class="px-1">
       {{ matchDate }}
     </div>
@@ -41,7 +41,6 @@ export default {
 <style lang="stylus" scoped>
 .profile
   align-self center
-  height 0
   transform scale(0.8)
   transform-origin center left
 
