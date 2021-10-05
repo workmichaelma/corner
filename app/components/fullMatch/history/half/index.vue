@@ -58,7 +58,6 @@
 import { get } from "lodash";
 import CornerCount from "./cornerCount";
 import CHL from "./CHL";
-import HAD from "./HAD";
 import HIL from "./HIL";
 import HDC from "./HDC";
 import Score from "./score.vue";
@@ -86,7 +85,6 @@ export default {
   components: {
     CHL,
     CornerCount,
-    HAD,
     HIL,
     HDC,
     Score
