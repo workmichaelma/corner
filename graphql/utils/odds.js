@@ -136,7 +136,6 @@ const chinHDCMap = {
 };
 
 const getChinHDC = (v) => {
-  console.log(v, get(chinHDCMap, v, null));
   return get(chinHDCMap, v, null);
 };
 

@@ -36,7 +36,7 @@ const oddJob = new CronJob("0 */1 * * * *", () => {
 });
 oddJob.start();
 
-const resultJob = new CronJob("0 */120 * * * *", () => {
+const resultJob = new CronJob("0 */30 * * * *", () => {
   const worker = new Result();
   worker.init();
 });
