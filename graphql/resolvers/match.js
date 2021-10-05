@@ -5,7 +5,8 @@ const MatchSchema = require("../mongo/schema/Match");
 const { formatDate } = require("../utils/date");
 const { filterOdds } = require("../utils/odds");
 const { trimLeagueName } = require("../utils/league");
-const { matchResultPreprocess } = require("../utils/match");
+const { matchResultPreprocess, getMatchHistory } = require("../utils/match");
+const fetchTips = require("../utils/tips");
 
 module.exports = {
   Query: {
@@ -136,6 +137,18 @@ module.exports = {
       try {
         const { result } = parent;
         return get(result, "HAD", null) !== null;
+      } catch (err) {
+        return null;
+      }
+    },
+    tips: async (parent, args, context, info) => {
+      try {
+        const history = getMatchHistory(parent);
+
+        return fetchTips({
+          ...parent,
+          history,
+        });
       } catch (err) {
         return null;
       }

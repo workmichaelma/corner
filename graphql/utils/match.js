@@ -1,4 +1,5 @@
 const { get } = require("lodash");
+const MatchSchema = require("../mongo/schema/Match");
 
 const matchResultPreprocess = (result) => {
   if (result) {
@@ -24,4 +25,28 @@ const matchResultPreprocess = (result) => {
   }
 };
 
-module.exports = { matchResultPreprocess };
+const getMatchHistory = async (match) => {
+  try {
+    const { home, away, datetime, history } = match;
+    if (history) {
+      return history;
+    }
+    const homeHistory = await MatchSchema.getTeamHistory({
+      _id: home._id,
+      before: datetime,
+    });
+    const awayHistory = await MatchSchema.getTeamHistory({
+      _id: away._id,
+      before: datetime,
+    });
+    return {
+      home: homeHistory,
+      away: awayHistory,
+    };
+  } catch (err) {
+    console.log("resolver.match.history() error: ", { parent }, err);
+    return {};
+  }
+};
+
+module.exports = { matchResultPreprocess, getMatchHistory };

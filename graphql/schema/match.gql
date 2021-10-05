@@ -17,6 +17,7 @@ type Match {
   resultInLatestOdds: ResultInLatestOdds
   odds(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): Odds
   isResultValid: Boolean
+  tips: TipsMatch
 }
 
 type MatchTeam {
