@@ -66,6 +66,12 @@ MatchSchema.statics.getTeamHistory = async ({ _id, teamId, before, after }) => {
               }
             : {}),
         },
+        "result.HAD": {
+          $ne: "RFD",
+        },
+        "result.HHA": {
+          $ne: null,
+        },
         $or: [
           {
             home: team_id,

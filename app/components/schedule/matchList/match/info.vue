@@ -47,6 +47,9 @@ export default {
     },
     corner: {
       default: {}
+    },
+    result: {
+      default: {}
     }
   },
   methods: {
