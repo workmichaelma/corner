@@ -5,14 +5,14 @@
     <template v-if="corner.home > -1 && corner.away > -1">
       <v-flex
         :class="isHome ? 'lime--text lighten-2' : ''"
-        class="d-flex justify-center"
+        class="d-flex justify-end"
       >
         {{ corner.home }}
       </v-flex>
-      <v-flex class="d-flex justify-center">:</v-flex>
+      <v-flex class="d-flex justify-center">-</v-flex>
       <v-flex
         :class="!isHome ? 'lime--text lighten-2' : ''"
-        class="d-flex justify-center"
+        class="d-flex justify-start"
       >
         {{ corner.away }}
       </v-flex>
