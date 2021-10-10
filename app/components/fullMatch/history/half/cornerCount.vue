@@ -1,12 +1,14 @@
 <template>
-  <v-flex
-    :class="
-      `corner-count d-flex flex-column align-center justify-center title font-weight-bold flex-grow-1 flex-shrink-0 ${
-        result !== '' && count > -1 && hasCHL ? (isHigh ? 'red' : 'green') : ''
-      } lighten-1`
-    "
-  >
-    {{ count > -1 ? count : "-" }}
+  <v-flex class="d-flex flex-row align-center justify-center text-mini">
+    <template v-if="corner.home > -1 && corner.away > -1">
+      <d-flex :class="isHome ? 'lime--text lighten-2' : ''">
+        {{ corner.home }}
+      </d-flex>
+      <d-flex>:</d-flex>
+      <d-flex :class="!isHome ? 'lime--text lighten-2' : ''">
+        {{ corner.away }}
+      </d-flex>
+    </template>
   </v-flex>
 </template>
 
@@ -15,18 +17,18 @@ import { isEmpty } from "lodash";
 export default {
   name: "corner-count",
   props: {
-    count: {
+    isHome: {
       required: true,
-      default: -1
+      default: true
     },
-    result: {
+    corner: {
       required: true,
-      default: ""
-    },
-    odds: {
-      required: true,
-      default: []
+      default: {}
     }
+    // odds: {
+    //   required: true,
+    //   default: []
+    // }
   },
   computed: {
     isHigh() {

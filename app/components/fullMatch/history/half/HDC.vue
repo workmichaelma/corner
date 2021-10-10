@@ -59,7 +59,7 @@ export default {
     },
     resultString() {
       let result = this.result;
-      if (this.useFake) {
+      if (this.useFake || this.result === null) {
         result = this.FAKE_HDC.result;
       }
       let txt = "";

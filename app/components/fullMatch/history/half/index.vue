@@ -10,25 +10,23 @@
           }"
         />
       </v-col> -->
-      <v-col cols="4" class="pa-0 d-flex">
-        <HDC
+      <v-col cols="3" class="pa-0 d-flex">
+        <CHL
           v-bind="{
-            result: get(match, 'result.HDC'),
-            odd: get(match, 'odds.HDC[0]', {}),
-            FAKE_HDC: get(match, 'FAKE_HDC.FAKE_HDC'),
-            isHome
+            result: get(match, 'result.CHL'),
+            odd: get(match, 'odds.CHL[0]', {})
           }"
         />
       </v-col>
       <v-col cols="2" class="pa-0 d-flex">
-        <HIL
+        <Corner
           v-bind="{
-            result: get(match, 'result.HIL'),
-            odd: get(match, 'odds.HIL[0]', {})
+            corner: get(match, 'result.corner.full', {}),
+            isHome
           }"
         />
       </v-col>
-      <v-col cols="4" class="pa-0 d-flex">
+      <v-col cols="3" class="pa-0 d-flex">
         <Score
           v-bind="{
             result: get(match, 'result'),
@@ -39,21 +37,31 @@
           }"
         />
       </v-col>
-      <v-col cols="2" class="pa-0 d-flex">
-        <CHL
+      <v-col cols="4" class="pa-0 d-flex">
+        <HDC
           v-bind="{
-            result: get(match, 'result.CHL'),
-            odd: get(match, 'odds.CHL[0]', {})
+            result: get(match, 'result.HDC'),
+            odd: get(match, 'odds.HDC[0]', {}),
+            FAKE_HDC: get(match, 'FAKE_HDC.FAKE_HDC'),
+            isHome
           }"
         />
       </v-col>
+      <!-- <v-col cols="2" class="pa-0 d-flex">
+        <HIL
+          v-bind="{
+            result: get(match, 'result.HIL'),
+            odd: get(match, 'odds.HIL[0]', {})
+          }"
+        />
+      </v-col> -->
     </template>
   </v-row>
 </template>
 
 <script>
 import { get } from "lodash";
-import CornerCount from "./cornerCount";
+import Corner from "./cornerCount";
 import CHL from "./CHL";
 import HIL from "./HIL";
 import HDC from "./HDC";
@@ -81,7 +89,7 @@ export default {
   },
   components: {
     CHL,
-    CornerCount,
+    Corner,
     HIL,
     HDC,
     Score

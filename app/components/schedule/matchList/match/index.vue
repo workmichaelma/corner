@@ -6,7 +6,8 @@
         matchDate: get(match, 'matchDate', ''),
         matchTime: get(match, 'matchTime', ''),
         chl: get(match, 'odds.CHL[0]', {}),
-        corner: get(match, 'result.corner.full', '')
+        corner: get(match, 'result.corner.full', ''),
+        result: get(match, 'result')
       }"
     />
     <teams
