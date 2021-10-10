@@ -1,15 +1,6 @@
 <template>
   <v-row class="ma-0" :class="`${right ? 'flex-row-reverse' : ''}`">
     <template v-if="match.isResultValid">
-      <!-- <v-col cols="1" class="pa-0 d-flex">
-        <corner-count
-          v-bind="{
-            odds: get(match, 'odds.CHL'),
-            count: cornerCount,
-            result: get(match, 'result.CHL')
-          }"
-        />
-      </v-col> -->
       <v-col cols="3" class="pa-0 d-flex">
         <CHL
           v-bind="{
@@ -40,7 +31,7 @@
       <v-col cols="4" class="pa-0 d-flex">
         <HDC
           v-bind="{
-            result: get(match, 'result.HDC'),
+            result: get(match, 'result'),
             odd: get(match, 'odds.HDC[0]', {}),
             FAKE_HDC: get(match, 'FAKE_HDC.FAKE_HDC'),
             isHome

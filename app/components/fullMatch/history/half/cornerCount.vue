@@ -1,13 +1,21 @@
 <template>
-  <v-flex class="d-flex flex-row align-center justify-center text-mini">
+  <v-flex
+    class="d-flex flex-row align-center justify-center text-mini text-center"
+  >
     <template v-if="corner.home > -1 && corner.away > -1">
-      <d-flex :class="isHome ? 'lime--text lighten-2' : ''">
+      <v-flex
+        :class="isHome ? 'lime--text lighten-2' : ''"
+        class="d-flex justify-center"
+      >
         {{ corner.home }}
-      </d-flex>
-      <d-flex>:</d-flex>
-      <d-flex :class="!isHome ? 'lime--text lighten-2' : ''">
+      </v-flex>
+      <v-flex class="d-flex justify-center">:</v-flex>
+      <v-flex
+        :class="!isHome ? 'lime--text lighten-2' : ''"
+        class="d-flex justify-center"
+      >
         {{ corner.away }}
-      </d-flex>
+      </v-flex>
     </template>
   </v-flex>
 </template>

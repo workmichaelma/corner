@@ -40,7 +40,7 @@ export default {
   computed: {
     useFake() {
       const { value, result, isFake } = this.FAKE_HDC;
-      return value && result && (this.result === null || isEmpty(this.odd));
+      return value && result && (this.HDCResult === null || isEmpty(this.odd));
     },
     LINE() {
       if (this.FAKE_HDC.value) {
@@ -57,10 +57,19 @@ export default {
       }
       return null;
     },
+    HDCResult() {
+      return this.result.HDC;
+    },
+    HADResult() {
+      return this.result.HAD;
+    },
     resultString() {
-      let result = this.result;
-      if (this.useFake || this.result === null) {
+      let result = this.HDCResult;
+      if (this.useFake || this.HDCResult === null) {
         result = this.FAKE_HDC.result;
+      }
+      if (result === null && this.HADResult) {
+        result = this.HADResult;
       }
       let txt = "";
       if (result.indexOf("H") > -1) {
