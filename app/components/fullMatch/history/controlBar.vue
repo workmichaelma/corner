@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       showSameSide: false,
-      showSameLeague: false,
+      showSameLeague: true,
       showSimilarOdd: false,
       sliderPositions: [0, 4]
     };

@@ -15,16 +15,6 @@
                   teamId: match[`${side}Team`].teamId
                 }"
               />
-              <!-- <match-row
-                v-bind="{
-                  match: m,
-                  teamId: match[`${side}Team`].teamId,
-                  leagueId: match.league.leagueId,
-                  config,
-                  half: false
-                }"
-                :key="`matchHistory__${i}`"
-              /> -->
             </v-list-item-content>
           </v-list-item>
           <v-divider v-if="i + 1 < match.history[side].length" :key="i" />
@@ -34,7 +24,6 @@
   </v-card>
 </template>
 <script>
-// import Match from '~/mixins/match'
 import { isObject, get, reduce } from "lodash";
 import MatchRow from "./matchRow/index";
 import Full from "./full/index";
@@ -42,19 +31,6 @@ export default {
   components: {
     MatchRow,
     Full
-  },
-  // mixins: [
-  //   Match
-  // ],
-  data() {
-    return {
-      item: 1,
-      items: [
-        { text: "Real-Time", icon: "mdi-clock" },
-        { text: "Audience", icon: "mdi-account" },
-        { text: "Conversions", icon: "mdi-flag" }
-      ]
-    };
   },
   props: {
     match: {
@@ -103,12 +79,18 @@ export default {
           if (this.showSameLeague && exposed) {
             exposed = this.leagueId === get(m, "league.leagueId");
           }
-          if (isObject(this.oddsRange) && exposed) {
-            const { min, max } = this.oddsRange || {};
-            const HAD = get(m, "odds.HAD[0].H");
-            exposed = HAD >= min && HAD <= max;
+          if (this.showSimilarOdd && exposed) {
+            const HDC = get(this, "match.FAKE_HDC.FAKE_HDC.value");
+            if (HDC) {
+              exposed = HDC === get(m, "FAKE_HDC.FAKE_HDC.value");
+            }
           }
-          if (exposed) {
+          // if (isObject(this.oddsRange) && exposed) {
+          //   const { min, max } = this.oddsRange || {};
+          //   const HAD = get(m, "odds.HAD[0].H");
+          //   exposed = HAD >= min && HAD <= max;
+          // }
+          if (exposed && m.result) {
             arr.push(m);
           }
           return arr;

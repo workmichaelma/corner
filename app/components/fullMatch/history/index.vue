@@ -52,7 +52,7 @@ export default {
       pages: ["home", "all", "away"],
       config: {
         showSameSide: false,
-        showSameLeague: false,
+        showSameLeague: true,
         showSimilarOdd: false,
         oddsRange: null
       }
