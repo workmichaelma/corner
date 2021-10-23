@@ -1,5 +1,7 @@
 const { get, isUndefined, reduce, upperCase } = require("lodash");
 const moment = require("moment");
+const axios = require("axios");
+const graphqlFields = require("graphql-fields");
 const MatchSchema = require("../mongo/schema/Match");
 
 const { formatDate } = require("../utils/date");
@@ -12,9 +14,20 @@ module.exports = {
   Query: {
     match: async (obj, args, context, info) => {
       const { id } = args;
-      return MatchSchema.get({
+      const { future, against } = graphqlFields(info);
+      const match = await MatchSchema.get({
         id,
       });
+      if ((future || against) && match.winId) {
+        const { data } = await axios.get(
+          `http://crawler:8082/win/match?id=${match.winId}`
+        );
+        return {
+          ...match,
+          ...data,
+        };
+      }
+      return match;
     },
   },
   Match: {

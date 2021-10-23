@@ -18,6 +18,16 @@ type Match {
   odds(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): Odds
   isResultValid: Boolean
   tips: TipsMatch
+  future: Future
+  against: [AgainstMatch]
+}
+
+type AgainstMatch {
+  homeTeam: MatchTeam
+  awayTeam: MatchTeam
+  league: League
+  result: Result
+  date: String
 }
 
 type MatchTeam {
@@ -32,6 +42,18 @@ type MatchTeam {
 type MatchHistory {
   home: [Match]
   away: [Match]
+}
+
+type Future {
+  home: [FutureMatch]
+  away: [FutureMatch]
+}
+
+type FutureMatch {
+  date: String
+  league: String
+  teams: String
+  daysAfter: String
 }
 
 type Query {
