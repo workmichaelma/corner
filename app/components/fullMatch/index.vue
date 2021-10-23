@@ -14,13 +14,13 @@
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>
+        <full-match-history v-bind="{ match }" />
+      </v-tab-item>
+      <v-tab-item>
         <full-match-future v-bind="{ match }" />
       </v-tab-item>
       <v-tab-item>
         <full-match-against v-bind="{ match }" />
-      </v-tab-item>
-      <v-tab-item>
-        <full-match-history v-bind="{ match }" />
       </v-tab-item>
     </v-tabs-items>
   </v-flex>
@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       tab: null,
-      items: ["賽程", "對賽", "往積"]
+      items: ["往積", "賽程", "對賽"]
     };
   }
 };
