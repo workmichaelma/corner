@@ -41,6 +41,51 @@ fragment match on Match {
       result
     }
   }
+  against {
+    date
+    league {
+      name
+    }
+    homeTeam {
+      teamName
+      rank
+    }
+    awayTeam {
+      teamName
+      rank
+    }
+    result {
+      FT {
+        home
+        away
+      }
+      HT {
+        home
+        away
+      }
+      corner {
+        full {
+          home
+          away
+          total
+        }
+      }
+    }
+  }
+  future {
+    home {
+      date
+      league
+      teams
+      daysAfter
+    }
+    away {
+      date
+      league
+      teams
+      daysAfter
+    }
+  }
   ...odds_firstlatest
   ...result
 }
