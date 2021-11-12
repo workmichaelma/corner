@@ -42,6 +42,12 @@ const resultJob = new CronJob("0 */30 * * * *", () => {
 });
 resultJob.start();
 
+const tipsJob = new CronJob("0 12 * * * *", () => {
+  const worker = new Tips();
+  worker.init();
+});
+tipsJob.start();
+
 const port = 8083;
 
 app.listen(port, () => console.log("Server running..."));

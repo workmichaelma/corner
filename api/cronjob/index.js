@@ -5,6 +5,7 @@ const Odd = require("./worker/Odd");
 const Schedule = require("./worker/Schedule");
 const Result = require("./worker/Result");
 const TeamHistory = require("./worker/TeamHistory");
+const Tips = require("./worker/Tips");
 const Profile = require("./worker/Profile");
 
 app.get("/odd", async (req, res) => {
@@ -50,6 +51,16 @@ app.get("/team-history", async (req, res) => {
 app.get("/profile", async (req, res) => {
   try {
     const worker = Profile();
+    res.json(await worker.init());
+  } catch (err) {
+    console.log(err);
+    res.json({});
+  }
+});
+
+app.get("/tips", async (req, res) => {
+  try {
+    const worker = Tips();
     res.json(await worker.init());
   } catch (err) {
     console.log(err);

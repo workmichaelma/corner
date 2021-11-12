@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const moment = require("moment");
 const updateAt = require("mongoose-createdat-updatedat");
-const { isEmpty, get, reduce, isObject } = require("lodash");
+const { isEmpty, get, reduce, isObject, isBoolean } = require("lodash");
 const Result = require("./Result");
 const Team = require("./Team");
 const League = require("./League");
@@ -267,6 +267,7 @@ MatchSchema.statics.getMatchesWithDateRange = async ({
   end: _end = moment(),
   odds = false,
   result,
+  fields = "",
   limit = 100,
 }) => {
   try {
@@ -274,26 +275,112 @@ MatchSchema.statics.getMatchesWithDateRange = async ({
     const end = moment(_end);
 
     if (start.isValid() && end.isValid()) {
-      return Match.find({
-        datetime: {
-          $gte: start.format(),
-          $lt: end.format(),
+      return Match.find(
+        {
+          datetime: {
+            $gte: start.toISOString(),
+            $lt: end.toISOString(),
+          },
+          ...(isBoolean(result)
+            ? {
+                result: {
+                  $exist: result,
+                },
+              }
+            : {}),
         },
-        ...(isBoolean(result)
-          ? {
-              result: {
-                $exist: result,
-              },
-            }
-          : {}),
-      })
+        fields
+      )
         .limit(limit)
+        .sort({ datetime: 1, num: 1 })
         .lean();
     }
   } catch (err) {
     console.error(err);
     return [];
   }
+};
+
+MatchSchema.statics.getTeamHistory = async ({
+  _id,
+  teamId,
+  league,
+  start: _start,
+  fields,
+  end: _end = moment(),
+  limit = 20,
+}) => {
+  let team_id = _id;
+  if (!team_id) {
+    if (teamId) {
+      const { _id } =
+        (await TeamSchema.findOne({
+          id: teamId,
+          result: {
+            $ne: null,
+          },
+        })) || {};
+      if (_id) {
+        team_id = _id;
+      }
+    }
+  }
+  const start = _start ? moment(_start) : null;
+  const end = moment(_end);
+
+  if (team_id) {
+    return (
+      Match.find(
+        {
+          league,
+          datetime: {
+            $lt: end.toISOString(),
+            ...(start
+              ? {
+                  $gte: start.toISOString(),
+                }
+              : {}),
+          },
+          "result.HAD": {
+            $ne: "RFD",
+          },
+          "result.HHA": {
+            $ne: null,
+          },
+          result: {
+            $ne: null,
+          },
+          $or: [
+            {
+              home: team_id,
+            },
+            {
+              away: team_id,
+            },
+          ],
+        },
+        fields
+      )
+        .sort({ datetime: -1 })
+        .limit(limit)
+        .populate([
+          {
+            path: "home",
+            model: Team,
+          },
+          {
+            path: "away",
+            model: Team,
+          },
+          {
+            path: "league",
+            model: League,
+          },
+        ])
+        .lean() || []
+    );
+  }
+  return [];
 };
 
 MatchSchema.statics.getNoResultMatchesWithDateRange = async ({
