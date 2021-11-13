@@ -8,6 +8,7 @@ const Schedule = require("./cronjob/worker/Schedule");
 const Odd = require("./cronjob/worker/Odd");
 const Result = require("./cronjob/worker/Result");
 const Profile = require("./cronjob/worker/Profile");
+const Tips = require("./cronjob/worker/Tips");
 
 app.get("/", (req, res) => {
   res.json({});
