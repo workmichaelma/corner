@@ -142,7 +142,7 @@ const Tips = () => {
         return false;
       }
     },
-    init: async () => {
+    async init() {
       const today = moment(_.today).add(12, "hours");
       const matches = await Match.getMatchesWithDateRange({
         start: moment(today.subtract(8, "hours")),
