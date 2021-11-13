@@ -35,11 +35,22 @@ const TipsSchema = new Schema({
 TipsSchema.statics.insertTips = async (tips) => {
   try {
     const Tips = mongoose.model("Tips", TipsSchema);
-    return Tips.create(tips, function (err) {
-      if (err) return handleError(err);
-      // saved!
-    });
+
+    return new Promise((resolve, reject) => {
+      Tips.create(tips, function (err, obj) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          // saved!
+          resolve(obj);
+        }
+      });
+    })
+      .then((obj) => obj)
+      .catch((err) => err);
   } catch (err) {
+    console.log({ err });
     return null;
   }
 };
