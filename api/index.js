@@ -43,7 +43,7 @@ const resultJob = new CronJob("0 */30 * * * *", () => {
 resultJob.start();
 
 const tipsJob = new CronJob("0 12 * * * *", () => {
-  const worker = new Tips();
+  const worker = Tips();
   worker.init();
 });
 tipsJob.start();
