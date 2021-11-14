@@ -51,7 +51,7 @@ if (isProd) {
   });
   resultJob.start();
 
-  const tipsJob = new CronJob("0 12 * * * *", () => {
+  const tipsJob = new CronJob("0 8 * * * *", () => {
     console.log("CRONJOB RUNNING - TIPS");
     const worker = Tips();
     worker.init();
