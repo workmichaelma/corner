@@ -19,6 +19,11 @@ const transformBet = ({ betItem, betType }) => {
       betType: "讓球",
       betItem: item === "H" ? "主" : "客",
     };
+  } else if (type === "HHQ") {
+    return {
+      betType: "讓球主客和",
+      betItem: item === "H" ? "主" : "客",
+    };
   }
 };
 

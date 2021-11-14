@@ -54,6 +54,7 @@ const Tips = () => {
             betItem: tip.item,
             betOdd: tip.odd,
             betGrade: tip.grade,
+            betLine: tip.line,
           });
         });
 
@@ -77,6 +78,7 @@ const Tips = () => {
             betItem: tip.item,
             betOdd: tip.odd,
             betGrade: tip.grade,
+            betLine: tip.line,
           });
         });
         return Promise.all(insertTips);
@@ -162,6 +164,7 @@ const Tips = () => {
           grade: "",
           type: "",
           item: "",
+          line: "",
         };
 
         // 主隊上場受讓羸
@@ -171,10 +174,12 @@ const Tips = () => {
             tips.type = HDC ? "HDC" : "HAD";
             tips.item = "A";
             tips.odd = tips.type === "HDC" ? HDC.A : A;
+            tips.line = tips.type === "HDC" ? HDC.AG : "";
           } else if (AG > 0) {
             tips.type = HDC ? "HDC" : "HHA";
             tips.item = "A";
             tips.odd = tips.type === "HDC" ? HDC.A : HHA_A;
+            tips.line = tips.type === "HDC" ? HDC.AG : AG;
           }
 
           if (tips.odd) {
@@ -188,10 +193,12 @@ const Tips = () => {
             tips.type = HDC ? "HDC" : "HHA";
             tips.item = "H";
             tips.odd = tips.type === "HDC" ? HDC.H : HHA_H;
+            tips.line = tips.type === "HDC" ? HDC.HG : HG;
           } else if (AG > 0 && H > 1.6) {
             tips.type = HDC ? "HDC" : "HAD";
             tips.item = "H";
             tips.odd = tips.type === "HDC" ? HDC.H : H;
+            tips.line = tips.type === "HDC" ? HDC.HG : "";
           }
           if (tips.odd) {
             tips.grade = A > 3 ? "C" : A < 1.7 ? "B" : "A";
@@ -319,6 +326,7 @@ const Tips = () => {
         grade: "",
         type: "",
         item: "",
+        line: "",
       };
       const CHLStat = (home.CHL.percent + away.CHL.percent) / 2;
 
@@ -327,6 +335,7 @@ const Tips = () => {
         if (CHLStat < 25) {
           tips.item = "L";
           tips.odd = CHL.L;
+          tips.line = CHL.LINE;
           tips.grade = "C";
           if (CHLStat < 10) {
             tips.grade = "B";
@@ -338,6 +347,7 @@ const Tips = () => {
         if (CHLStat > 75) {
           tips.item = "H";
           tips.odd = CHL.H;
+          tips.line = CHL.LINE;
           tips.grade = "C";
           if (CHLStat > 90) {
             tips.grade = "B";

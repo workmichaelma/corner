@@ -30,6 +30,10 @@ const TipsSchema = new Schema({
     type: String,
     required: true,
   },
+  betLine: {
+    type: String,
+    required: false,
+  },
 });
 
 TipsSchema.statics.insertTips = async (tips) => {
