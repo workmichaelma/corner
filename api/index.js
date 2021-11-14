@@ -10,6 +10,8 @@ const Result = require("./cronjob/worker/Result");
 const Profile = require("./cronjob/worker/Profile");
 const Tips = require("./cronjob/worker/Tips");
 
+const isProd = process.env.production === "true";
+
 app.get("/", (req, res) => {
   res.json({});
 });
@@ -19,35 +21,43 @@ app.use((req, res, next) => {
   next();
 });
 
-const scheduleJob = new CronJob("0 0 */2 * * *", () => {
-  const worker = Schedule();
-  worker.init();
-});
-scheduleJob.start();
+if (isProd) {
+  console.log("CRONJOB RUNNING");
+  const scheduleJob = new CronJob("0 0 */2 * * *", () => {
+    console.log("CRONJOB RUNNING - SCHEDULE");
+    const worker = Schedule();
+    worker.init();
+  });
+  scheduleJob.start();
 
-const profileJob = new CronJob("0 0 */1 * * *", () => {
-  const worker = Profile();
-  worker.init();
-});
-profileJob.start();
+  const profileJob = new CronJob("0 0 */1 * * *", () => {
+    console.log("CRONJOB RUNNING - PROFILE");
+    const worker = Profile();
+    worker.init();
+  });
+  profileJob.start();
 
-const oddJob = new CronJob("0 */1 * * * *", () => {
-  const worker = new Odd();
-  worker.update();
-});
-oddJob.start();
+  const oddJob = new CronJob("0 */1 * * * *", () => {
+    console.log("CRONJOB RUNNING - ODD");
+    const worker = new Odd();
+    worker.update();
+  });
+  oddJob.start();
 
-const resultJob = new CronJob("0 */30 * * * *", () => {
-  const worker = new Result();
-  worker.init();
-});
-resultJob.start();
+  const resultJob = new CronJob("0 */30 * * * *", () => {
+    console.log("CRONJOB RUNNING - RESULT");
+    const worker = new Result();
+    worker.init();
+  });
+  resultJob.start();
 
-const tipsJob = new CronJob("0 12 * * * *", () => {
-  const worker = Tips();
-  worker.init();
-});
-tipsJob.start();
+  const tipsJob = new CronJob("0 12 * * * *", () => {
+    console.log("CRONJOB RUNNING - TIPS");
+    const worker = Tips();
+    worker.init();
+  });
+  tipsJob.start();
+}
 
 const port = 8083;
 

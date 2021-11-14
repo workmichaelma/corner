@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   app:
@@ -8,7 +8,8 @@ services:
     volumes:
       - ./app:/usr/src/app/corner/app
     ports:
-      - '8098:3000'
+      - "8098:3000"
+      - "80:3000"
     restart: always
     depends_on:
       - graphql
@@ -24,7 +25,7 @@ services:
   #   build: ./api
   #   ports:
   #     # - '80:3000'
-  #     - '1003:3000'
+  #     - "1003:3000"
   #   links:
   #     - mongo
   #     - crawler
@@ -32,24 +33,24 @@ services:
   #     - ./api:/usr/src/app/api
   #   networks:
   #     - corner-networks
-  mongo:
-    container_name: corner_mongo
-    image: mongo
-    ports:
-      - '27017:27017'
-    volumes:
-      - ./mongo:/usr/src/app/corner/mongo
-    networks:
-      - corner-networks
-    environment:
-      - TZ=Asia/Hong_Kong
+  # mongo:
+  #   container_name: corner_mongo
+  #   image: mongo
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - ./mongo:/usr/src/app/corner/mongo
+  #   networks:
+  #     - corner-networks
+  #   environment:
+  #     - TZ=Asia/Hong_Kong
   crawler:
     restart: always
     build: ./crawler
     command: sh -c "npm install && npm run start"
     working_dir: /usr/src/app/corner/crawler
-    ports: 
-      - '2002:8082'
+    ports:
+      - "2002:8082"
     volumes:
       - ./crawler:/usr/src/app/corner/crawler
     networks:
@@ -61,28 +62,29 @@ services:
     build: ./api
     command: sh -c "npm install && npm run start"
     working_dir: /usr/src/app/corner/api
-    ports: 
-      - '2003:8083'
+    ports:
+      - "2003:8083"
     volumes:
       - ./api:/usr/src/app/corner/api
     networks:
       - corner-networks
     environment:
-      WAIT_HOSTS: mongo:27017
+      production: "true"
+      # WAIT_HOSTS: mongo:27017
 
   graphql:
     restart: always
     build: ./graphql
     command: sh -c "npm install && npm run start"
     working_dir: /usr/src/app/corner/graphql
-    ports: 
-      - '2004:8084'
+    ports:
+      - "2004:8084"
     volumes:
       - ./graphql:/usr/src/app/corner/graphql
     networks:
       - corner-networks
-    environment:
-      WAIT_HOSTS: mongo:27017
+  # environment:
+  #   WAIT_HOSTS: mongo:27017
 
 networks:
   corner-networks:
