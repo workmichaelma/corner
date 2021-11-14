@@ -1,9 +1,14 @@
 type Query {
-  tips: Tips
+  tips: [Tip]
 }
 
-type Tips {
-  matches: [TipsMatch]
+type Tip {
+  match: Match
+  betType: String
+  betItem: String
+  betOdd: String
+  betGrade: String
+  isStarted: String
 }
 
 type TipsMatch {
