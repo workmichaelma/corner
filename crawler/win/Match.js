@@ -41,8 +41,8 @@ const fetchMatch = async (id) => {
               return {
                 date: tds.eq(0).text(),
                 league: tds.eq(1).text(),
-                teams: tds.eq(2).text().trim(),
-                daysAfter: tds.eq(5).text().trim(),
+                teams: (tds.eq(2).text() || "").trim(),
+                daysAfter: (tds.eq(5).text() || "").trim(),
               };
             })
             .get();
@@ -66,11 +66,11 @@ const fetchMatch = async (id) => {
             },
             homeTeam: {
               teamName: homeTeam.contents().text(),
-              rank: homeTeam.attr("title").trim().replace("排名：", ""),
+              rank: (homeTeam.attr("title") || "").trim().replace("排名：", ""),
             },
             awayTeam: {
               teamName: awayTeam.contents().text(),
-              rank: awayTeam.attr("title").trim().replace("排名：", ""),
+              rank: (awayTeam.attr("title") || "").trim().replace("排名：", ""),
             },
             result: {
               HT: {
