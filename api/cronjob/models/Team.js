@@ -117,4 +117,4 @@ TeamSchema.statics.updateTeam = async ({ _id }, args) => {
 
 TeamSchema.plugin(updateAt);
 
-module.exports = Team = mongoose.model("team", TeamSchema);
+module.exports = Team = mongoose.model("team", TeamSchema, "teams");

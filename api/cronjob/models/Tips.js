@@ -58,4 +58,4 @@ TipsSchema.statics.insertTips = async (tips) => {
     return null;
   }
 };
-module.exports = Team = mongoose.model("tips", TipsSchema, "tips");
+module.exports = Tips = mongoose.model("tips", TipsSchema, "tips");

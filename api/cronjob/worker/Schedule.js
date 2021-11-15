@@ -62,6 +62,7 @@ const Schedule = () => {
           datetime: moment(m.datetime).toDate(),
         };
       } catch (err) {
+        console.log({ err });
         return null;
       }
     },
