@@ -37,7 +37,10 @@ module.exports = {
     FAKE_HDC: (parent, args, context, info) => {
       const { HAD, HDC, result } = parent;
       const isFake = isEmpty(HDC);
-      const [had, ...r] = HAD;
+      const [had = {}, ...r] = HAD;
+      if (isEmpty(had)) {
+        return {};
+      }
       return getFakeHDC(
         isFake ? had.H : get(HDC, "[0].HG", null),
         isFake,
