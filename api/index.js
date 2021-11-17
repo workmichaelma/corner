@@ -58,6 +58,13 @@ if (isProd) {
     worker.init();
   });
   tipsJob.start();
+
+  const tipsResultJob = new CronJob("0 */60 * * * *", () => {
+    console.log("CRONJOB RUNNING - TIPS Result - " + moment().format());
+    const worker = Tips();
+    worker.initResult();
+  });
+  tipsResultJob.start();
 }
 
 const port = 8083;

@@ -1,6 +1,11 @@
+const { range } = require("lodash");
 const mongoose = require("mongoose");
 const updateAt = require("mongoose-createdat-updatedat");
+const { map } = require("lodash");
+const moment = require("moment");
 const Schema = mongoose.Schema;
+
+const MatchSchema = require("./Match");
 
 const TipsSchema = new Schema({
   date: {
@@ -35,7 +40,36 @@ const TipsSchema = new Schema({
     type: String,
     required: false,
   },
+  result: String,
 });
+
+TipsSchema.virtual("match", {
+  ref: "Match",
+  localField: "matchId",
+  foreignField: "id",
+});
+
+TipsSchema.statics.getNoResultTips = async () => {
+  try {
+    return Tips.find({
+      result: null,
+      date: {
+        $in: map(range(10), (i) => {
+          return moment().subtract(i, "days").format("YYYY-MM-DD");
+        }),
+      },
+    })
+      .populate({
+        path: "match",
+        model: MatchSchema,
+        select: "result",
+      })
+      .lean();
+  } catch (err) {
+    console.log(`getNoResultTips - error, ${err}`);
+    return [];
+  }
+};
 
 TipsSchema.statics.insertTips = async (tips) => {
   try {
@@ -57,6 +91,26 @@ TipsSchema.statics.insertTips = async (tips) => {
   } catch (err) {
     console.log({ err });
     return null;
+  }
+};
+
+TipsSchema.statics.insertTipsResult = async ({ _id, result }) => {
+  const Tips = mongoose.model("Tips", TipsSchema);
+  try {
+    return Tips.findOneAndUpdate(
+      {
+        _id,
+      },
+      {
+        result,
+      },
+      { new: true }
+    );
+  } catch (err) {
+    console.error("TipsSchema.statics.insertTipsResult() error: ", {
+      result,
+      err,
+    });
   }
 };
 

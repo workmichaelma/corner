@@ -2,11 +2,26 @@ const Match = require("../models/Match");
 const moment = require("moment");
 const TipsSchema = require("../models/Tips");
 
-const { map, head, compact, isEmpty, get, reduce } = require("lodash");
+const {
+  map,
+  head,
+  compact,
+  includes,
+  isEmpty,
+  isString,
+  isNull,
+  get,
+  reduce,
+} = require("lodash");
+
+const addDays = 1;
+const subtractDays = 0;
 
 const Tips = () => {
   const _ = {
-    today: moment(moment().add(1, "days")).format("YYYY-MM-DD"),
+    today: moment(moment().add(addDays, "days"))
+      .subtract(subtractDays, "days")
+      .format("YYYY-MM-DD"),
     async fetchMatchHistory(match) {
       const homeHistory =
         (await Match.getTeamHistory({
@@ -35,6 +50,14 @@ const Tips = () => {
       } catch {
         console.log(`failed to insert tips - ${tips}`);
         return tips;
+      }
+    },
+    async insertTipsResult(result) {
+      try {
+        return TipsSchema.insertTipsResult(result);
+      } catch (err) {
+        console.log(`failed to insert tips result - ${result}`);
+        return {};
       }
     },
     async initUnexpectedWin(matches) {
@@ -370,6 +393,17 @@ const Tips = () => {
 
       return tips.type ? tips : false;
     },
+    fetchTipsResult: ({ result, betItem, betType }) => {
+      const r = get(result, `[${betType}]`);
+      const first = get(r, "first");
+      if (isString(first) && first) {
+        return includes(first, betItem) ? "W" : "L";
+      } else if (isString(r) && r) {
+        return includes(r, betItem) ? "W" : "L";
+      }
+
+      return null;
+    },
     async init() {
       const today = moment(_.today).add(12, "hours");
       const matches = await Match.getMatchesWithDateRange({
@@ -388,6 +422,41 @@ const Tips = () => {
         unexpectedWin: await _.initUnexpectedWin(matchesWithHistory),
         corner: await _.initCorner(matchesWithHistory),
       };
+    },
+    async initResult() {
+      const tips = await TipsSchema.getNoResultTips();
+
+      const tipsResult = compact(
+        tips.map((t) => {
+          const { match = [], betItem, betType } = t || {};
+          const { result, datetime } = head(match) || {};
+
+          if (
+            !isEmpty(result) &&
+            moment(datetime).isBefore(moment().add(5, "hours"))
+          ) {
+            const r = _.fetchTipsResult({
+              result,
+              betItem,
+              betType,
+            });
+            return isNull(r)
+              ? false
+              : {
+                  _id: t._id,
+                  result: r,
+                };
+          }
+
+          return false;
+        })
+      );
+
+      const insertTipsResultCalls = await tipsResult.map(async (r) => {
+        return _.insertTipsResult(r);
+      });
+
+      return Promise.all(insertTipsResultCalls);
     },
   };
   return _;

@@ -68,4 +68,14 @@ app.get("/tips", async (req, res) => {
   }
 });
 
+app.get("/tips-result", async (req, res) => {
+  try {
+    const worker = Tips();
+    res.json(await worker.initResult());
+  } catch (err) {
+    console.log(err);
+    res.json({});
+  }
+});
+
 module.exports = app;
