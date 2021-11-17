@@ -24,35 +24,35 @@ app.use((req, res, next) => {
 if (isProd) {
   console.log("CRONJOB RUNNING");
   const scheduleJob = new CronJob("0 0 */2 * * *", () => {
-    console.log("CRONJOB RUNNING - SCHEDULE");
+    console.log("CRONJOB RUNNING - SCHEDULE - " + moment().format());
     const worker = Schedule();
     worker.init();
   });
   scheduleJob.start();
 
   const profileJob = new CronJob("0 0 */1 * * *", () => {
-    console.log("CRONJOB RUNNING - PROFILE");
+    console.log("CRONJOB RUNNING - PROFILE - " + moment().format());
     const worker = Profile();
     worker.init();
   });
   profileJob.start();
 
   const oddJob = new CronJob("0 */1 * * * *", () => {
-    console.log("CRONJOB RUNNING - ODD");
+    console.log("CRONJOB RUNNING - ODD - " + moment().format());
     const worker = new Odd();
     worker.update();
   });
   oddJob.start();
 
   const resultJob = new CronJob("0 */30 * * * *", () => {
-    console.log("CRONJOB RUNNING - RESULT");
+    console.log("CRONJOB RUNNING - RESULT - " + moment().format());
     const worker = new Result();
     worker.init();
   });
   resultJob.start();
 
-  const tipsJob = new CronJob("0 8 * * * *", () => {
-    console.log("CRONJOB RUNNING - TIPS");
+  const tipsJob = new CronJob("0 0 8 * * *", () => {
+    console.log("CRONJOB RUNNING - TIPS - " + moment().format());
     const worker = Tips();
     worker.init();
   });

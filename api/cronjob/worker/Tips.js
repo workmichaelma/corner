@@ -29,6 +29,14 @@ const Tips = () => {
         awayHistory,
       };
     },
+    async insertTips(tips) {
+      try {
+        return TipsSchema.insertTips(tips);
+      } catch {
+        console.log(`failed to insert tips - ${tips}`);
+        return tips;
+      }
+    },
     async initUnexpectedWin(matches) {
       try {
         const fetchUnexpectedWinMatches = map(matches, async (m) => {
@@ -46,7 +54,7 @@ const Tips = () => {
         );
 
         const insertTips = unexpectedWinTips.map(async (tip) => {
-          return TipsSchema.insertTips({
+          return _.insertTips({
             date: tip.date,
             matchId: tip.matchId,
             type: "UNEXPECTEDWIN",
@@ -70,7 +78,7 @@ const Tips = () => {
         );
 
         const insertTips = cornerMatches.map(async (tip) => {
-          return TipsSchema.insertTips({
+          return _.insertTips({
             date: tip.date,
             matchId: tip.matchId,
             type: tip.type,
@@ -328,32 +336,34 @@ const Tips = () => {
         item: "",
         line: "",
       };
-      const CHLStat = (home.CHL.percent + away.CHL.percent) / 2;
+      if (home.CHL.H + home.CHL.L > 2 || away.CHL.H + away.CHL.L > 2) {
+        const CHLStat = (home.CHL.percent + away.CHL.percent) / 2;
 
-      if (CHLStat < 25 || CHLStat > 75) {
-        tips.type = "CHL";
-        if (CHLStat < 25) {
-          tips.item = "L";
-          tips.odd = CHL.L;
-          tips.line = CHL.LINE;
-          tips.grade = "C";
-          if (CHLStat < 10) {
-            tips.grade = "B";
+        if (CHLStat < 25 || CHLStat > 75) {
+          tips.type = "CHL";
+          if (CHLStat < 25) {
+            tips.item = "L";
+            tips.odd = CHL.L;
+            tips.line = CHL.LINE;
+            tips.grade = "C";
+            if (CHLStat < 10) {
+              tips.grade = "B";
+            }
+            if (CHLStat < 5) {
+              tips.grade = "A";
+            }
           }
-          if (CHLStat < 5) {
-            tips.grade = "A";
-          }
-        }
-        if (CHLStat > 75) {
-          tips.item = "H";
-          tips.odd = CHL.H;
-          tips.line = CHL.LINE;
-          tips.grade = "C";
-          if (CHLStat > 90) {
-            tips.grade = "B";
-          }
-          if (CHLStat > 95) {
-            tips.grade = "A";
+          if (CHLStat > 75) {
+            tips.item = "H";
+            tips.odd = CHL.H;
+            tips.line = CHL.LINE;
+            tips.grade = "C";
+            if (CHLStat > 90) {
+              tips.grade = "B";
+            }
+            if (CHLStat > 95) {
+              tips.grade = "A";
+            }
           }
         }
       }

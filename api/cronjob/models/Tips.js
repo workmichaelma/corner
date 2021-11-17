@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const updateAt = require("mongoose-createdat-updatedat");
 const Schema = mongoose.Schema;
 
 const TipsSchema = new Schema({
@@ -58,4 +59,7 @@ TipsSchema.statics.insertTips = async (tips) => {
     return null;
   }
 };
+
+TipsSchema.plugin(updateAt);
+
 module.exports = Tips = mongoose.model("tips", TipsSchema, "tips");
