@@ -123,13 +123,13 @@ const Tips = () => {
       const { H, A } = HAD;
 
       if (H < A) {
-        if (H <= 1.7 && teamId.toString() === away.toString()) {
+        if (H <= 1.8 && teamId.toString() === away.toString()) {
           if (result === "D" || result === "A") {
             return { id };
           }
         }
       } else if (H > A) {
-        if (A <= 1.7 && teamId.toString() === home.toString()) {
+        if (A <= 1.8 && teamId.toString() === home.toString()) {
           if (result === "D" || result === "H") {
             return { id };
           }
