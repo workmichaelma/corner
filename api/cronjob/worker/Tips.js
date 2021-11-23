@@ -397,9 +397,9 @@ const Tips = () => {
       const r = get(result, `[${betType}]`);
       const first = get(r, "first");
       if (isString(first) && first) {
-        return includes(first, betItem) ? "W" : "L";
+        return first === "D" ? "D" : includes(first, betItem) ? "W" : "L";
       } else if (isString(r) && r) {
-        return includes(r, betItem) ? "W" : "L";
+        return r === "D" ? "D" : includes(r, betItem) ? "W" : "L";
       }
 
       return null;
