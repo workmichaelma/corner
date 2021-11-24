@@ -12,6 +12,8 @@ const {
   isNull,
   get,
   reduce,
+  toNumber,
+  toString,
 } = require("lodash");
 
 const addDays = 1;
@@ -28,6 +30,7 @@ const Tips = () => {
           _id: match.home,
           league: match.league,
           limit: 30,
+          end: match.datetime,
           fields: "id home away league odds result datetime",
         })) || [];
       const awayHistory =
@@ -35,6 +38,7 @@ const Tips = () => {
           _id: match.away,
           league: match.league,
           limit: 30,
+          end: match.datetime,
           fields: "id home away league odds result datetime",
         })) || [];
 
@@ -123,13 +127,13 @@ const Tips = () => {
       const { H, A } = HAD;
 
       if (H < A) {
-        if (H <= 1.8 && teamId.toString() === away.toString()) {
+        if (H <= 1.75 && teamId.toString() === away.toString()) {
           if (result === "D" || result === "A") {
             return { id };
           }
         }
       } else if (H > A) {
-        if (A <= 1.8 && teamId.toString() === home.toString()) {
+        if (A <= 1.75 && teamId.toString() === home.toString()) {
           if (result === "D" || result === "H") {
             return { id };
           }
@@ -393,13 +397,101 @@ const Tips = () => {
 
       return tips.type ? tips : false;
     },
-    fetchTipsResult: ({ result, betItem, betType }) => {
+    fetchTipsResult: ({ result, betItem, betType, betOdd }) => {
       const r = get(result, `[${betType}]`);
       const first = get(r, "first");
       if (isString(first) && first) {
-        return first === "D" ? "D" : includes(first, betItem) ? "W" : "L";
-      } else if (isString(r) && r) {
-        return r === "D" ? "D" : includes(r, betItem) ? "W" : "L";
+        if (first === "D") {
+          return {
+            result: "D",
+            gainLost: 1,
+            betItemResult: "D",
+          };
+        } else if (betItem === "H") {
+          switch (first) {
+            case "H":
+              return {
+                result: "W",
+                gainLost: betOdd,
+                betItemResult: "H",
+              };
+            case "L":
+            case "A":
+              return {
+                result: "L",
+                gainLost: 0,
+                betItemResult: first,
+              };
+            case "HF":
+              return {
+                result: "W",
+                gainLost: (toNumber(betOdd) - 1) / 2 + 1,
+                betItemResult: "HF",
+              };
+            case "AF":
+              return {
+                result: "L",
+                gainLost: 0.5,
+                betItemResult: "AF",
+              };
+            default:
+              return null;
+          }
+        } else if (betItem === "A") {
+          switch (first) {
+            case "A":
+              return {
+                result: "W",
+                gainLost: betOdd,
+                betItemResult: "A",
+              };
+            case "H":
+              return {
+                result: "L",
+                gainLost: 0,
+                betItemResult: "H",
+              };
+            case "AF":
+              return {
+                result: "W",
+                gainLost: (toNumber(betOdd) - 1) / 2 + 1,
+                betItemResult: "AF",
+              };
+            case "HF":
+              return {
+                result: "L",
+                gainLost: 0.5,
+                betItemResult: "HF",
+              };
+            default:
+              return null;
+          }
+        } else if (betItem === "L") {
+          switch (first) {
+            case "L":
+              return {
+                result: "W",
+                gainLost: betOdd,
+                betItemResult: "L",
+              };
+            case "H":
+              return {
+                result: "L",
+                gainLost: 0,
+                betItemResult: "H",
+              };
+            default:
+              return null;
+          }
+        }
+        return null;
+      } else if (isString(r) && r && betType === "HAD") {
+        const result = r === betItem ? "W" : "L";
+        return {
+          result,
+          gainLost: result === "W" ? betOdd : 0,
+          betItemResult: r,
+        };
       }
 
       return null;
@@ -428,7 +520,7 @@ const Tips = () => {
 
       const tipsResult = compact(
         tips.map((t) => {
-          const { match = [], betItem, betType } = t || {};
+          const { match = [], betItem, betType, betOdd } = t || {};
           const { result, datetime } = head(match) || {};
 
           if (
@@ -439,12 +531,14 @@ const Tips = () => {
               result,
               betItem,
               betType,
+              betOdd,
             });
             return isNull(r)
               ? false
               : {
                   _id: t._id,
-                  result: r,
+                  ...r,
+                  gainLost: toNumber(r.gainLost),
                 };
           }
 

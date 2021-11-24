@@ -314,11 +314,8 @@ MatchSchema.statics.getTeamHistory = async ({
   if (!team_id) {
     if (teamId) {
       const { _id } =
-        (await TeamSchema.findOne({
+        (await Team.findOne({
           id: teamId,
-          result: {
-            $ne: null,
-          },
         })) || {};
       if (_id) {
         team_id = _id;

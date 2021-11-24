@@ -41,6 +41,8 @@ const TipsSchema = new Schema({
     required: false,
   },
   result: String,
+  gainLost: Number,
+  betItemResult: String,
 });
 
 TipsSchema.virtual("match", {
@@ -54,7 +56,7 @@ TipsSchema.statics.getNoResultTips = async () => {
     return Tips.find({
       result: null,
       date: {
-        $in: map(range(10), (i) => {
+        $in: map(range(20), (i) => {
           return moment().subtract(i, "days").format("YYYY-MM-DD");
         }),
       },
@@ -94,7 +96,12 @@ TipsSchema.statics.insertTips = async (tips) => {
   }
 };
 
-TipsSchema.statics.insertTipsResult = async ({ _id, result }) => {
+TipsSchema.statics.insertTipsResult = async ({
+  _id,
+  result,
+  gainLost,
+  betItemResult,
+}) => {
   const Tips = mongoose.model("Tips", TipsSchema);
   try {
     return Tips.findOneAndUpdate(
@@ -103,6 +110,8 @@ TipsSchema.statics.insertTipsResult = async ({ _id, result }) => {
       },
       {
         result,
+        gainLost,
+        betItemResult,
       },
       { new: true }
     );
