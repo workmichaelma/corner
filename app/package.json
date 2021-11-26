@@ -23,7 +23,8 @@
     "moment": "^2.29.1",
     "nuxt": "^2.14.0",
     "nuxt-svg-loader": "^1.0.1",
-    "vue-chartjs": "^3.5.1"
+    "vue-chartjs": "^3.5.1",
+    "vue-iframes": "^0.0.16"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
