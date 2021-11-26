@@ -138,7 +138,7 @@ fragment match on Match {
 # }
 
 fragment result on Match {
-  result: resultInLatestOdds {
+  result: resultByOdds {
     HAD
     FHA
     HHA

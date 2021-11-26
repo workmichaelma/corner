@@ -112,18 +112,20 @@ module.exports = {
         return {};
       }
     },
-    resultInLatestOdds: async (parent, args, context, info) => {
+    resultByOdds: async (parent, args, context, info) => {
+      const { orderBy = "ASC" } = args || {};
       try {
         const { result: _result } = parent;
         const result = matchResultPreprocess(_result);
         if (!isUndefined(result)) {
+          const field = orderBy === "DESC" ? "latest" : "first";
           return {
             ...result,
-            HHA: get(result, "HHA.latest"),
-            HDC: get(result, "HDC.latest"),
-            HIL: get(result, "HIL.latest"),
-            FHL: get(result, "FHL.latest"),
-            CHL: get(result, "CHL.latest"),
+            HHA: get(result, `HHA.${field}`),
+            HDC: get(result, `HDC.${field}`),
+            HIL: get(result, `HIL.${field}`),
+            FHL: get(result, `FHL.${field}`),
+            CHL: get(result, `CHL.${field}`),
           };
         }
         return null;

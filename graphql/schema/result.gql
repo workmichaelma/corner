@@ -11,7 +11,7 @@ type Result {
   corner: CornerResult
 }
 
-type ResultInLatestOdds {
+type ResultByOdds {
   HAD: String
   FHA: String
   HHA: String

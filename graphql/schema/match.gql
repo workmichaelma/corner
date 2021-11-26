@@ -14,7 +14,7 @@ type Match {
   league: League
   history: MatchHistory
   result: Result
-  resultInLatestOdds: ResultInLatestOdds
+  resultByOdds(orderBy: OrderByEnum): ResultByOdds
   odds(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): Odds
   isResultValid: Boolean
   tips: TipsMatch
