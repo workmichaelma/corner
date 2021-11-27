@@ -12,6 +12,7 @@ type Tip {
   isStarted: String
   gainLost: Float
   date: String
+  result: String
 }
 
 type TipsMatch {
