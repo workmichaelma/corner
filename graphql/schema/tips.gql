@@ -1,5 +1,5 @@
 type Query {
-  tips: [Tip]
+  tips(days: Int): [Tip]
 }
 
 type Tip {
@@ -8,6 +8,7 @@ type Tip {
   betItem: String
   betOdd: String
   betGrade: String
+  betLine: String
   isStarted: String
 }
 

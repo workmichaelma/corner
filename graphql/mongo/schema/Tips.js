@@ -22,9 +22,11 @@ TipsSchema.virtual("match", {
   foreignField: "id",
 });
 
-TipsSchema.statics.getTips = async ({ date }) => {
+TipsSchema.statics.getTips = async ({ dates }) => {
   const tips = await Tips.find({
-    date,
+    date: {
+      $in: dates,
+    },
   })
     .populate({
       path: "match",
@@ -45,7 +47,7 @@ TipsSchema.statics.getTips = async ({ date }) => {
       ],
     })
     .lean()
-    .sort({ betGrade: 1 });
+    .sort({ date: -1, betGrade: 1 });
 
   return tips;
 };

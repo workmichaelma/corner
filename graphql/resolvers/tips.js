@@ -1,5 +1,8 @@
+const { range, map } = require("lodash");
 const moment = require("moment");
 const TipsSchema = require("../mongo/schema/Tips");
+
+const { prettyHDCLine } = require("../utils/odds");
 
 const transformBet = ({ betItem, betType }) => {
   const type = betType.toString();
@@ -30,9 +33,15 @@ const transformBet = ({ betItem, betType }) => {
 module.exports = {
   Query: {
     tips: async (obj, args, context, info) => {
-      const today = moment().format("YYYY-MM-DD");
+      const { days = 1 } = args || {};
+      const dates = map(range(days), (day) => {
+        return moment()
+          .subtract(day - 1, "days")
+          .format("YYYY-MM-DD");
+      });
+
       const tips = await TipsSchema.getTips({
-        date: today,
+        dates,
       });
 
       return tips.map(({ match, ...t }) => {
@@ -49,6 +58,7 @@ module.exports = {
           ...t,
           betItem,
           betType,
+          betLine: t.betType === "HDC" ? prettyHDCLine(t.betLine) : t.betLine,
         };
       });
       // const { docs } = await MatchSchema.getSchedule({
