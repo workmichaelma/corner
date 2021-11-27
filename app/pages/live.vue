@@ -1,6 +1,6 @@
 <template>
   <v-layout justify-center align-center>
-    <v-flex xs12 sm12 md10>
+    <v-flex xs12 sm8 md10>
       <player v-bind="{ src }" />
       <live-list v-bind="{ matches, setSrc }" />
     </v-flex>

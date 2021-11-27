@@ -1,24 +1,38 @@
 version: "3"
 
 services:
-  # app:
-  #   build:
-  #     context: ./app
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #     - ./app:/usr/src/app/corner/app
-  #   ports:
-  #     - "8098:3000"
-  #     - "80:3000"
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/usr/src/app/corner/app
+    ports:
+      - "8098:3000"
+      - "80:3000"
+    restart: always
+    depends_on:
+      - graphql
+    networks:
+      - corner-networks
+    environment:
+      - TZ=Asia/Hong_Kong
+    command: sh -c "npm install --legacy-peer-deps && npm run dev"
+
+  # api:
+  #   container_name: api
   #   restart: always
-  #   depends_on:
-  #     - graphql
+  #   build: ./api
+  #   ports:
+  #     # - '80:3000'
+  #     - "1003:3000"
+  #   links:
+  #     - mongo
+  #     - crawler
+  #   volumes:
+  #     - ./api:/usr/src/app/api
   #   networks:
   #     - corner-networks
-  #   environment:
-  #     - TZ=Asia/Hong_Kong
-  #   command: sh -c "npm install --legacy-peer-deps && npm run dev"
-
   # mongo:
   #   container_name: corner_mongo
   #   image: mongo
@@ -55,9 +69,8 @@ services:
     networks:
       - corner-networks
     environment:
-      production: "false"
-
-  # WAIT_HOSTS: mongo:27017
+      production: "true"
+      # WAIT_HOSTS: mongo:27017
 
   graphql:
     restart: always
@@ -70,7 +83,6 @@ services:
       - ./graphql:/usr/src/app/corner/graphql
     networks:
       - corner-networks
-
   # environment:
   #   WAIT_HOSTS: mongo:27017
 
