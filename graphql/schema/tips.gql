@@ -10,6 +10,7 @@ type Tip {
   betGrade: String
   betLine: String
   isStarted: String
+  gainLost: Float
 }
 
 type TipsMatch {
