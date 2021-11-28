@@ -12,7 +12,7 @@ type Match {
   homeTeam: MatchTeam
   awayTeam: MatchTeam
   league: League
-  history: MatchHistory
+  history(limit: Int): MatchHistory
   result: Result
   resultByOdds(orderBy: OrderByEnum): ResultByOdds
   odds(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): Odds

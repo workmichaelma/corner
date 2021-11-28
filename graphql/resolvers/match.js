@@ -83,6 +83,7 @@ module.exports = {
     },
     history: async (parent, args, context, info) => {
       try {
+        const { limit = 20 } = args || {};
         const { home, away, datetime, history } = parent;
         if (history) {
           return history;
@@ -90,10 +91,12 @@ module.exports = {
         const homeHistory = await MatchSchema.getTeamHistory({
           _id: home._id,
           before: datetime,
+          limit,
         });
         const awayHistory = await MatchSchema.getTeamHistory({
           _id: away._id,
           before: datetime,
+          limit,
         });
         return {
           home: homeHistory,

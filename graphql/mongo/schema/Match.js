@@ -39,7 +39,13 @@ MatchSchema.statics.get = async ({ id, winId }) => {
     .lean();
 };
 
-MatchSchema.statics.getTeamHistory = async ({ _id, teamId, before, after }) => {
+MatchSchema.statics.getTeamHistory = async ({
+  _id,
+  teamId,
+  before,
+  after,
+  limit,
+}) => {
   let team_id = _id;
   if (!team_id) {
     if (teamId) {
@@ -81,6 +87,7 @@ MatchSchema.statics.getTeamHistory = async ({ _id, teamId, before, after }) => {
           },
         ],
       })
+        .limit(limit)
         .sort({ datetime: -1 })
         .populate(populate)
         .lean() || []
