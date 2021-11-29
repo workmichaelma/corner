@@ -9,6 +9,17 @@ type Odds {
   FAKE_HDC: FAKE_HDC
 }
 
+type Odd {
+  HAD: HAD
+  HHA: HHA
+  FHA: FHA
+  HIL: HIL
+  FHL: FHL
+  HDC: HDC
+  CHL: CHL
+  FAKE_HDC: FAKE_HDC
+}
+
 type FAKE_HDC {
   value: String
   isFake: Boolean

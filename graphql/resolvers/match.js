@@ -1,4 +1,11 @@
-const { get, isUndefined, reduce, upperCase } = require("lodash");
+const {
+  head,
+  get,
+  isUndefined,
+  reduce,
+  upperCase,
+  isObject,
+} = require("lodash");
 const moment = require("moment");
 const axios = require("axios");
 const graphqlFields = require("graphql-fields");
@@ -9,6 +16,55 @@ const { filterOdds } = require("../utils/odds");
 const { trimLeagueName } = require("../utils/league");
 const { matchResultPreprocess, getMatchHistory } = require("../utils/match");
 const fetchTips = require("../utils/tips");
+
+const handleOdds = (match, args) => {
+  try {
+    const { odds, result } = match;
+    return reduce(
+      odds,
+      (obj, oddArray, key) => {
+        obj[upperCase(key)] = filterOdds({ odds: oddArray, args });
+        return obj;
+      },
+      {
+        result,
+      }
+    );
+  } catch (err) {
+    return {};
+  }
+};
+
+const handleResult = (match) => {
+  try {
+    const { result } = match || {};
+    return matchResultPreprocess(result);
+  } catch (err) {
+    return {};
+  }
+};
+
+const handleResultByOdds = (match, args) => {
+  const { orderBy = "ASC" } = args || {};
+  try {
+    const { result: _result } = match || {};
+    const result = matchResultPreprocess(_result);
+    if (!isUndefined(result)) {
+      const field = orderBy === "DESC" ? "latest" : "first";
+      return {
+        ...result,
+        HHA: get(result, `HHA.${field}`),
+        HDC: get(result, `HDC.${field}`),
+        HIL: get(result, `HIL.${field}`),
+        FHL: get(result, `FHL.${field}`),
+        CHL: get(result, `CHL.${field}`),
+      };
+    }
+    return null;
+  } catch (err) {
+    return {};
+  }
+};
 
 module.exports = {
   Query: {
@@ -28,6 +84,30 @@ module.exports = {
         };
       }
       return match;
+    },
+    matchOdds: async (obj, args, context, info) => {
+      const { id } = args;
+      const match =
+        (await MatchSchema.get({
+          id,
+        })) || {};
+
+      if (isObject(match) && get(match, "odds")) {
+        return match;
+      }
+      return null;
+    },
+    matchResult: async (obj, args, context, info) => {
+      const { id } = args;
+      const match =
+        (await MatchSchema.get({
+          id,
+        })) || {};
+
+      if (isObject(match) && get(match, "result")) {
+        return { result: match.result };
+      }
+      return null;
     },
   },
   Match: {
@@ -108,50 +188,13 @@ module.exports = {
       }
     },
     result: async (parent, args, context, info) => {
-      try {
-        const { result } = parent;
-        return matchResultPreprocess(result);
-      } catch (err) {
-        return {};
-      }
+      return handleResult(parent);
     },
     resultByOdds: async (parent, args, context, info) => {
-      const { orderBy = "ASC" } = args || {};
-      try {
-        const { result: _result } = parent;
-        const result = matchResultPreprocess(_result);
-        if (!isUndefined(result)) {
-          const field = orderBy === "DESC" ? "latest" : "first";
-          return {
-            ...result,
-            HHA: get(result, `HHA.${field}`),
-            HDC: get(result, `HDC.${field}`),
-            HIL: get(result, `HIL.${field}`),
-            FHL: get(result, `FHL.${field}`),
-            CHL: get(result, `CHL.${field}`),
-          };
-        }
-        return null;
-      } catch (err) {
-        return {};
-      }
+      return handleResultByOdds(parent, args);
     },
     odds: async (parent, args, context, info) => {
-      try {
-        const { odds, result } = parent;
-        return reduce(
-          odds,
-          (obj, oddArray, key) => {
-            obj[upperCase(key)] = filterOdds({ odds: oddArray, args });
-            return obj;
-          },
-          {
-            result,
-          }
-        );
-      } catch (err) {
-        return {};
-      }
+      return handleOdds(parent, args);
     },
     isResultValid: async (parent, args, context, info) => {
       try {
@@ -173,6 +216,30 @@ module.exports = {
         console.log("Graphql -> Resolvers -> Match -> Tips, Error");
         return null;
       }
+    },
+  },
+  MatchResult: {
+    result: async (parent, args, context, info) => {
+      return handleResult(parent);
+    },
+    resultByOdds: async (parent, args, context, info) => {
+      return handleResultByOdds(parent, args);
+    },
+  },
+  MatchOdds: {
+    odds: async (parent, args, context, info) => {
+      return handleOdds(parent, args);
+    },
+    odd: async (parent, args, context, info) => {
+      const odds = handleOdds(parent, args);
+      return reduce(
+        odds,
+        (obj, odd, item) => {
+          obj[item] = head(odd);
+          return obj;
+        },
+        {}
+      );
     },
   },
 };

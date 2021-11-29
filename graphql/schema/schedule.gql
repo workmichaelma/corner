@@ -1,5 +1,6 @@
 type Query {
   schedule(ended: Boolean!, page: Int, limit: Int): Schedule
+    @cacheControl(maxAge: 30)
 }
 
 type Schedule {

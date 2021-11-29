@@ -56,6 +56,18 @@ type FutureMatch {
   daysAfter: String
 }
 
+type MatchResult {
+  result: Result
+  resultByOdds(orderBy: OrderByEnum): ResultByOdds
+}
+
+type MatchOdds {
+  odds(type: OddTypeEnum, orderBy: OrderByEnum, limit: Int): Odds
+  odd(type: OddTypeEnum): Odd
+}
+
 type Query {
   match(id: ID!): Match
+  matchOdds(id: ID!): MatchOdds @cacheControl(maxAge: 30)
+  matchResult(id: ID!): MatchResult @cacheControl(maxAge: 30)
 }

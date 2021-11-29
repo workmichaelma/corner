@@ -3,9 +3,14 @@ type Team {
   teamName: String
   winId: String
   image: String
-  history (leagueId: String, after: String, before: String, teamId: String): [Match]
+  history(
+    leagueId: String
+    after: String
+    before: String
+    teamId: String
+  ): [Match]
 }
 
 type Query {
-  team(id: ID, name: String): Team
+  team(id: ID, name: String): Team @cacheControl(maxAge: 30)
 }
