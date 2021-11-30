@@ -18,6 +18,7 @@ const {
 
 const addDays = 1;
 const subtractDays = 0;
+const testing = false;
 
 const Tips = () => {
   const _ = {
@@ -50,7 +51,7 @@ const Tips = () => {
     },
     async insertTips(tips) {
       try {
-        return TipsSchema.insertTips(tips);
+        return testing ? tips : TipsSchema.insertTips(tips);
       } catch {
         console.log(`failed to insert tips - ${tips}`);
         return tips;
@@ -58,7 +59,7 @@ const Tips = () => {
     },
     async insertTipsResult(result) {
       try {
-        return TipsSchema.insertTipsResult(result);
+        return testing ? result : TipsSchema.insertTipsResult(result);
       } catch (err) {
         console.log(`failed to insert tips result - ${result}`);
         return {};

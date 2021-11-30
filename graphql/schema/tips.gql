@@ -1,5 +1,5 @@
 type Query {
-  tips(days: Int): [Tip] @cacheControl(maxAge: 86400)
+  tips(days: Int): [Tip] @cacheControl(maxAge: 7200)
 }
 
 type Tip {
