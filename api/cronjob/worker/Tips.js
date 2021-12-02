@@ -124,17 +124,24 @@ const Tips = () => {
       }
     },
     /* For Unexpected Win */
-    getUnexpectedWin: ({ HAD, result, id, teamId, home, away }) => {
+    getUnexpectedWin: ({ HAD, HDC, result, id, teamId, home, away }) => {
       const { H, A } = HAD;
+      const { HG = "", AG = "" } = HDC || {};
 
       if (H < A) {
-        if (H <= 1.75 && teamId.toString() === away.toString()) {
+        if (
+          (H <= 1.75 || HG === "+0.5/+1.0") &&
+          teamId.toString() === away.toString()
+        ) {
           if (result === "D" || result === "A") {
             return { id };
           }
         }
       } else if (H > A) {
-        if (A <= 1.75 && teamId.toString() === home.toString()) {
+        if (
+          (A <= 1.75 || AG === "-0.5/-1.0") &&
+          teamId.toString() === home.toString()
+        ) {
           if (result === "D" || result === "H") {
             return { id };
           }
@@ -157,6 +164,7 @@ const Tips = () => {
             ? _.getUnexpectedWin({
                 id: homeHistory.id,
                 HAD: homeHistory.odds.had[0],
+                HDC: get(homeHistory, "odds.hdc[0]", {}),
                 result: homeHistory.result.HAD,
                 teamId: match.home,
                 home: homeHistory.home._id,
@@ -170,6 +178,7 @@ const Tips = () => {
           moment(_.today).diff(awayHistory.datetime, "day") < 15
             ? _.getUnexpectedWin({
                 id: awayHistory.id,
+                HDC: get(awayHistory, "odds.hdc[0]", {}),
                 HAD: awayHistory.odds.had[0],
                 result: awayHistory.result.HAD,
                 teamId: match.away,
