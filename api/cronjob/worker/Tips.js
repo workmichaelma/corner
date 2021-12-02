@@ -193,7 +193,7 @@ const Tips = () => {
       try {
         const { H, A } = get(match, "match.odds.had[0]");
         const HDC = get(match, "match.odds.hdc[0]");
-        const { HHA_H, HHA_A, HG, AG } = get(match, "match.odds.hha[0]");
+        const { H: HHA_H, A: HHA_A, HG, AG } = get(match, "match.odds.hha[0]");
         const isHome = get(match, "home");
         const isAway = get(match, "away");
         const tips = {
@@ -402,90 +402,99 @@ const Tips = () => {
       const r = get(result, `[${betType}]`);
       const first = get(r, "first");
       if (isString(first) && first) {
-        if (first === "D") {
+        if (betType === "HHA") {
+          const _result = first === betItem ? "W" : "L";
           return {
-            result: "D",
-            gainLost: 1,
-            betItemResult: "D",
+            result: _result,
+            gainLost: _result === "W" ? betOdd : 0,
+            betItemResult: first,
           };
-        } else if (betItem === "H") {
-          switch (first) {
-            case "H":
-              return {
-                result: "W",
-                gainLost: betOdd,
-                betItemResult: "H",
-              };
-            case "L":
-            case "A":
-              return {
-                result: "L",
-                gainLost: 0,
-                betItemResult: first,
-              };
-            case "HF":
-              return {
-                result: "W",
-                gainLost: (toNumber(betOdd) - 1) / 2 + 1,
-                betItemResult: "HF",
-              };
-            case "AF":
-              return {
-                result: "L",
-                gainLost: 0.5,
-                betItemResult: "AF",
-              };
-            default:
-              return null;
+        } else {
+          if (first === "D") {
+            return {
+              result: "D",
+              gainLost: 1,
+              betItemResult: "D",
+            };
+          } else if (betItem === "H") {
+            switch (first) {
+              case "H":
+                return {
+                  result: "W",
+                  gainLost: betOdd,
+                  betItemResult: "H",
+                };
+              case "L":
+              case "A":
+                return {
+                  result: "L",
+                  gainLost: 0,
+                  betItemResult: first,
+                };
+              case "HF":
+                return {
+                  result: "W",
+                  gainLost: (toNumber(betOdd) - 1) / 2 + 1,
+                  betItemResult: "HF",
+                };
+              case "AF":
+                return {
+                  result: "L",
+                  gainLost: 0.5,
+                  betItemResult: "AF",
+                };
+              default:
+                return null;
+            }
+          } else if (betItem === "A") {
+            switch (first) {
+              case "A":
+                return {
+                  result: "W",
+                  gainLost: betOdd,
+                  betItemResult: "A",
+                };
+              case "H":
+                return {
+                  result: "L",
+                  gainLost: 0,
+                  betItemResult: "H",
+                };
+              case "AF":
+                return {
+                  result: "W",
+                  gainLost: (toNumber(betOdd) - 1) / 2 + 1,
+                  betItemResult: "AF",
+                };
+              case "HF":
+                return {
+                  result: "L",
+                  gainLost: 0.5,
+                  betItemResult: "HF",
+                };
+              default:
+                return null;
+            }
+          } else if (betItem === "L") {
+            switch (first) {
+              case "L":
+                return {
+                  result: "W",
+                  gainLost: betOdd,
+                  betItemResult: "L",
+                };
+              case "H":
+                return {
+                  result: "L",
+                  gainLost: 0,
+                  betItemResult: "H",
+                };
+              default:
+                return null;
+            }
           }
-        } else if (betItem === "A") {
-          switch (first) {
-            case "A":
-              return {
-                result: "W",
-                gainLost: betOdd,
-                betItemResult: "A",
-              };
-            case "H":
-              return {
-                result: "L",
-                gainLost: 0,
-                betItemResult: "H",
-              };
-            case "AF":
-              return {
-                result: "W",
-                gainLost: (toNumber(betOdd) - 1) / 2 + 1,
-                betItemResult: "AF",
-              };
-            case "HF":
-              return {
-                result: "L",
-                gainLost: 0.5,
-                betItemResult: "HF",
-              };
-            default:
-              return null;
-          }
-        } else if (betItem === "L") {
-          switch (first) {
-            case "L":
-              return {
-                result: "W",
-                gainLost: betOdd,
-                betItemResult: "L",
-              };
-            case "H":
-              return {
-                result: "L",
-                gainLost: 0,
-                betItemResult: "H",
-              };
-            default:
-              return null;
-          }
+          return null;
         }
-        return null;
       } else if (isString(r) && r && betType === "HAD") {
         const result = r === betItem ? "W" : "L";
         return {
