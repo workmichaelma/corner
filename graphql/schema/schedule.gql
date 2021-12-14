@@ -1,9 +1,16 @@
 type Query {
   schedule(ended: Boolean!, page: Int, limit: Int): Schedule
     @cacheControl(maxAge: 30)
+  scheduleByDate(ended: Boolean!, day: Int): [ScheduleByDate]
 }
 
 type Schedule {
   docs: [Match]
   metadata: Pagination
+}
+
+type ScheduleByDate {
+  date: String
+  weekday: String
+  matches: [Match]
 }

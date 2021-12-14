@@ -96,6 +96,27 @@ MatchSchema.statics.getTeamHistory = async ({
   return [];
 };
 
+MatchSchema.statics.getScheduleByDate = async ({ to, from, orderBy }) => {
+  const { docs, ...metadata } = await Match.paginate(
+    {
+      datetime: {
+        $gt: new Date(from),
+        $lt: new Date(to),
+      },
+    },
+    {
+      limit: 1000,
+      sort: { datetime: orderBy, num: 1 },
+      populate,
+    }
+  );
+
+  return {
+    docs: dbObjectToObject(docs),
+    ...metadata,
+  };
+};
+
 MatchSchema.statics.getSchedule = async ({ page = 1, limit = 10 }) => {
   const { docs, ...metadata } = await Match.paginate(
     {
