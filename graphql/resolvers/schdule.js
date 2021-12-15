@@ -87,7 +87,7 @@ module.exports = {
         } else {
           return {
             date: moment(d).format("DD/MM"),
-            fulldate: moment(_d),
+            fulldate: moment(d),
             weekday,
             matches: matches[weekday],
           };
