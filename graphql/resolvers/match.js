@@ -196,6 +196,17 @@ module.exports = {
     resultByOdds: async (parent, args, context, info) => {
       return handleResultByOdds(parent, args);
     },
+    odd: async (parent, args, context, info) => {
+      const odds = handleOdds(parent, args);
+      return reduce(
+        odds,
+        (obj, odd, item) => {
+          obj[item] = head(odd);
+          return obj;
+        },
+        {}
+      );
+    },
     odds: async (parent, args, context, info) => {
       return handleOdds(parent, args);
     },
