@@ -8,6 +8,18 @@ const getWeekday = (day) => {
   return ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][day];
 };
 
+const getWeekdayChin = (day) => {
+  return {
+    SUN: "週日",
+    MON: "週一",
+    TUE: "週二",
+    WED: "週三",
+    THU: "週四",
+    FRI: "週五",
+    SAT: "週六",
+  }[day];
+};
+
 module.exports = {
   Query: {
     schedule: async (obj, args, context, info) => {
@@ -82,6 +94,7 @@ module.exports = {
             date: moment(_d).format("DD/MM"),
             fulldate: moment(_d),
             weekday,
+            weekdayChin: getWeekdayChin(weekday),
             matches: matches[weekday],
           };
         } else {
@@ -90,6 +103,7 @@ module.exports = {
             date: moment(d).format("DD/MM"),
             fulldate: moment(d),
             weekday,
+            weekdayChin: getWeekdayChin(weekday),
             matches: matches[weekday],
           };
         }
@@ -108,6 +122,7 @@ module.exports = {
               date: date.format("DD/MM"),
               weekday,
               matches: matches[weekday],
+              weekdayChin: getWeekdayChin(weekday),
             };
           } else {
             const date = moment(today.fulldate)
@@ -116,7 +131,8 @@ module.exports = {
             const weekday = getWeekday(moment(date).day());
             return {
               date: date.format("DD/MM"),
-              weekday: getWeekday(moment(date).day()),
+              weekday,
+              weekdayChin: getWeekdayChin(weekday),
               matches: matches[weekday],
             };
           }

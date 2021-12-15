@@ -12,5 +12,6 @@ type Schedule {
 type ScheduleByDate {
   date: String
   weekday: String
+  weekdayChin: String
   matches: [Match]
 }
