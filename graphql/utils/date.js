@@ -19,6 +19,19 @@ const formatDate = ({ datetime, format }) => {
       return date;
   }
 };
+
+const getWeekdayChin = (day) => {
+  return {
+    SUN: "週日",
+    MON: "週一",
+    TUE: "週二",
+    WED: "週三",
+    THU: "週四",
+    FRI: "週五",
+    SAT: "週六",
+  }[day];
+};
 module.exports = {
   formatDate,
+  getWeekdayChin,
 };

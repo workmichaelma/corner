@@ -7,7 +7,7 @@ type Match {
   winId: String
   matchNum: String
   matchDatetime(format: DatetimeFormatEnum): Date
-  matchDay: String
+  matchDay(format: MatchDayFormatEnum): String
   ended: Boolean
   homeTeam: MatchTeam
   awayTeam: MatchTeam

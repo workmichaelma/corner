@@ -9,6 +9,11 @@ enum DatetimeFormatEnum {
   DD
 }
 
+enum MatchDayFormatEnum {
+  CHIN
+  ENG
+}
+
 enum OddTypeEnum {
   FULL
   FIRST_LATEST

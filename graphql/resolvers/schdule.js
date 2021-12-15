@@ -1,23 +1,12 @@
 const moment = require("moment");
 const range = require("lodash/range");
 const map = require("lodash/map");
-const MatchSchema = require("../mongo/schema/Match");
 const { get, reduce } = require("lodash");
+const MatchSchema = require("../mongo/schema/Match");
+const { getWeekdayChin } = require("../utils/date");
 
 const getWeekday = (day) => {
   return ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][day];
-};
-
-const getWeekdayChin = (day) => {
-  return {
-    SUN: "週日",
-    MON: "週一",
-    TUE: "週二",
-    WED: "週三",
-    THU: "週四",
-    FRI: "週五",
-    SAT: "週六",
-  }[day];
 };
 
 module.exports = {

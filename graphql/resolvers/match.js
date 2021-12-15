@@ -11,7 +11,7 @@ const axios = require("axios");
 const graphqlFields = require("graphql-fields");
 const MatchSchema = require("../mongo/schema/Match");
 
-const { formatDate } = require("../utils/date");
+const { formatDate, getWeekdayChin } = require("../utils/date");
 const { filterOdds } = require("../utils/odds");
 const { trimLeagueName } = require("../utils/league");
 const { matchResultPreprocess, getMatchHistory } = require("../utils/match");
@@ -120,7 +120,10 @@ module.exports = {
       return formatDate({ datetime, format });
     },
     matchDay: async (parent, args, context, info) => {
-      return parent.day;
+      const { day } = parent;
+      const { format } = args;
+
+      return format === "CHIN" ? getWeekdayChin(day) : day;
     },
     ended: async (parent, args, context, info) => {
       const current = moment();
