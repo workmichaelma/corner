@@ -85,6 +85,7 @@ module.exports = {
             matches: matches[weekday],
           };
         } else {
+          const weekday = getWeekday(moment(d).day());
           return {
             date: moment(d).format("DD/MM"),
             fulldate: moment(d),
