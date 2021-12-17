@@ -2,6 +2,7 @@ type Query {
   schedule(ended: Boolean!, page: Int, limit: Int): Schedule
     @cacheControl(maxAge: 30)
   scheduleByDate(ended: Boolean!, day: Int): [ScheduleByDate]
+    @cacheControl(maxAge: 30)
 }
 
 type Schedule {
